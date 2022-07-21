@@ -9,6 +9,7 @@ import {
 import Header from "./Header";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { loadedStatus } from "../../store/global";
+import Animation from "./animation/Animation";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -51,6 +52,7 @@ const MobileLayout = ({ children }: LayoutProps) => {
         sign={sign}
       />
       <Main open={open} md={md}>
+        <Animation />
         <StyledWrapper maxWidth="xl">
           {sign && !open && <button onClick={() => setOpen(true)}>버튼</button>}
           {children}
@@ -73,7 +75,7 @@ const StyledWrapper: any = styled(Container, {
   md?: boolean;
 }>(({ theme, md }) => ({
   position: "relative",
-  overflowY: "scroll",
+  // overflowY: "scroll",
   width: "100%",
   height: "100%",
   paddingTop: 100,
