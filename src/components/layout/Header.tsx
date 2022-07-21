@@ -31,11 +31,13 @@ interface HeaderProps {
   menuWidth: number;
   open: boolean;
   md?: boolean;
+  sign?: boolean;
 }
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
   sidebar: number;
+  sign?: boolean;
 }
 
 const Header = ({
@@ -44,6 +46,7 @@ const Header = ({
   menuWidth,
   open,
   md,
+  sign,
 }: HeaderProps) => {
   const drawer = (
     <Box>
@@ -89,7 +92,7 @@ const Header = ({
       sx={{ width: { md: menuWidth }, flexShrink: { sm: 0 } }}
       aria-label="mailbox folders"
     >
-      <AppBar open={open} sidebar={menuWidth}>
+      <AppBar open={open} sidebar={menuWidth} sign={sign}>
         <StyledToolbar>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <IconButton
@@ -183,7 +186,7 @@ const DrawerHeader = styled(Box)(({ theme }) => ({
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open" && prop !== "sidebar",
-})<AppBarProps>(({ theme, open, sidebar }) => ({
+})<AppBarProps>(({ theme, open, sidebar, sign }) => ({
   transition: theme.transitions.create(["margin", "width"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
@@ -196,5 +199,14 @@ const AppBar = styled(MuiAppBar, {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
+  }),
+  ...(sign && {
+    width: `calc(100% - ${sidebar}px)`,
+    marginLeft: `${sidebar}px`,
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    display: "none",
   }),
 }));

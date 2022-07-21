@@ -18,6 +18,7 @@ const sidebarWidth = 240;
 
 const MobileLayout = ({ children }: LayoutProps) => {
   const [open, setOpen] = useState(true);
+  const [sign, setSign] = useState(true);
   // const [loading, setLoading] = useRecoilState(loadedStatus);
   const loading = useRecoilValue(loadedStatus);
 
@@ -25,10 +26,12 @@ const MobileLayout = ({ children }: LayoutProps) => {
 
   const handleDrawerOpen = () => {
     setOpen(true);
+    setSign(false);
   };
 
   const handleDrawerClose = () => {
     setOpen(false);
+    setSign(true);
   };
 
   return (
@@ -45,9 +48,13 @@ const MobileLayout = ({ children }: LayoutProps) => {
         menuWidth={sidebarWidth}
         open={open}
         md={md}
+        sign={sign}
       />
       <Main open={open} md={md}>
-        <StyledWrapper maxWidth="xl">{children}</StyledWrapper>
+        <StyledWrapper maxWidth="xl">
+          {sign && !open && <button onClick={() => setOpen(true)}>버튼</button>}
+          {children}
+        </StyledWrapper>
       </Main>
       {loading && (
         <StyledSpinner>
@@ -60,7 +67,7 @@ const MobileLayout = ({ children }: LayoutProps) => {
 
 export default MobileLayout;
 
-const StyledWrapper = styled(Container, {
+const StyledWrapper: any = styled(Container, {
   shouldForwardProp: (prop) => prop !== "md",
 })<{
   md?: boolean;
