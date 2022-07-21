@@ -10,7 +10,8 @@ import Header from "./Header";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { loadedStatus } from "../../store/global";
 import Animation from "./animation/Animation";
-
+import AA from "../../static/background-mobile-phones.png";
+import styles from "styled-components";
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -20,6 +21,7 @@ const sidebarWidth = 240;
 const MobileLayout = ({ children }: LayoutProps) => {
   const [open, setOpen] = useState(true);
   const [sign, setSign] = useState(true);
+
   // const [loading, setLoading] = useRecoilState(loadedStatus);
   const loading = useRecoilValue(loadedStatus);
 
@@ -49,13 +51,27 @@ const MobileLayout = ({ children }: LayoutProps) => {
         menuWidth={sidebarWidth}
         open={open}
         md={md}
-        sign={sign}
+        sign={`${sign}`}
       />
+
       <Main open={open} md={md}>
         <Animation />
+
         <StyledWrapper maxWidth="xl">
-          {sign && !open && <button onClick={() => setOpen(true)}>버튼</button>}
-          {children}
+          {md && <>{children}</>}
+          {sign && (
+            <button
+              onClick={() => setOpen((state) => !state)}
+              style={{ position: "fixed" }}
+            >
+              버튼
+            </button>
+          )}
+          {!md && (
+            <ContentWrapper>
+              <InnerWrapper>{children}</InnerWrapper>
+            </ContentWrapper>
+          )}
         </StyledWrapper>
       </Main>
       {loading && (
@@ -78,8 +94,7 @@ const StyledWrapper: any = styled(Container, {
   // overflowY: "scroll",
   width: "100%",
   height: "100%",
-  paddingTop: 100,
-  paddingBottom: 80,
+  zIndex: 1,
 }));
 
 const Main = styled("main", {
@@ -118,3 +133,46 @@ const StyledSpinner = styled(Box)({
   height: "100vh",
   background: "#00000040",
 });
+
+const ContentWrapper = styles.div`
+  position: relative;
+  width: 100%;
+  max-width: 32rem;
+  height: 90%;
+  margin-left: auto;
+  border: 16px black solid;
+  border-top-width: 60px;
+  border-bottom-width: 60px;
+  border-radius: 36px;
+  &:before {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 5px;
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #333;
+    border-radius: 10px;
+  }
+  &:after {
+    content: '';
+    display: block;
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    left: 50%;
+    bottom: -65px;
+    transform: translate(-50%, -50%);
+    background: #333;
+    border-radius: 50%;
+  }
+`;
+
+const InnerWrapper = styles.div`
+width: 100%;
+max-width: 32rem;
+height: 100%;
+background: white;
+`;

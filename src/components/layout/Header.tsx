@@ -31,13 +31,13 @@ interface HeaderProps {
   menuWidth: number;
   open: boolean;
   md?: boolean;
-  sign?: boolean;
+  sign: string;
 }
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
   sidebar: number;
-  sign?: boolean;
+  sign: string;
 }
 
 const Header = ({
@@ -200,7 +200,7 @@ const AppBar = styled(MuiAppBar, {
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
-  ...(sign && {
+  ...(sign === "true" && {
     width: `calc(100% - ${sidebar}px)`,
     marginLeft: `${sidebar}px`,
     transition: theme.transitions.create(["margin", "width"], {

@@ -18,9 +18,9 @@ const sidebarWidth = 240;
 
 const Layout = ({ children }: LayoutProps) => {
   const [open, setOpen] = useState(true);
+  const sign = false;
   // const [loading, setLoading] = useRecoilState(loadedStatus);
   const loading = useRecoilValue(loadedStatus);
-
   const md = useMediaQuery("(max-width:900px)");
 
   const handleDrawerOpen = () => {
@@ -45,6 +45,7 @@ const Layout = ({ children }: LayoutProps) => {
         menuWidth={sidebarWidth}
         open={open}
         md={md}
+        sign={"false"}
       />
       <Main open={open} md={md}>
         <StyledWrapper maxWidth="xl">{children}</StyledWrapper>
