@@ -13,6 +13,7 @@ import Animation from "./animation/Animation";
 import AA from "../../static/background-mobile-phones.png";
 import styles from "styled-components";
 import MobileHeader from "./MobileHeader";
+import { isModalState } from "../../store/form";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -24,7 +25,7 @@ const MobileLayout = ({ children }: LayoutProps) => {
   const [open, setOpen] = useState(true);
   const [sign, setSign] = useState(true);
 
-  // const [loading, setLoading] = useRecoilState(loadedStatus);
+  const [isModal, setIsModal] = useRecoilState(isModalState);
   const loading = useRecoilValue(loadedStatus);
 
   const md = useMediaQuery("(max-width:900px)");
@@ -94,7 +95,7 @@ const MobileLayout = ({ children }: LayoutProps) => {
               <MobileWrapper>
                 <InnerWrapper>
                   <MobileHeader />
-                  <MobileContent>{children}</MobileContent>
+                  <MobileContent isModal={isModal}>{children}</MobileContent>
                 </InnerWrapper>
               </MobileWrapper>
             </Box>
@@ -216,8 +217,13 @@ const MobileInnerWrapper = styles.div`
   margin-right: -1.5rem;
 `;
 
-const MobileContent = styled(Box)({
+const MobileContent = styled(Box, {
+  shouldForwardProp: (prop) => prop !== "isModal",
+})<{
+  isModal?: boolean;
+}>(({ isModal }) => ({
+  overflow: isModal ? "hidden" : "auto",
   paddingInline: 15,
   paddingTop: 10,
   paddingBottom: 50,
-});
+}));
