@@ -4,8 +4,6 @@ import SearchBar from "../components/dashboard/SearchBar";
 import List from "../components/dashboard/List";
 import Footer from "../components/dashboard/Footer";
 
-// import "../dashboard.css";
-
 const sortOptionList = [
   // TODO: 확정 아님
   { value: "latest", name: "최신순" },
@@ -20,14 +18,16 @@ const filterOptionList = [
 const Dashboard = () => {
   return (
     <Layout>
-      <ListHeader />
-      <SearchBar
-        handleChagne={() => {}}
-        optionList1={sortOptionList}
-        optionList2={filterOptionList}
-      />
-      <List />
-      <Footer />
+      <div style={{ maxWidth: "1500px" }}>
+        <ListHeader />
+        <SearchBar
+          handleChagne={() => {}}
+          optionList1={sortOptionList}
+          optionList2={filterOptionList}
+        />
+        <List />
+        <Footer />
+      </div>
     </Layout>
   );
 };

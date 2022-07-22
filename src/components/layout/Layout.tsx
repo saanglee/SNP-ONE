@@ -36,7 +36,8 @@ const Layout = ({ children }: LayoutProps) => {
       sx={{
         display: "flex",
         minHeight: "100vh",
-        background: "#f6f6f6",
+        // background: "#f6f6f6",
+        background: "white",
       }}
     >
       <Header

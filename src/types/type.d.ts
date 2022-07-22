@@ -1,5 +1,5 @@
-interface Applicant {
-  id: string;
+export interface Applicant {
+  _id?: string;
   DateOfApplication: string | number;
   name: string;
   gender: string;
@@ -8,5 +8,7 @@ interface Applicant {
   email: string;
   transportation: string;
   address: string;
-  isChecked: string;
+  isChecked: boolean;
 }
+// TODO: 타입 좁히기
+// type gender = "femail" | "male";
