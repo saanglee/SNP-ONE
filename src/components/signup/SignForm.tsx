@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FormGroup,
   FormLabel,
@@ -18,9 +18,11 @@ import FormInput from "../form/FormInput";
 import FormRadio from "../form/FormRadio";
 import { Link } from "react-router-dom";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import ResidenceSelect from "./ResidenceSelect";
 
 const SignForm = () => {
   const [value, setValue] = React.useState("female");
+  const [selectOpen, setSelectOpen] = useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
@@ -39,6 +41,14 @@ const SignForm = () => {
   const handleChange3 = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked([checked[0], event.target.checked]);
   };
+
+  const handleResidenceOpen = () => {
+    setSelectOpen(true);
+  };
+
+  const handleResidenceClose = () => {
+    setSelectOpen(false);
+  };
   return (
     <FormGroup>
       {/* <FormControlLabel
@@ -50,8 +60,11 @@ const SignForm = () => {
       <FormInput title="생년월일" placeholder="YYYY.MM.DD" />
       <Box sx={{ mb: 3 }}>
         <Typography sx={{ mb: 2, fontWeight: 500 }}>거주지역</Typography>
-        <Button variant="outlined">거주지역 선택</Button>
+        <Button variant="outlined" onClick={handleResidenceOpen}>
+          거주지역 선택
+        </Button>
       </Box>
+      <ResidenceSelect open={selectOpen} handleClose={handleResidenceClose} />
       <FormInput title="연락처" />
       <FormInput title="이메일" />
       <FormRadio
