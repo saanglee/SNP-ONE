@@ -1,150 +1,28 @@
 import React from "react";
 import Layout from "../components/layout/Layout";
 import MobileLayout from "../components/layout/MobileLayout";
-
-import { styled } from "@mui/material/styles";
-import {
-  FormGroup,
-  FormLabel,
-  FormControlLabel,
-  Input,
-  InputLabel,
-  Radio,
-  RadioGroup,
-  Switch,
-  Button,
-  Box,
-  Checkbox,
-} from "@mui/material";
+import { Switch, styled } from "@mui/material";
+import SignForm from "../components/signup/SignForm";
 
 const SignUp = () => {
-  const [value, setValue] = React.useState("female");
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value);
-  };
-
-  const [checked, setChecked] = React.useState([true, false]);
-
-  const handleChange1 = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked([event.target.checked, event.target.checked]);
-  };
-
-  const handleChange2 = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked([event.target.checked, checked[1]]);
-  };
-
-  const handleChange3 = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked([checked[0], event.target.checked]);
-  };
-
-  const children = (
-    <Box sx={{ display: "flex", flexDirection: "column", ml: 3 }}>
-      <FormControlLabel
-        label="개인정보 처리방침 고지(필수)"
-        control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
-      />
-      <FormControlLabel
-        label="제3자 정보제공 동의(필수)"
-        control={<Checkbox checked={checked[1]} onChange={handleChange3} />}
-      />
-    </Box>
-  );
   return (
     <MobileLayout>
-      여기는 모바일페이지 모바일 레이아웃을 이용하여 어플을 웹페이지에서
-      보는느낌 컴포넌트 안에있는 Sign을 불러올수이써여
-      <Title>크라우드 워커에 지원하기 위해 필요한 정보를 입력해 주세요</Title>
-      <FormGroup>
-        <FormControlLabel
-          control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
-          label="mode switch"
-        />
-        <InputLabel htmlFor="component-simple">이름</InputLabel>
-        <Input
-          id="component-simple"
-          value={name}
-          onChange={handleChange}
-          placeholder={"홍길동"}
-        />
-        <FormLabel id="demo-controlled-radio-buttons-group">성별</FormLabel>
-        <RadioGroup
-          aria-labelledby="demo-controlled-radio-buttons-group"
-          name="controlled-radio-buttons-group"
-          value={value}
-          onChange={handleChange}
-          row
-        >
-          <FormControlLabel value="female" control={<Radio />} label="여자" />
-          <FormControlLabel value="male" control={<Radio />} label="남자" />
-        </RadioGroup>
-        <InputLabel htmlFor="component-simple">생년월일</InputLabel>
-        <Input
-          id="component-simple"
-          // value={birth}
-          onChange={handleChange}
-          placeholder={"YYYY.MM.DD"}
-        />
-        <InputLabel htmlFor="component-simple">연락처</InputLabel>
-        <Input
-          id="component-simple"
-          // value={number}
-          onChange={handleChange}
-          placeholder={"'-'없이 입력해 주세요"}
-        />
-        <InputLabel htmlFor="component-simple">이메일</InputLabel>
-        <Input
-          id="component-simple"
-          // value={email}
-          onChange={handleChange}
-          placeholder={"snpone@naver.com"}
-        />
-        <RadioGroup
-          row
-          aria-labelledby="demo-row-radio-buttons-group-label"
-          name="row-radio-buttons-group"
-        >
-          <FormControlLabel value="female" control={<Radio />} label="버스" />
-          <FormControlLabel value="male" control={<Radio />} label="지하철" />
-          <FormControlLabel value="other" control={<Radio />} label="택시" />
-          <FormControlLabel
-            value="female"
-            control={<Radio />}
-            label="KTX/기차"
-          />
-        </RadioGroup>
-        <RadioGroup
-          row
-          aria-labelledby="demo-row-radio-buttons-group-label"
-          name="row-radio-buttons-group"
-        >
-          <FormControlLabel value="male" control={<Radio />} label="도보" />
-          <FormControlLabel value="other" control={<Radio />} label="자전거" />
-          <FormControlLabel
-            value="female"
-            control={<Radio />}
-            label="전동킥보드"
-          />
-          <FormControlLabel value="male" control={<Radio />} label="자가용" />
-        </RadioGroup>
-        <FormControlLabel
-          label="이용약관 모두 동의"
-          control={
-            <Checkbox
-              checked={checked[0] && checked[1]}
-              indeterminate={checked[0] !== checked[1]}
-              onChange={handleChange1}
-            />
-          }
-        />
-        {children}
-        <Button variant="contained">지원하기</Button>
-      </FormGroup>
+      <Title sx={{ mb: 0 }}>
+        크라우드 워커에 지원하기 위해
+        <br />
+        필요한 정보를 입력해 주세요
+      </Title>
+      <SignForm />
     </MobileLayout>
   );
 };
 
 export default SignUp;
+
+const Title = styled("h3")({
+  width: "100%",
+  height: "4rem",
+});
 
 // darkMode
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -193,7 +71,3 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     borderRadius: 20 / 2,
   },
 }));
-const Title = styled("h3")({
-  width: "100%",
-  height: "4rem",
-});
