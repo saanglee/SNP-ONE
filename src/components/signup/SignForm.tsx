@@ -19,10 +19,13 @@ import FormRadio from "../form/FormRadio";
 import { Link } from "react-router-dom";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import ResidenceSelect from "./ResidenceSelect";
+import Terms from "./Terms";
+import FormCheckbox from "../form/FormCheckbox";
 
 const SignForm = () => {
   const [value, setValue] = React.useState("female");
   const [selectOpen, setSelectOpen] = useState(false);
+  const [termsOpen, setTermsOpen] = useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
@@ -45,9 +48,15 @@ const SignForm = () => {
   const handleResidenceOpen = () => {
     setSelectOpen(true);
   };
-
   const handleResidenceClose = () => {
     setSelectOpen(false);
+  };
+
+  const handleTermsOpen = () => {
+    setTermsOpen(true);
+  };
+  const handleTermsClose = () => {
+    setTermsOpen(false);
   };
   return (
     <FormGroup>
@@ -67,12 +76,20 @@ const SignForm = () => {
       <ResidenceSelect open={selectOpen} handleClose={handleResidenceClose} />
       <FormInput title="연락처" />
       <FormInput title="이메일" />
-      <FormRadio
+      <FormCheckbox
         type="checkbox"
         title="주로 이용하는 교통 수단"
         subText="주로 이용하는 교통 수단을 모두 선택해주세요."
-        values={["버스", "지하철", "택시", "KTX/기차", "도보", "자전거"]}
-        sx={{ mb: 3 }}
+        values={[
+          "버스",
+          "지하철",
+          "택시",
+          "KTX/기차",
+          "도보",
+          "자전거",
+          "전동킥보드",
+          "자가용",
+        ]}
       />
 
       <FormControlLabel
@@ -95,9 +112,9 @@ const SignForm = () => {
             }
             control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
           />
-          <Link to="/">
+          <Button onClick={handleTermsOpen}>
             <KeyboardArrowRightIcon />
-          </Link>
+          </Button>
         </StyledTerms>
         <StyledTerms>
           <FormControlLabel
@@ -108,9 +125,10 @@ const SignForm = () => {
             }
             control={<Checkbox checked={checked[1]} onChange={handleChange3} />}
           />
-          <Link to="/">
+          <Button onClick={handleTermsOpen}>
             <KeyboardArrowRightIcon />
-          </Link>
+          </Button>
+          <Terms open={termsOpen} handleClose={handleTermsClose} />
         </StyledTerms>
       </Box>
       <Button variant="contained" sx={{ height: 48, fontSize: 16 }}>
