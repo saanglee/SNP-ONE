@@ -3,7 +3,7 @@ import { createTheme } from "@mui/material";
 export const theme = createTheme({
   palette: {
     primary: {
-      main: "#1cc5f7",
+      main: "#0F2C6E",
       contrastText: "#fff",
     },
   },
@@ -14,6 +14,17 @@ export const theme = createTheme({
       md: 900,
       lg: 1200,
       xl: 1536,
+    },
+  },
+  components: {
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: "#0F2C6E",
+          color: "white",
+          borderColor: "#1BBDEC",
+        },
+      },
     },
   },
 });

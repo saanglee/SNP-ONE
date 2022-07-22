@@ -57,10 +57,23 @@ const MobileLayout = ({ children }: LayoutProps) => {
       />
 
       <Main open={open} md={md}>
-        {/* <Animation /> */}
+        <Animation />
 
         <StyledWrapper maxWidth="xl">
-          {md && <>{children}</>}
+          {md && (
+            <MobileInnerWrapper>
+              <MobileHeader />
+              <Box
+                sx={{
+                  backgroundColor: "#fff",
+                  marginLeft: "1rem",
+                  marginRight: "1rem",
+                }}
+              >
+                {children}
+              </Box>
+            </MobileInnerWrapper>
+          )}
           {sign && (
             <button
               onClick={() => setOpen((state) => !state)}
@@ -192,6 +205,15 @@ const InnerWrapper = styles.div`
   flex-direction: column;
   height: 90%;
   border: 1px solid #8c8c8c;
+`;
+
+const MobileInnerWrapper = styles.div`
+  overflow-y: auto;
+  position: relative;
+  height: 100%;
+  background-color: #fff;
+  margin-left: -1.5rem;
+  margin-right: -1.5rem;
 `;
 
 const MobileContent = styled(Box)({
