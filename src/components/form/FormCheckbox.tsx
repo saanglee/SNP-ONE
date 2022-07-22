@@ -2,13 +2,10 @@ import React from "react";
 import {
   FormControl,
   FormLabel,
-  FormControlLabel,
-  Radio,
   RadioGroup,
   Typography,
-  Button,
-  Checkbox,
-  FormGroup,
+  styled,
+  Box,
 } from "@mui/material";
 
 interface CheckProps {
@@ -27,16 +24,45 @@ const FormCheckbox = ({ title, subText, values }: CheckProps) => {
         aria-labelledby="demo-controlled-radio-buttons-group"
         name="controlled-radio-buttons-group"
         row
+        sx={{ marginTop: 2 }}
       >
         {values.map((value, idx) => (
-          <FormGroup key={value + idx}>
-            <Button variant="outlined" size="small">
-              {value}
-            </Button>
-          </FormGroup>
+          <Box key={value + idx}>
+            <StyledCheckInput
+              type="checkbox"
+              value={value}
+              id={value + idx}
+              name={value}
+            ></StyledCheckInput>
+            <StyledLabel htmlFor={value + idx}>{value}</StyledLabel>
+          </Box>
         ))}
       </RadioGroup>
     </FormControl>
   );
 };
 export default FormCheckbox;
+
+const StyledCheckInput = styled("input")(({ theme }) => ({
+  position: "absolute",
+  visibility: "hidden",
+  "&:checked + label": {
+    background: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+  },
+}));
+
+const StyledLabel = styled("label")(({ theme }) => ({
+  display: "inline-block",
+  padding: "7px 12px",
+  height: 15,
+  marginRight: 10,
+  marginBottom: 10,
+  fontSize: 14,
+  borderWidth: "1px",
+  borderStyle: "solid",
+  borderColor: theme.palette.primary.main,
+  color: theme.palette.primary.main,
+  borderRadius: "20px",
+  cursor: "pointer",
+}));
