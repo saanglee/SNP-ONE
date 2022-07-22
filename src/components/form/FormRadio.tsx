@@ -18,7 +18,7 @@ interface RadioProps {
   sx?: {};
 }
 
-const FormRadio = ({ type, title, subText, values, sx }: RadioProps) => {
+const FormRadio = ({ title, subText, values, sx }: RadioProps) => {
   return (
     <FormControl sx={{ mb: 1, ...sx }}>
       <FormLabel id="demo-controlled-radio-buttons-group">{title}</FormLabel>
@@ -29,20 +29,13 @@ const FormRadio = ({ type, title, subText, values, sx }: RadioProps) => {
         aria-labelledby="demo-controlled-radio-buttons-group"
         name="controlled-radio-buttons-group"
         row
+        defaultValue="female"
       >
         {values.map((value, idx) => (
           <FormControlLabel
             key={value + idx}
             value={value}
-            control={
-              type === "radio" ? (
-                <Radio />
-              ) : (
-                <Button variant="outlined" size="small">
-                  {value}
-                </Button>
-              )
-            }
+            control={<Radio />}
             label={value}
           />
         ))}

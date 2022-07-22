@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import ResidenceSelect from "./ResidenceSelect";
 import Terms from "./Terms";
+import FormCheckbox from "../form/FormCheckbox";
 
 const SignForm = () => {
   const [value, setValue] = React.useState("female");
@@ -75,7 +76,7 @@ const SignForm = () => {
       <ResidenceSelect open={selectOpen} handleClose={handleResidenceClose} />
       <FormInput title="연락처" />
       <FormInput title="이메일" />
-      <FormRadio
+      <FormCheckbox
         type="checkbox"
         title="주로 이용하는 교통 수단"
         subText="주로 이용하는 교통 수단을 모두 선택해주세요."
@@ -89,7 +90,6 @@ const SignForm = () => {
           "전동킥보드",
           "자가용",
         ]}
-        sx={{ mb: 3 }}
       />
 
       <FormControlLabel
