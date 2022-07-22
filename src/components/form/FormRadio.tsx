@@ -6,6 +6,7 @@ import {
   Radio,
   RadioGroup,
   Typography,
+  Button,
   Checkbox,
 } from "@mui/material";
 
@@ -33,7 +34,15 @@ const FormRadio = ({ type, title, subText, values, sx }: RadioProps) => {
           <FormControlLabel
             key={value + idx}
             value={value}
-            control={type === "radio" ? <Radio /> : <Checkbox />}
+            control={
+              type === "radio" ? (
+                <Radio />
+              ) : (
+                <Button variant="outlined" size="small">
+                  {value}
+                </Button>
+              )
+            }
             label={value}
           />
         ))}
