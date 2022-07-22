@@ -12,6 +12,8 @@ import { loadedStatus } from "../../store/global";
 import Animation from "./animation/Animation";
 import AA from "../../static/background-mobile-phones.png";
 import styles from "styled-components";
+import MobileHeader from "./MobileHeader";
+
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -55,7 +57,7 @@ const MobileLayout = ({ children }: LayoutProps) => {
       />
 
       <Main open={open} md={md}>
-        <Animation />
+        {/* <Animation /> */}
 
         <StyledWrapper maxWidth="xl">
           {md && <>{children}</>}
@@ -68,9 +70,21 @@ const MobileLayout = ({ children }: LayoutProps) => {
             </button>
           )}
           {!md && (
-            <ContentWrapper>
-              <InnerWrapper>{children}</InnerWrapper>
-            </ContentWrapper>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "100%",
+              }}
+            >
+              <MobileWrapper>
+                <InnerWrapper>
+                  <MobileHeader />
+                  <MobileContent>{children}</MobileContent>
+                </InnerWrapper>
+              </MobileWrapper>
+            </Box>
           )}
         </StyledWrapper>
       </Main>
@@ -90,8 +104,8 @@ const StyledWrapper: any = styled(Container, {
 })<{
   md?: boolean;
 }>(({ theme, md }) => ({
+  overflow: "hidden",
   position: "relative",
-  // overflowY: "scroll",
   width: "100%",
   height: "100%",
   zIndex: 1,
@@ -134,45 +148,54 @@ const StyledSpinner = styled(Box)({
   background: "#00000040",
 });
 
-const ContentWrapper = styles.div`
+const MobileWrapper = styles.div`
   position: relative;
   width: 100%;
-  max-width: 32rem;
-  height: 90%;
-  margin-left: auto;
-  border: 16px black solid;
-  border-top-width: 60px;
-  border-bottom-width: 60px;
-  border-radius: 36px;
+  max-width: 25rem;
+  height: 75vh;
+  margin: 0 auto;
+  background: #fff;
+  padding: 70px 18px 50px;
+  border: 10px solid #cecece;
+  border-radius: 30px;
   &:before {
     content: "";
     display: block;
     width: 60px;
-    height: 5px;
+    height: 4px;
     position: absolute;
-    top: -30px;
+    top: 30px;
     left: 50%;
-    transform: translate(-50%, -50%);
-    background: #333;
+    transform: translateX(-50%);
+    background: #cecece;
     border-radius: 10px;
   }
   &:after {
     content: '';
     display: block;
-    width: 35px;
-    height: 35px;
+    width: 45px;
+    height: 45px;
     position: absolute;
     left: 50%;
-    bottom: -65px;
-    transform: translate(-50%, -50%);
-    background: #333;
+    bottom: 40px;
+    transform: translateX(-50%);
+    background: #fff;
+    border: 3px solid #cecece;
     border-radius: 50%;
   }
 `;
 
 const InnerWrapper = styles.div`
-width: 100%;
-max-width: 32rem;
-height: 100%;
-background: white;
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 90%;
+  border: 1px solid #8c8c8c;
 `;
+
+const MobileContent = styled(Box)({
+  paddingInline: 15,
+  paddingTop: 10,
+  paddingBottom: 50,
+});
