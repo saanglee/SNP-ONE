@@ -13,7 +13,7 @@ import Animation from "./animation/Animation";
 import AA from "../../static/background-mobile-phones.png";
 import styles from "styled-components";
 import MobileHeader from "./MobileHeader";
-
+import CircularMenu from "./CircularMenu";
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -60,6 +60,7 @@ const MobileLayout = ({ children }: LayoutProps) => {
         <Animation />
 
         <StyledWrapper maxWidth="xl">
+          <CircularMenu />
           {md && (
             <MobileInnerWrapper>
               <MobileHeader />
@@ -74,14 +75,14 @@ const MobileLayout = ({ children }: LayoutProps) => {
               </Box>
             </MobileInnerWrapper>
           )}
-          {sign && (
+          {/* {sign && (
             <button
               onClick={() => setOpen((state) => !state)}
               style={{ position: "fixed" }}
             >
               버튼
             </button>
-          )}
+          )} */}
           {!md && (
             <Box
               sx={{
@@ -137,14 +138,6 @@ const Main = styled("main", {
     duration: theme.transitions.duration.leavingScreen,
   }),
   marginLeft: md ? 0 : `-${sidebarWidth}px`,
-  ...(open && {
-    width: `calc(100% - ${sidebarWidth}px)`,
-    marginLeft: 0,
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
 }));
 
 const StyledSpinner = styled(Box)({

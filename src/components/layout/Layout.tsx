@@ -47,6 +47,7 @@ const Layout = ({ children }: LayoutProps) => {
         md={md}
         sign={"false"}
       />
+
       <Main open={open} md={md}>
         <StyledWrapper maxWidth="xl">{children}</StyledWrapper>
       </Main>
@@ -87,14 +88,6 @@ const Main = styled("main", {
     duration: theme.transitions.duration.leavingScreen,
   }),
   marginLeft: md ? 0 : `-${sidebarWidth}px`,
-  ...(open && {
-    width: `calc(100% - ${sidebarWidth}px)`,
-    marginLeft: 0,
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
 }));
 
 const StyledSpinner = styled(Box)({

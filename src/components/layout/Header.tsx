@@ -24,6 +24,7 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import SettingsIcon from "@mui/icons-material/Settings";
+import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 
 interface HeaderProps {
   handleDrawerOpen: () => void;
@@ -48,44 +49,6 @@ const Header = ({
   md,
   sign,
 }: HeaderProps) => {
-  const drawer = (
-    <Box>
-      <Divider />
-      <List sx={{ padding: 0 }}>
-        <StyledLink href="/" color="inherit">
-          <ListItem disablePadding>
-            <ListItemButton sx={{ pt: 2, pb: 2 }}>
-              <ListItemIcon>
-                <StackedLineChartIcon />
-              </ListItemIcon>
-              <span>홈</span>
-            </ListItemButton>
-          </ListItem>
-        </StyledLink>
-        <StyledLink href="/dash" color="inherit">
-          <ListItem disablePadding>
-            <ListItemButton sx={{ pt: 2, pb: 2 }}>
-              <ListItemIcon>
-                <PostAddIcon />
-              </ListItemIcon>
-              <span>유저관리</span>
-            </ListItemButton>
-          </ListItem>
-        </StyledLink>
-        <StyledLink href="/sign" color="inherit">
-          <ListItem disablePadding>
-            <ListItemButton sx={{ pt: 2, pb: 2 }}>
-              <ListItemIcon>
-                <PostAddIcon />
-              </ListItemIcon>
-              <span>등록하기</span>
-            </ListItemButton>
-          </ListItem>
-        </StyledLink>
-      </List>
-    </Box>
-  );
-
   return (
     <Box
       component="nav"
@@ -105,10 +68,16 @@ const Header = ({
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap component="div">
-              Dashboard
+              SNP-ONE
             </Typography>
           </Box>
           <Icons>
+            <Link href="/sign" color="inherit">
+              sign up
+            </Link>
+            <Link href="/sign" color="inherit">
+              <PhoneAndroidIcon fontSize="large" />
+            </Link>
             <Badge>
               <NotificationsNoneIcon fontSize="large" />
             </Badge>
@@ -122,32 +91,6 @@ const Header = ({
           </Icons>
         </StyledToolbar>
       </AppBar>
-
-      <Drawer
-        sx={{
-          width: menuWidth,
-          flexShrink: 0,
-          "& .MuiDrawer-paper": {
-            width: menuWidth,
-            boxSizing: "border-box",
-          },
-        }}
-        variant={md ? "temporary" : "persistent"}
-        ModalProps={{
-          keepMounted: true,
-        }}
-        onClose={handleDrawerClose}
-        anchor="left"
-        open={open}
-      >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            <ArrowBackIosNewIcon />
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        {drawer}
-      </Drawer>
     </Box>
   );
 };
@@ -176,14 +119,6 @@ const UserBox = styled(Box)({
   alignItems: "center",
 });
 
-const DrawerHeader = styled(Box)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  padding: theme.spacing(0, 1),
-  ...theme.mixins.toolbar,
-  justifyContent: "flex-end",
-}));
-
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open" && prop !== "sidebar",
 })<AppBarProps>(({ theme, open, sidebar, sign }) => ({
@@ -192,14 +127,7 @@ const AppBar = styled(MuiAppBar, {
     duration: theme.transitions.duration.leavingScreen,
   }),
   backgroundColor: theme.palette.primary.main,
-  ...(open && {
-    width: `calc(100% - ${sidebar}px)`,
-    marginLeft: `${sidebar}px`,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
+
   ...(sign === "true" && {
     width: `calc(100% - ${sidebar}px)`,
     marginLeft: `${sidebar}px`,
