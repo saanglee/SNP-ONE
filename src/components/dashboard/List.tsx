@@ -1,6 +1,8 @@
+import React, { useEffect } from "react";
 import ListItem from "./ListItem";
-import React from "react";
+import styled from "styled-components";
 import dummy from "./dummy.json";
+import { Applicant } from "../../types/type";
 import "./dashboard.css";
 
 const TABLE_HEADER: string[] = [
@@ -17,23 +19,56 @@ const TABLE_HEADER: string[] = [
 ];
 
 const List = () => {
-  console.log(dummy);
+  const dummyData = dummy;
+  useEffect(() => {
+    console.log(dummyData);
+  }, []);
 
   return (
-    <div className="List">
-      <table>
-        <thead>
+    <LitsContainer>
+      <ListTable>
+        <ListTableHeader>
           <tr>
             {TABLE_HEADER.map((item: string, index: number) => {
-              return <th key={index}>{item} </th>;
+              return <TH key={index}>{item} </TH>;
             })}
           </tr>
-        </thead>
-        <ListItem />
-        <ListItem />
-      </table>
-    </div>
+        </ListTableHeader>
+        <tbody>
+          {dummyData.map((item, index) => {
+            return <ListItem key={item._id} data={item} index={index} />;
+          })}
+        </tbody>
+      </ListTable>
+    </LitsContainer>
   );
 };
 
 export default List;
+
+// const SearchBarContainer = styled.div`
+
+const LitsContainer = styled.div`
+  border-radius: 8px;
+  margin-top: 20px;
+  height: 500px;
+
+  display: flex;
+  flex-direction: column;
+`;
+
+const ListTable = styled.table`
+  border-collapse: collapse;
+`;
+
+const ListTableHeader = styled.thead`
+  background-color: #eff3ff;
+  color: #0f2c6e;
+  white-space: nowrap;
+  height: 50px;
+`;
+
+const TH = styled.th`
+  padding: 15px;
+  font-weight: normal;
+`;

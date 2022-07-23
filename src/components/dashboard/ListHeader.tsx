@@ -1,4 +1,4 @@
-import React from "react";
+import styled from "styled-components";
 import "./dashboard.css";
 const ListHeader = () => {
   return (
@@ -10,5 +10,5 @@ const ListHeader = () => {
     </div>
   );
 };
-// test
+
 export default ListHeader;
