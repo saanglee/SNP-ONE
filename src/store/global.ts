@@ -39,3 +39,8 @@ export const loadedStatus = atom({
   key: "loadedStatus",
   default: false,
 });
+
+export const activeStatus = atom({
+  key: "activeStatus",
+  default: false,
+});

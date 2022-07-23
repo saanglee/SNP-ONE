@@ -7,8 +7,12 @@ import HomeIcon from "@mui/icons-material/Home";
 import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import { useLocation } from "react-router-dom";
+import { activeStatus } from "../../store/global";
+import { useRecoilState, useRecoilValue } from "recoil";
+
 const CircularMenu = () => {
   const [open, setOpen] = React.useState(false);
+  const [active, setActive] = useRecoilState(activeStatus);
   const location = useLocation();
   //   console.log(location.pathname);
   return (
@@ -16,12 +20,15 @@ const CircularMenu = () => {
       <div
         id="circularMenu"
         className={
-          open
+          active
             ? "circular-menu circular-menu-left active"
             : "circular-menu circular-menu-left"
         }
       >
-        <a className="floating-btn" onClick={() => setOpen((state) => !state)}>
+        <a
+          className="floating-btn"
+          onClick={() => setActive((state) => !state)}
+        >
           <MenuIcon />
         </a>
 

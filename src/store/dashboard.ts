@@ -1,10 +1,15 @@
 import { atom, selector } from "recoil";
 import { Applicant, FilterDashboardApplicantData } from "../types/dashboard";
+import { axiosInstance } from "../api/instance/instance";
 
-// TODO: 비동기 데이터 쿼리를 이용해 데이터 fetch
-const applicantAllData = atom({
+// TODO: get 메소드를 api 파일로 분리
+// TODO: filteredApplicantData 작업 마친 후 export 제거
+export const applicantAllData = atom({
   key: "applicantAllData",
-  default: [] as Applicant[],
+  default: selector({
+    key: "applicantUpdateData",
+    get: async () => (await axiosInstance.get<Applicant[]>("/user")).data,
+  }),
 });
 
 const filteredApplicantState = atom({
@@ -12,14 +17,13 @@ const filteredApplicantState = atom({
   default: {
     name: "",
     sort: "asc",
-    address: "전국", // TODO: 임의로 default를 전국으로 해둠 -> 논의 후 수정
+    address: "전국",
     recruitment: 1,
     isChecked: true,
   } as FilterDashboardApplicantData,
 });
 
-// TODO: 필터링 함수들을 따로 빼줄지 고민하기
-const filteredApplicantData = selector({
+export const filteredApplicantData = selector({
   key: "filteredApplicantData",
   get: ({ get }) => {
     const applicantData = get(applicantAllData);
