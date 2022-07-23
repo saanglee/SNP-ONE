@@ -8,5 +8,15 @@ interface Applicant {
   email: string;
   transportation: string;
   address: string;
-  isChecked: string;
+  isChecked: boolean;
 }
+
+interface FilterDashboardApplicantData {
+  name: string;
+  sort: "asc" | "desc";
+  address: string;
+  recruitment: 1 | 2;
+  isChecked: boolean;
+}
+
+export { Applicant, FilterDashboardApplicantData };
