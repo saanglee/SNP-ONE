@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import ListItem from "./ListItem";
 import styled from "styled-components";
 import dummy from "./dummy.json";
-import { Applicant } from "../../types/type";
+import { Applicant } from "../../types/datshboard";
 import "./dashboard.css";
 
 const TABLE_HEADER: string[] = [
