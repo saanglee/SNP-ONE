@@ -25,6 +25,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import SettingsIcon from "@mui/icons-material/Settings";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
+import Logo from "../../static/images/d.png";
 
 interface HeaderProps {
   handleDrawerOpen: () => void;
@@ -67,9 +68,11 @@ const Header = ({
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" noWrap component="div">
-              SNP-ONE
-            </Typography>
+            <div>
+              <Link href="/sign" color="inherit">
+                <img style={{ width: "180px" }} src={Logo} alt="" />
+              </Link>
+            </div>
           </Box>
           <Icons>
             <Link href="/sign" color="inherit">

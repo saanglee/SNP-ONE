@@ -1,13 +1,24 @@
 import Layout from "../components/layout/Layout";
 import { Typography } from "@mui/material";
 import React from "react";
+import Title from "../components/layout/Texts/Title";
+import Subtitle from "../components/layout/Texts/Subtitle";
+import Text from "../components/layout/Texts/Text";
 
 const Home = () => {
   return (
     <Layout>
-      <Typography variant="h6" sx={{ mt: 6, mb: 2 }}>
-        여기서 페이지 2개로 이동 코드설명이나 간단한거 적어도 좋을듯
-      </Typography>
+      <Title size={3} my={80} mx={30}>
+        폰트 적용
+      </Title>
+      <Subtitle size={1.6} my={-1}>
+        폰트 적용
+      </Subtitle>
+      <Text size={1.3} color="red">
+        폰트 적용 <br />
+        <span>dsfjlksdf</span>
+      </Text>
+      <Text size={1.3}> 폰트 적용</Text>
     </Layout>
   );
 };

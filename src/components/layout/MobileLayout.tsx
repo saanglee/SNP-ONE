@@ -10,7 +10,6 @@ import Header from "./Header";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { loadedStatus } from "../../store/global";
 import Animation from "./animation/Animation";
-import AA from "../../static/background-mobile-phones.png";
 import styles from "styled-components";
 import MobileHeader from "./MobileHeader";
 import CircularMenu from "./CircularMenu";
@@ -77,14 +76,6 @@ const MobileLayout = ({ children }: LayoutProps) => {
               </Box>
             </MobileInnerWrapper>
           )}
-          {/* {sign && (
-            <button
-              onClick={() => setOpen((state) => !state)}
-              style={{ position: "fixed" }}
-            >
-              버튼
-            </button>
-          )} */}
           {!md && (
             <Box
               sx={{
