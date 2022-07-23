@@ -1,6 +1,6 @@
 import { AxiosInstance } from "axios";
 
-type ApiUrlType = "/overall" | "/platform" | "/campaign";
+type ApiUrlType = "/city" | "/user" | "/overall";
 
 export class HttpRequest {
   private service: AxiosInstance;

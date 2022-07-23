@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Dialog,
@@ -13,8 +13,10 @@ import {
   Button,
   styled,
   IconButton,
+  SelectChangeEvent,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { useCitysModel } from "../../api/models/useCityModels";
 
 interface ResidenceSelectProps {
   open: boolean;
@@ -22,6 +24,30 @@ interface ResidenceSelectProps {
 }
 
 const ResidenceSelect = ({ open, handleClose }: ResidenceSelectProps) => {
+  const { getCitys } = useCitysModel();
+  const [citys, setCitys] = useState<string[] | undefined | any>();
+  const [regions, setRegions] = useState<string | HTMLSelectElement>("");
+  const [districs, setDistrics] = useState<string[]>(["-"]);
+  const [distric, setDistric] = useState<string | HTMLSelectElement>("");
+
+  useEffect(() => {
+    async function fetchCitys() {
+      const response = await getCitys().then((result) => result);
+
+      setCitys(response.data);
+    }
+    fetchCitys();
+  }, []);
+
+  const handleChangeRegion = (event: SelectChangeEvent<HTMLSelectElement>) => {
+    setRegions(event.target.value);
+    setDistrics(citys[`${event.target.value}`]);
+  };
+
+  const handleChangeDistric = (event: SelectChangeEvent<HTMLSelectElement>) => {
+    setDistric(event.target.value);
+  };
+
   return (
     <StyledModal open={open}>
       <StyledModalContent>
@@ -36,50 +62,66 @@ const ResidenceSelect = ({ open, handleClose }: ResidenceSelectProps) => {
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            paddingTop: 4,
+            paddingTop: 2,
             paddingInline: 3,
           }}
         >
           <Box sx={{ display: "flex" }}>
             <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel htmlFor="demo-dialog-native">시/도</InputLabel>
+              <InputLabel htmlFor="region">시/도</InputLabel>
               <Select
-                native
-                value="residence1"
+                label="시/도"
+                onChange={handleChangeRegion}
                 input={
-                  <OutlinedInput label="residence1" id="demo-dialog-native" />
+                  <OutlinedInput name="region" label="residence1" id="region" />
                 }
+                inputProps={{
+                  id: "region-select",
+                }}
               >
-                <option aria-label="None" value="" />
-                <option value="경기">경기</option>
-                <option value="서울">서울</option>
-                <option value="강원">강원</option>
+                {citys &&
+                  Object.keys(citys)?.map((city: any, index: number) => (
+                    <MenuItem key={city + index} value={city}>
+                      {city}
+                    </MenuItem>
+                  ))}
               </Select>
             </FormControl>
             <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel id="demo-dialog-select-label">시/구/군</InputLabel>
+              <InputLabel shrink htmlFor="distric">
+                시/구/군
+              </InputLabel>
               <Select
-                labelId="demo-dialog-select-label"
-                id="demo-dialog-select"
-                input={<OutlinedInput label="residence2" />}
+                label="시/도"
+                onChange={handleChangeDistric}
+                input={
+                  <OutlinedInput
+                    label="residence2"
+                    name="distric"
+                    id="distric"
+                  />
+                }
+                inputProps={{
+                  id: "distric-select",
+                }}
               >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value="강남구">강남구</MenuItem>
-                <MenuItem value="강동구">강동구</MenuItem>
+                {districs?.map((distric, index) => (
+                  <MenuItem key={distric + index} value={distric}>
+                    {distric}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Box>
-          <Button variant="contained" sx={{ mt: 3, width: "100%", height: 50 }}>
+          <Button
+            variant="contained"
+            onClick={handleClose}
+            sx={{ mt: 3, width: "100%", height: 50 }}
+          >
             확인
           </Button>
         </Box>
       </StyledModalContent>
-      {/* <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleClose}>Ok</Button>
-      </DialogActions> */}
     </StyledModal>
   );
 };
@@ -106,7 +148,7 @@ const StyledModalContent = styled(Box)({
   bottom: 0,
   left: 0,
   width: "100%",
-  height: "50%",
+  height: "60%",
   background: "#fff",
   zIndex: 100,
 });
@@ -115,3 +157,14 @@ const StyledModalHeader = styled(Box)({
   paddingBlock: 1,
   width: "100%",
 });
+
+// const StyledOption = styled("option")({
+//   paddingBlock: 4,
+//   paddingLeft: 7,
+//   fontSize: 14,
+//   "&:checked": {
+//     background: "#0F2C6E",
+//     color: "#fff",
+//     borderRadius: 3,
+//   },
+// });
