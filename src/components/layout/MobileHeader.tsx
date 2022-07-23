@@ -11,12 +11,16 @@ import {
   Typography,
   Toolbar,
   AppBar,
+  Link,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import Logo from "../../static/images/e.png";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { activeStatus } from "../../store/global";
 
 const MobileHeader = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
+  const [active, setActive] = useRecoilState(activeStatus);
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -43,13 +47,14 @@ const MobileHeader = () => {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            sx={{ display: "relative" }}
+            onClick={() => setActive((state) => !state)}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            SNP-ONE
-          </Typography>
+          <div style={{ marginLeft: "auto" }}>
+            <img style={{ width: "180px" }} src={Logo} alt="" />
+          </div>
 
           <div></div>
         </Toolbar>

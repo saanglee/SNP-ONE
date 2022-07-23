@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import "./dashboard.css";
-import { Applicant } from "../../types/type";
+import { Applicant } from "../../types/datshboard";
 
 /* eslint-disable react/prop-types */
 
