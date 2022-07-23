@@ -13,8 +13,12 @@ const Router = () => {
       <RecoilRoot>
         <ThemeProvider theme={theme}>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/sign" element={<SignUp />} />
+            {/* <Route path="/" element={<Home />} /> */}
+            {/* <Route path={"/sign"} element={<SignUp />} /> */}
+
+            {["/", "/sign", "*"].map((path, index) => {
+              return <Route path={path} element={<SignUp />} key={index} />;
+            })}
             <Route path="/dash" element={<Dashboard />} />
           </Routes>
         </ThemeProvider>
