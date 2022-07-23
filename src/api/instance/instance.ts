@@ -1,7 +1,7 @@
 import axios from "axios";
 import { HttpRequest } from "../http/HttpRequest";
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   baseURL: "http://localhost:8000",
 });
 
