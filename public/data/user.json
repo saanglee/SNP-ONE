@@ -7,7 +7,7 @@
     "gender": "female",
     "phone": "01011111234",
     "region": "제주특별자치도",
-    "distric": "서귀포시",
+    "district": "서귀포시",
     "transportation": ["지하철", "전동킥보드"],
     "date": "2022-07-11 13:12:22"
   },
@@ -19,7 +19,7 @@
     "gender": "female",
     "phone": "01011111234",
     "region": "제주특별자치도",
-    "distric": "서귀포시",
+    "district": "서귀포시",
     "transportation": ["지하철", "전동킥보드"],
     "date": "2022-07-11 13:12:22"
   },
@@ -31,7 +31,7 @@
     "gender": "female",
     "phone": "01011111234",
     "region": "제주특별자치도",
-    "distric": "서귀포시",
+    "district": "서귀포시",
     "transportation": ["지하철", "전동킥보드"],
     "date": "2022-07-11 13:12:22"
   }

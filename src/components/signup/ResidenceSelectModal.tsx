@@ -35,8 +35,8 @@ const ResidenceSelectModal = ({
   const { getCitys } = useCitysModel();
   const [citys, setCitys] = useState<string[] | undefined | any>();
   const [regions, setRegions] = useState<string | HTMLSelectElement>();
-  const [districs, setDistrics] = useState<string[]>();
-  const [distric, setDistric] = useState<string | HTMLSelectElement>();
+  const [districts, setDistricts] = useState<string[]>();
+  const [district, setDistrict] = useState<string | HTMLSelectElement>();
 
   const [, setResidence] = useRecoilState(ResidenceValue);
   useEffect(() => {
@@ -50,15 +50,17 @@ const ResidenceSelectModal = ({
 
   const handleChangeRegion = (event: SelectChangeEvent<HTMLSelectElement>) => {
     setRegions(event.target.value);
-    setDistrics(citys[`${event.target.value}`]);
+    setDistricts(citys[`${event.target.value}`]);
   };
 
-  const handleChangeDistric = (event: SelectChangeEvent<HTMLSelectElement>) => {
-    setDistric(event.target.value);
+  const handleChangeDistrict = (
+    event: SelectChangeEvent<HTMLSelectElement>,
+  ) => {
+    setDistrict(event.target.value);
   };
 
   const handleSelectValue = () => {
-    setResidence(regions + " " + distric);
+    setResidence(regions + " " + district);
     handleClose();
   };
   return (
@@ -91,9 +93,9 @@ const ResidenceSelectModal = ({
 
             <FormSelect
               label="시/구/군"
-              name="distric"
-              onBlur={handleChangeDistric}
-              options={districs}
+              name="district"
+              onBlur={handleChangeDistrict}
+              options={districts}
               control={control}
               sx={{ width: 135 }}
             />

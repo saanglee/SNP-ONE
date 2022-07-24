@@ -7,6 +7,6 @@ export interface FormValues {
   transportation: string;
   gender: string;
   region: string;
-  distric: string;
+  district: string;
   date: string;
 }
