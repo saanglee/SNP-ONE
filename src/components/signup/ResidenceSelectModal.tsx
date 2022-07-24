@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useCitysModel } from "../../api/models/useCityModels";
-import FormSelect from "../../components/form/FormSelect";
+import FormSelect from "../form/FormSelect";
 import { useRecoilState } from "recoil";
 import { ResidenceValue } from "../../store/form";
 

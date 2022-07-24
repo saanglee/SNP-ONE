@@ -8,32 +8,29 @@ import {
   styled,
   Typography,
   FormControl,
+  Input,
 } from "@mui/material";
+import { format } from "date-fns";
 import FormInput from "../form/FormInput";
 import FormRadio from "../form/FormRadio";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import ResidenceSelectModal from "./ResidenceSelect";
+import ResidenceSelectModal from "./ResidenceSelectModal";
 import Terms from "./Terms";
 import FormCheckboxBtn from "../form/FormCheckboxBtn";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ResidenceValue, FormData } from "../../store/form";
 import { useRecoilState, useRecoilValue } from "recoil";
-type FormValues = {
-  phone: string;
-  birth: string;
-  email: string;
-  name: string;
-  transportation: string;
-  gender: string;
-  region: string;
-  distric: string;
-};
+import { FormValues } from "../../types/form";
+
 const SignForm = () => {
+  const today = format(new Date(), "yyyy-MM-dd HH:mm:s");
+  const userId = Math.random().toString(36).substr(2, 9);
+
   const { register, handleSubmit, control } = useForm<FormValues>();
-  const onSubmit: SubmitHandler<FormValues> = (data: any) => {
+  const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
     console.log(data);
 
-    // TODO: 데이터 추가하기
+    // TODO: 서버에 데이터 전송
   };
 
   const residence = useRecoilValue(ResidenceValue);
@@ -70,6 +67,7 @@ const SignForm = () => {
   const handleTermsClose = () => {
     setIsTermsOpen(false);
   };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormGroup>
@@ -77,6 +75,8 @@ const SignForm = () => {
         control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
         label="mode switch"
       /> */}
+        <InputHidden {...register("date")} value={today} />
+        <InputHidden {...register("_id")} value={userId} />
         <FormInput title="이름" name="name" control={control} />
         <FormControl sx={{ mt: 2, mb: 1 }}>
           <Typography variant="h6">성별</Typography>
@@ -104,7 +104,6 @@ const SignForm = () => {
           </Button>
           <Typography sx={{ mt: 1, fontSize: 14 }}>{residence}</Typography>
         </Box>
-        {/*  */}
         <ResidenceSelectModal
           open={isOpenSelect}
           handleClose={handleResidenceClose}
@@ -210,4 +209,10 @@ const StyledTerms = styled(Box)({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
+});
+
+const InputHidden = styled(Input)({
+  position: "absolute",
+  top: "-9999px",
+  visibility: "hidden",
 });

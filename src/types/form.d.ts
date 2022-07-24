@@ -1,10 +1,12 @@
-export interface FormTypes {
-  name: string;
-  gender: string;
+export interface FormValues {
+  _id: string;
+  phone: string;
   birth: string;
+  email: string;
+  name: string;
+  transportation: string;
+  gender: string;
   region: string;
   distric: string;
-  phone: string;
-  email: string;
   date: string;
 }
