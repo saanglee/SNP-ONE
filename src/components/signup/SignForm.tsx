@@ -86,6 +86,9 @@ const SignForm = () => {
         <Button variant="outlined" onClick={handleResidenceOpen}>
           거주지역 선택
         </Button>
+        <Typography sx={{ mt: 1, fontSize: 14 }}>
+          선택한 거주지 들어갑니다
+        </Typography>
       </Box>
       <ResidenceSelect open={isSelectOpen} handleClose={handleResidenceClose} />
       <FormInput

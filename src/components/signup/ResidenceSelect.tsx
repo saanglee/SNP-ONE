@@ -17,6 +17,9 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useCitysModel } from "../../api/models/useCityModels";
+import FormSelect from "../../components/form/FormSelect";
+import { useRecoilState } from "recoil";
+import { ResidenceValue } from "../../store/form";
 
 interface ResidenceSelectProps {
   open: boolean;
@@ -26,10 +29,11 @@ interface ResidenceSelectProps {
 const ResidenceSelect = ({ open, handleClose }: ResidenceSelectProps) => {
   const { getCitys } = useCitysModel();
   const [citys, setCitys] = useState<string[] | undefined | any>();
-  const [regions, setRegions] = useState<string | HTMLSelectElement>("");
-  const [districs, setDistrics] = useState<string[]>(["-"]);
-  const [distric, setDistric] = useState<string | HTMLSelectElement>("");
+  const [regions, setRegions] = useState<string | HTMLSelectElement>();
+  const [districs, setDistrics] = useState<string[]>();
+  const [distric, setDistric] = useState<string | HTMLSelectElement>();
 
+  const [, setResidence] = useRecoilState(ResidenceValue);
   useEffect(() => {
     async function fetchCitys() {
       const response = await getCitys().then((result) => result);
@@ -46,6 +50,11 @@ const ResidenceSelect = ({ open, handleClose }: ResidenceSelectProps) => {
 
   const handleChangeDistric = (event: SelectChangeEvent<HTMLSelectElement>) => {
     setDistric(event.target.value);
+  };
+
+  const handleSelectValue = () => {
+    setResidence(regions + " " + distric);
+    handleClose();
   };
 
   return (
@@ -67,55 +76,27 @@ const ResidenceSelect = ({ open, handleClose }: ResidenceSelectProps) => {
           }}
         >
           <Box sx={{ display: "flex" }}>
-            <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel htmlFor="region">시/도</InputLabel>
-              <Select
-                label="시/도"
-                onChange={handleChangeRegion}
-                input={
-                  <OutlinedInput name="region" label="residence1" id="region" />
-                }
-                inputProps={{
-                  id: "region-select",
-                }}
-              >
-                {citys &&
-                  Object.keys(citys)?.map((city: any, index: number) => (
-                    <MenuItem key={city + index} value={city}>
-                      {city}
-                    </MenuItem>
-                  ))}
-              </Select>
-            </FormControl>
-            <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel shrink htmlFor="distric">
-                시/구/군
-              </InputLabel>
-              <Select
-                label="시/도"
-                onChange={handleChangeDistric}
-                input={
-                  <OutlinedInput
-                    label="residence2"
-                    name="distric"
-                    id="distric"
-                  />
-                }
-                inputProps={{
-                  id: "distric-select",
-                }}
-              >
-                {districs?.map((distric, index) => (
-                  <MenuItem key={distric + index} value={distric}>
-                    {distric}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+            <FormSelect
+              label="시/도"
+              name="region"
+              id="region"
+              options={citys && Object.keys(citys)}
+              onChange={handleChangeRegion}
+              value={regions || ""}
+            />
+
+            <FormSelect
+              label="시/구/군"
+              name="distric"
+              id="distric"
+              onChange={handleChangeDistric}
+              options={districs}
+              value={distric || ""}
+            />
           </Box>
           <Button
             variant="contained"
-            onClick={handleClose}
+            onClick={handleSelectValue}
             sx={{ mt: 3, width: "100%", height: 50 }}
           >
             확인
@@ -157,14 +138,3 @@ const StyledModalHeader = styled(Box)({
   paddingBlock: 1,
   width: "100%",
 });
-
-// const StyledOption = styled("option")({
-//   paddingBlock: 4,
-//   paddingLeft: 7,
-//   fontSize: 14,
-//   "&:checked": {
-//     background: "#0F2C6E",
-//     color: "#fff",
-//     borderRadius: 3,
-//   },
-// });
