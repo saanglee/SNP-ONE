@@ -9,18 +9,42 @@ import {
   Button,
   Checkbox,
 } from "@mui/material";
+import { Controller } from "react-hook-form";
 
 interface RadioProps {
-  type: string;
   title: string;
   subText?: string;
   values: string[];
-  sx?: {};
+  control: any;
+  name: string;
 }
 
-const FormRadio = ({ title, subText, values, sx }: RadioProps) => {
+const FormRadio = ({ control, name, title, subText, values }: RadioProps) => {
   return (
-    <FormControl sx={{ mb: 1, ...sx }}>
+    <Controller
+      name={name}
+      control={control}
+      defaultValue=""
+      render={({ field }) => (
+        <RadioGroup>
+          {values.map((value, idx) => (
+            <FormControlLabel
+              key={value + idx}
+              value={value}
+              control={<Radio />}
+              label={value}
+            />
+          ))}
+        </RadioGroup>
+      )}
+    />
+  );
+};
+export default FormRadio;
+
+// eslint-disable-next-line no-lone-blocks
+{
+  /* <FormControl sx={{ mb: 1, ...sx }}>
       <FormLabel id="demo-controlled-radio-buttons-group">{title}</FormLabel>
       {subText && (
         <Typography sx={{ fontSize: 14, color: "eee" }}>{subText}</Typography>
@@ -40,7 +64,5 @@ const FormRadio = ({ title, subText, values, sx }: RadioProps) => {
           />
         ))}
       </RadioGroup>
-    </FormControl>
-  );
-};
-export default FormRadio;
+    </FormControl> */
+}
