@@ -7,6 +7,7 @@ import {
   Checkbox,
   styled,
   Typography,
+  FormControl,
 } from "@mui/material";
 import FormInput from "../form/FormInput";
 import FormRadio from "../form/FormRadio";
@@ -15,7 +16,8 @@ import ResidenceSelect from "./ResidenceSelect";
 import Terms from "./Terms";
 import FormCheckboxBtn from "../form/FormCheckboxBtn";
 import { useForm, SubmitHandler } from "react-hook-form";
-
+import { ResidenceValue } from "../../store/form";
+import { useRecoilState } from "recoil";
 type FormValues = {
   phone: string;
   birth: string;
@@ -28,8 +30,10 @@ const SignForm = () => {
   const { register, handleSubmit, control } = useForm<FormValues>();
   const onSubmit: SubmitHandler<FormValues> = (data: any) => console.log(data);
 
+  const [residence, setResidence] = useRecoilState(ResidenceValue);
+
   const [value, setValue] = React.useState("female");
-  const [isSelectOpen, setISSelectOpen] = useState(false);
+  const [isOpenSelect, setIsOpenSelect] = useState(false);
   const [isTermsOpen, setIsTermsOpen] = useState(false);
   const [termsType, setTermsType] = useState("개인정보");
   const [checked, setChecked] = React.useState([true, false]);
@@ -47,10 +51,10 @@ const SignForm = () => {
   };
 
   const handleResidenceOpen = () => {
-    setIsTermsOpen(true);
+    setIsOpenSelect(true);
   };
   const handleResidenceClose = () => {
-    setIsTermsOpen(false);
+    setIsOpenSelect(false);
   };
 
   const handleTermsOpen = (event: string): void => {
@@ -68,14 +72,14 @@ const SignForm = () => {
         label="mode switch"
       /> */}
         <FormInput title="이름" name="name" control={control} />
-        <Box sx={{ mt: 1 }}>
+        <FormControl sx={{ mt: 2, mb: 1 }}>
+          <Typography variant="h6">성별</Typography>
           <FormRadio
             name="gender"
-            title="성별"
             control={control}
             values={["female", "male"]}
           />
-        </Box>
+        </FormControl>
         <FormInput
           title="생년월일"
           placeholder="YYYY.MM.DD"
@@ -85,17 +89,17 @@ const SignForm = () => {
             maxLength: 8,
           }}
         />
-        <Box sx={{ mb: 3 }}>
-          <Typography sx={{ mb: 2, fontWeight: 500 }}>거주지역</Typography>
+        <Box sx={{ mt: 2, mb: 2 }}>
+          <Typography variant="h6" sx={{ mb: 1 }}>
+            거주지역
+          </Typography>
           <Button variant="outlined" onClick={handleResidenceOpen}>
             거주지역 선택
           </Button>
-          <Typography sx={{ mt: 1, fontSize: 14 }}>
-            선택한 거주지 들어갑니다
-          </Typography>
+          <Typography sx={{ mt: 1, fontSize: 14 }}>{residence}</Typography>
         </Box>
         <ResidenceSelect
-          open={isSelectOpen}
+          open={isOpenSelect}
           handleClose={handleResidenceClose}
         />
         <FormInput
@@ -106,23 +110,33 @@ const SignForm = () => {
             maxLength: 11,
           }}
         />
-        <FormInput title="이메일" name="email" control={control} />
-        <FormCheckboxBtn
-          name="transportation"
+        <FormInput
+          title="이메일"
+          name="email"
           control={control}
-          register={register}
-          values={[
-            "버스",
-            "지하철",
-            "택시",
-            "KTX/기차",
-            "도보",
-            "자전거",
-            "전동킥보드",
-            "자가용",
-          ]}
+          sx={{ mt: 2, mb: 3 }}
         />
-
+        <Box sx={{ mb: 2 }}>
+          <Typography variant="h6">주로 이용하는 교통 수단</Typography>
+          <Typography sx={{ mb: 2, fontSize: 14 }}>
+            주로 이용하는 교통 수단을 모두 선택해주세요
+          </Typography>
+          <FormCheckboxBtn
+            name="transportation"
+            control={control}
+            register={register}
+            values={[
+              "버스",
+              "지하철",
+              "택시",
+              "KTX/기차",
+              "도보",
+              "자전거",
+              "전동킥보드",
+              "자가용",
+            ]}
+          />
+        </Box>
         <FormControlLabel
           label="이용약관 모두 동의"
           control={
