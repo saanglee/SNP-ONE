@@ -35,21 +35,21 @@ const CircularMenu = () => {
           <BootstrapTooltip title="Home" placement="top">
             <button className={active ? "active menu-item" : "menu-item"}>
               <Link href="/dash" color="inherit">
-                <HomeIcon />
+                <HomeIcon className="icon" />
               </Link>
             </button>
           </BootstrapTooltip>
           <BootstrapTooltip title="AdminPage" placement="top">
             <button className={active ? "active menu-item" : "menu-item"}>
               <Link href="/dash" color="inherit">
-                <HomeRepairServiceIcon />
+                <HomeRepairServiceIcon className="icon" />
               </Link>
             </button>
           </BootstrapTooltip>
           <BootstrapTooltip title="About us" placement="top">
             <button className={active ? "active menu-item" : "menu-item"}>
               <Link href="/sign" color="inherit">
-                <PhoneAndroidIcon />
+                <PhoneAndroidIcon className="icon" />
               </Link>
             </button>
           </BootstrapTooltip>
@@ -106,6 +106,9 @@ const ItemWrapper = styles.menu`
   .menu-item {
     &:hover {
       background-color: black;
+    }
+    .icon {
+      margin-top: 0.4rem;
     }
     background-color: eee;
     border: none;
