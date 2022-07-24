@@ -12,22 +12,27 @@ import {
   Toolbar,
   AppBar,
   Link,
+  useMediaQuery,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Logo from "../../static/images/e.png";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { activeStatus } from "../../store/global";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 const MobileHeader = () => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [active, setActive] = useRecoilState(activeStatus);
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen((prev) => !prev);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleClickAway = () => {
+    setOpen(false);
   };
+
+  const md = useMediaQuery("(max-width:900px)");
 
   return (
     <Box
@@ -42,16 +47,42 @@ const MobileHeader = () => {
     >
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ display: "relative" }}
-            onClick={() => setActive((state) => !state)}
-          >
-            <MenuIcon />
-          </IconButton>
+          {md && (
+            <ClickAwayListener onClickAway={handleClickAway}>
+              <Box sx={{ position: "relative" }}>
+                <IconButton
+                  size="large"
+                  edge="start"
+                  color="inherit"
+                  aria-label="menu"
+                  onClick={handleClick}
+                >
+                  <MenuIcon />
+                </IconButton>
+                {open ? (
+                  <Box>
+                    관리자 페이지로 가시겠어요?
+                    <Link href="/dash" color="inherit">
+                      <strong> __CLICK!</strong>
+                    </Link>
+                  </Box>
+                ) : null}
+              </Box>
+            </ClickAwayListener>
+          )}
+          {!md && (
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ display: "relative" }}
+              onClick={() => setActive((state) => !state)}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
+
           <div style={{ marginLeft: "auto" }}>
             <img style={{ width: "180px" }} src={Logo} alt="" />
           </div>

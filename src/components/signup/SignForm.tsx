@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import {
   FormGroup,
-  FormLabel,
   FormControlLabel,
-  Input,
-  InputLabel,
-  Radio,
-  RadioGroup,
-  Switch,
   Button,
   Box,
   Checkbox,
@@ -16,27 +10,28 @@ import {
 } from "@mui/material";
 import FormInput from "../form/FormInput";
 import FormRadio from "../form/FormRadio";
-import { Link } from "react-router-dom";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import ResidenceSelect from "./ResidenceSelect";
 import Terms from "./Terms";
-import FormCheckbox from "../form/FormCheckbox";
+import FormCheckboxBtn from "../form/FormCheckboxBtn";
+import { useForm, SubmitHandler } from "react-hook-form";
 
+type FormValues = {
+  phone: string;
+  birth: string;
+  email: string;
+  name: string;
+  transportation: string;
+  gender: string;
+};
 const SignForm = () => {
+  const { register, handleSubmit, control } = useForm<FormValues>();
+  const onSubmit: SubmitHandler<FormValues> = (data: any) => console.log(data);
+
   const [value, setValue] = React.useState("female");
   const [isSelectOpen, setISSelectOpen] = useState(false);
   const [isTermsOpen, setIsTermsOpen] = useState(false);
   const [termsType, setTermsType] = useState("개인정보");
-  const [ckeckApply, setCheckApply] = useState(false);
-
-  const nameRef = React.useRef<HTMLInputElement | any>(null);
-  const birthRef = React.useRef<HTMLInputElement | any>(null);
-  const phoneRef = React.useRef<HTMLInputElement | any>(null);
-  const emailRef = React.useRef<HTMLInputElement | any>(null);
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value);
-  };
-
   const [checked, setChecked] = React.useState([true, false]);
 
   const handleChange1 = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,106 +61,125 @@ const SignForm = () => {
     setIsTermsOpen(false);
   };
   return (
-    <FormGroup>
-      {/* <FormControlLabel
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <FormGroup>
+        {/* <FormControlLabel
         control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
         label="mode switch"
       /> */}
-      <FormInput title="이름" inputRef={nameRef} />
-      <FormRadio type="radio" title="성별" values={["female", "male"]} />
-      <FormInput
-        title="생년월일"
-        placeholder="YYYY.MM.DD"
-        inputRef={birthRef}
-        inputProps={{
-          maxLength: 8,
-        }}
-      />
-      <Box sx={{ mb: 3 }}>
-        <Typography sx={{ mb: 2, fontWeight: 500 }}>거주지역</Typography>
-        <Button variant="outlined" onClick={handleResidenceOpen}>
-          거주지역 선택
-        </Button>
-        <Typography sx={{ mt: 1, fontSize: 14 }}>
-          선택한 거주지 들어갑니다
-        </Typography>
-      </Box>
-      <ResidenceSelect open={isSelectOpen} handleClose={handleResidenceClose} />
-      <FormInput
-        title="연락처"
-        inputRef={phoneRef}
-        inputProps={{
-          maxLength: 11,
-        }}
-      />
-      <FormInput title="이메일" inputRef={emailRef} />
-      <FormCheckbox
-        type="checkbox"
-        title="주로 이용하는 교통 수단"
-        subText="주로 이용하는 교통 수단을 모두 선택해주세요."
-        values={[
-          "버스",
-          "지하철",
-          "택시",
-          "KTX/기차",
-          "도보",
-          "자전거",
-          "전동킥보드",
-          "자가용",
-        ]}
-      />
+        <FormInput title="이름" name="name" control={control} />
+        <Box sx={{ mt: 1 }}>
+          <FormRadio
+            name="gender"
+            title="성별"
+            control={control}
+            values={["female", "male"]}
+          />
+        </Box>
+        <FormInput
+          title="생년월일"
+          placeholder="YYYY.MM.DD"
+          name="DateOfBirth"
+          control={control}
+          inputProps={{
+            maxLength: 8,
+          }}
+        />
+        <Box sx={{ mb: 3 }}>
+          <Typography sx={{ mb: 2, fontWeight: 500 }}>거주지역</Typography>
+          <Button variant="outlined" onClick={handleResidenceOpen}>
+            거주지역 선택
+          </Button>
+          <Typography sx={{ mt: 1, fontSize: 14 }}>
+            선택한 거주지 들어갑니다
+          </Typography>
+        </Box>
+        <ResidenceSelect
+          open={isSelectOpen}
+          handleClose={handleResidenceClose}
+        />
+        <FormInput
+          title="연락처"
+          name="phone"
+          control={control}
+          inputProps={{
+            maxLength: 11,
+          }}
+        />
+        <FormInput title="이메일" name="email" control={control} />
+        <FormCheckboxBtn
+          name="transportation"
+          control={control}
+          register={register}
+          values={[
+            "버스",
+            "지하철",
+            "택시",
+            "KTX/기차",
+            "도보",
+            "자전거",
+            "전동킥보드",
+            "자가용",
+          ]}
+        />
 
-      <FormControlLabel
-        label="이용약관 모두 동의"
-        control={
-          <Checkbox
-            checked={checked[0] && checked[1]}
-            indeterminate={checked[0] !== checked[1]}
-            onChange={handleChange1}
-          />
-        }
-      />
-      <Box sx={{ ml: 1, mb: 3 }}>
-        <StyledTerms>
-          <FormControlLabel
-            label={
-              <Typography sx={{ fontSize: 14 }}>
-                개인정보 처리방침 고지(필수)
-              </Typography>
-            }
-            control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
-          />
-          <Button onClick={() => handleTermsOpen("개인정보")}>
-            <KeyboardArrowRightIcon />
-          </Button>
-        </StyledTerms>
-        <StyledTerms>
-          <FormControlLabel
-            label={
-              <Typography sx={{ fontSize: 14 }}>
-                제3자 정보제공 동의(필수)
-              </Typography>
-            }
-            control={<Checkbox checked={checked[1]} onChange={handleChange3} />}
-          />
-          <Button onClick={() => handleTermsOpen("제3자")}>
-            <KeyboardArrowRightIcon />
-          </Button>
-          <Terms
-            open={isTermsOpen}
-            type={termsType}
-            handleClose={handleTermsClose}
-          />
-        </StyledTerms>
-      </Box>
-      <Button
-        disabled={ckeckApply === false}
-        variant="contained"
-        sx={{ height: 48, fontSize: 16 }}
-      >
-        지원하기
-      </Button>
-    </FormGroup>
+        <FormControlLabel
+          label="이용약관 모두 동의"
+          control={
+            <Checkbox
+              checked={checked[0] && checked[1]}
+              indeterminate={checked[0] !== checked[1]}
+              onChange={handleChange1}
+            />
+          }
+        />
+        <Box sx={{ ml: 1, mb: 3 }}>
+          <StyledTerms>
+            <FormControlLabel
+              label={
+                <Typography sx={{ fontSize: 14 }}>
+                  개인정보 처리방침 고지(필수)
+                </Typography>
+              }
+              control={
+                <Checkbox checked={checked[0]} onChange={handleChange2} />
+              }
+            />
+            <Button onClick={() => handleTermsOpen("개인정보")}>
+              <KeyboardArrowRightIcon />
+            </Button>
+          </StyledTerms>
+          <StyledTerms>
+            <FormControlLabel
+              label={
+                <Typography sx={{ fontSize: 14 }}>
+                  제3자 정보제공 동의(필수)
+                </Typography>
+              }
+              control={
+                <Checkbox checked={checked[1]} onChange={handleChange3} />
+              }
+            />
+            <Button onClick={() => handleTermsOpen("제3자")}>
+              <KeyboardArrowRightIcon />
+            </Button>
+            <Terms
+              open={isTermsOpen}
+              type={termsType}
+              handleClose={handleTermsClose}
+            />
+          </StyledTerms>
+        </Box>
+        <Button
+          type="submit"
+          // disabled={ckeckApply === false}
+          variant="contained"
+          sx={{ height: 48, fontSize: 16 }}
+        >
+          지원하기
+        </Button>
+      </FormGroup>
+    </form>
   );
 };
 export default SignForm;

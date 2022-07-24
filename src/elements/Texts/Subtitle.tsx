@@ -11,19 +11,19 @@ type TextType = {
   my?: number;
 };
 
-const Title = (props: TextType) => {
+const Subtitle = (props: TextType) => {
   const {
     children,
     className,
     onClick,
-    size = 25,
+    size = 1,
     color = "black",
     mx,
     my,
   } = props;
-  console.log(size);
+
   return (
-    <TitleElement
+    <SubtitleElement
       className={className}
       onClick={onClick}
       size={size}
@@ -32,22 +32,22 @@ const Title = (props: TextType) => {
       my={my}
     >
       {children}
-    </TitleElement>
+    </SubtitleElement>
   );
 };
 
-export default Title;
+export default Subtitle;
 
-const TitleElement = styled.h1<{
+const SubtitleElement = styled.h3<{
   size?: number;
   color?: string;
   mx?: number;
   my?: number;
 }>`
-  font-family: "Font-bold";
-  line-height: 0.2em;
-  letter-spacing: -0.05em;
-  font-size: ${(props) => `${props.size}em` || "24px"};
+  height: fit-content;
+  font-family: "Gfont_regular";
+  font-size: ${(props) => `${props.size}em` || "20px"};
+  letter-spacing: -0.1em;
   color: ${(props) => props.color};
   margin: ${(props) =>
     props.mx && props.my
