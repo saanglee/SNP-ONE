@@ -27,47 +27,12 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import Logo from "../../static/images/d.png";
 
-interface HeaderProps {
-  handleDrawerOpen: () => void;
-  handleDrawerClose: () => void;
-  menuWidth: number;
-  open: boolean;
-  md?: boolean;
-  sign: string;
-}
-
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
-  sidebar: number;
-  sign: string;
-}
-
-const Header = ({
-  handleDrawerOpen,
-  handleDrawerClose,
-  menuWidth,
-  open,
-  md,
-  sign,
-}: HeaderProps) => {
+const Header = () => {
   return (
-    <Box
-      component="nav"
-      sx={{ width: { md: menuWidth }, flexShrink: { sm: 0 } }}
-      aria-label="mailbox folders"
-    >
-      <AppBar open={open} sidebar={menuWidth} sign={sign}>
+    <Box component="nav" aria-label="mailbox folders">
+      <AppBar>
         <StyledToolbar>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-              sx={{ mr: 2, ...(open && { display: "none" }) }}
-            >
-              <MenuIcon />
-            </IconButton>
             <div>
               <Link href="/sign" color="inherit">
                 <img style={{ width: "180px" }} src={Logo} alt="" />
@@ -78,19 +43,17 @@ const Header = ({
             <Link href="/sign" color="inherit">
               sign up
             </Link>
-            <Link href="/sign" color="inherit">
-              <PhoneAndroidIcon fontSize="large" />
-            </Link>
-            <Badge>
+
+            {/* <Badge>
               <NotificationsNoneIcon fontSize="large" />
-            </Badge>
+            </Badge> */}
             <Badge>
               <SettingsIcon fontSize="large" />
             </Badge>
-            <UserBox>
+            {/* <UserBox>
               <Avatar sx={{ mr: 2 }} />
               <Typography>user</Typography>
-            </UserBox>
+            </UserBox> */}
           </Icons>
         </StyledToolbar>
       </AppBar>
@@ -122,12 +85,4 @@ const UserBox = styled(Box)({
   alignItems: "center",
 });
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open" && prop !== "sidebar",
-})<AppBarProps>(({ theme, open, sidebar, sign }) => ({
-  transition: theme.transitions.create(["margin", "width"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  backgroundColor: theme.palette.primary.main,
-}));
+const AppBar = styled(MuiAppBar)();

@@ -40,17 +40,9 @@ const Layout = ({ children }: LayoutProps) => {
         background: "white",
       }}
     >
-      <Header
-        handleDrawerOpen={handleDrawerOpen}
-        handleDrawerClose={handleDrawerClose}
-        menuWidth={sidebarWidth}
-        open={open}
-        md={md}
-        sign={"false"}
-      />
-
+      <Header />
       <Main>
-        <StyledWrapper maxWidth="xl">{children}</StyledWrapper>
+        <StyledWrapper>{children}</StyledWrapper>
       </Main>
       {loading && (
         <StyledSpinner>
