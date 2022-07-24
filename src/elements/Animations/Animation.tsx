@@ -1,24 +1,25 @@
 import * as React from "react";
-import { Options } from "react-lottie";
 import { Container, LottieWrapper } from "./Animation.styled";
-import * as SpinAnimation from "./animations/spin3-background.json";
+import { getAnimations } from "../../hooks/getAnimations";
 
 type AnimationType = {
-  animation?: string;
+  animation?: any;
 };
 
-const Spinner = (props: AnimationType) => {
+const Animation = (props: AnimationType) => {
+  console.log();
+
   const animationCompleteOptions = {
     loop: true,
     autoplay: true,
-    animationData: SpinAnimation,
+    animationData: getAnimations(props?.animation),
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
 
   return (
-    <Container>
+    <Container size={props?.animation}>
       <LottieWrapper
         isClickToPauseDisabled
         options={animationCompleteOptions}
@@ -27,4 +28,4 @@ const Spinner = (props: AnimationType) => {
   );
 };
 
-export default Spinner;
+export default Animation;

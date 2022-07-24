@@ -11,19 +11,19 @@ type TextType = {
   my?: number;
 };
 
-const Text = (props: TextType) => {
+const Title = (props: TextType) => {
   const {
     children,
     className,
     onClick,
-    size = 25,
+    size = 2,
     color = "black",
     mx,
     my,
   } = props;
-  console.log(size);
+
   return (
-    <TextElement
+    <TitleElement
       className={className}
       onClick={onClick}
       size={size}
@@ -32,21 +32,23 @@ const Text = (props: TextType) => {
       my={my}
     >
       {children}
-    </TextElement>
+    </TitleElement>
   );
 };
 
-export default Text;
+export default Title;
 
-const TextElement = styled.p<{
+const TitleElement = styled.h1<{
   size?: number;
   color?: string;
   mx?: number;
   my?: number;
 }>`
-  font-family: "Font-light";
-  font-size: ${(props) => `${props.size}em` || "16px"};
-  letter-spacing: 0.05em;
+  height: fit-content;
+  font-family: "Gfont_bold";
+  line-height: 0.2em;
+  letter-spacing: -0.05em;
+  font-size: ${(props) => `${props.size}em` || "24px"};
   color: ${(props) => props.color};
   margin: ${(props) =>
     props.mx && props.my

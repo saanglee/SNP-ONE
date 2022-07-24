@@ -1,16 +1,16 @@
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import styled from "styled-components";
-import { Link } from "@mui/material";
+import styles from "styled-components";
+import { Link, styled } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import { useLocation } from "react-router-dom";
 import { activeStatus } from "../../store/global";
 import { useRecoilState, useRecoilValue } from "recoil";
+import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
 
 const CircularMenu = () => {
-  const [open, setOpen] = React.useState(false);
   const [active, setActive] = useRecoilState(activeStatus);
   const location = useLocation();
   //   console.log(location.pathname);
@@ -32,22 +32,27 @@ const CircularMenu = () => {
         </FloatingButton>
 
         <ItemWrapper>
-          <button className={active ? "active menu-item" : "menu-item"}>
-            <Link href="/dash" color="inherit">
-              <HomeIcon />
-            </Link>
-          </button>
-
-          <button className={active ? "active menu-item" : "menu-item"}>
-            <Link href="/dash" color="inherit">
-              <HomeRepairServiceIcon />
-            </Link>
-          </button>
-          <button className={active ? "active menu-item" : "menu-item"}>
-            <Link href="/sign" color="inherit">
-              <PhoneAndroidIcon />
-            </Link>
-          </button>
+          <BootstrapTooltip title="Home" placement="top">
+            <button className={active ? "active menu-item" : "menu-item"}>
+              <Link href="/dash" color="inherit">
+                <HomeIcon className="icon" />
+              </Link>
+            </button>
+          </BootstrapTooltip>
+          <BootstrapTooltip title="AdminPage" placement="top">
+            <button className={active ? "active menu-item" : "menu-item"}>
+              <Link href="/dash" color="inherit">
+                <HomeRepairServiceIcon className="icon" />
+              </Link>
+            </button>
+          </BootstrapTooltip>
+          <BootstrapTooltip title="About us" placement="top">
+            <button className={active ? "active menu-item" : "menu-item"}>
+              <Link href="/sign" color="inherit">
+                <PhoneAndroidIcon className="icon" />
+              </Link>
+            </button>
+          </BootstrapTooltip>
         </ItemWrapper>
       </CircularContainer>
     </>
@@ -56,7 +61,7 @@ const CircularMenu = () => {
 
 export default CircularMenu;
 
-const CircularContainer = styled.div`
+const CircularContainer = styles.div`
   position: fixed;
   top: 5rem;
   left: 5rem;
@@ -81,7 +86,7 @@ const CircularContainer = styled.div`
   }
 `;
 
-const FloatingButton = styled.a`
+const FloatingButton = styles.a`
   display: block;
   width: 3.5em;
   height: 3.5em;
@@ -95,12 +100,15 @@ const FloatingButton = styled.a`
   outline: 0;
 `;
 
-const ItemWrapper = styled.menu`
+const ItemWrapper = styles.menu`
   padding: 0;
   margin: 0;
   .menu-item {
     &:hover {
       background-color: black;
+    }
+    .icon {
+      margin-top: 0.4rem;
     }
     background-color: eee;
     border: none;
@@ -134,3 +142,16 @@ const ItemWrapper = styled.menu`
     }
   }
 `;
+
+const BootstrapTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: theme.palette.common.black,
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: theme.palette.common.black,
+    fontSize: 17,
+    borderRadius: 7,
+  },
+}));

@@ -40,17 +40,9 @@ const Layout = ({ children }: LayoutProps) => {
         background: "white",
       }}
     >
-      <Header
-        handleDrawerOpen={handleDrawerOpen}
-        handleDrawerClose={handleDrawerClose}
-        menuWidth={sidebarWidth}
-        open={open}
-        md={md}
-        sign={"false"}
-      />
-
-      <Main open={open} md={md}>
-        <StyledWrapper maxWidth="xl">{children}</StyledWrapper>
+      <Header />
+      <Main>
+        <StyledWrapper>{children}</StyledWrapper>
       </Main>
       {loading && (
         <StyledSpinner>
@@ -63,33 +55,19 @@ const Layout = ({ children }: LayoutProps) => {
 
 export default Layout;
 
-const StyledWrapper = styled(Container, {
-  shouldForwardProp: (prop) => prop !== "md",
-})<{
-  md?: boolean;
-}>(({ theme, md }) => ({
+const StyledWrapper = styled(Container)({
   position: "relative",
   overflowY: "scroll",
   width: "100%",
   height: "100%",
   paddingTop: 100,
   paddingBottom: 80,
-}));
+});
 
-const Main = styled("main", {
-  shouldForwardProp: (prop) => prop !== "open" && prop !== "md",
-})<{
-  open?: boolean;
-  md?: boolean;
-}>(({ theme, open, md }) => ({
+const Main = styled("main")({
   flexGrow: 1,
   width: "100%",
-  transition: theme.transitions.create("margin", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  marginLeft: md ? 0 : `-${sidebarWidth}px`,
-}));
+});
 
 const StyledSpinner = styled(Box)({
   overflow: "hidden",
