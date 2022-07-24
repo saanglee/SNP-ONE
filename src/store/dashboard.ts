@@ -1,5 +1,5 @@
 import { atom, selector } from "recoil";
-import { Applicant, FilterDashboardApplicantData } from "../types/dashboard";
+import { Applicant, FilterDashboardApplicantData } from "../types/datshboard";
 import { axiosInstance } from "../api/instance/instance";
 
 // TODO: get 메소드를 api 파일로 분리

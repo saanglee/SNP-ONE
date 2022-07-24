@@ -3,17 +3,26 @@ import React, { ChangeEvent } from "react";
 
 type PropsType = {
   handleChagne: object;
-  optionList1: any;
-  optionList2: any;
+  dateOptionList: any;
+  checkOptionList: any;
 };
 
 const SearchBar = (props: PropsType) => {
   const [inputState, setInputState] = React.useState<string>(""); // 임시 useState
+  const [dateSort, setDateSort] = React.useState<string>("latest");
+  const [checkFilter, setCheckFilter] = React.useState<string>("all");
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setInputState(event.target.value);
   };
-  const handleClick = () => {};
+  const handleClickSearch = () => {};
+
+  const handleDateSortChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setDateSort(event.target.value);
+  };
+  const handleCheckFilterChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setCheckFilter(event.target.value);
+  };
 
   return (
     <SearchBarContainer>
@@ -24,9 +33,10 @@ const SearchBar = (props: PropsType) => {
           value={inputState}
           onChange={handleInputChange}
         />
-        <SearchButton onClick={handleClick}>검색</SearchButton>
-        <Filter name="" onChange={() => {}}>
-          {props.optionList1.map((item: any, index: number) => {
+        <SearchButton onClick={handleClickSearch}>검색</SearchButton>
+
+        <Filter value="dateSort" onChange={handleDateSortChange}>
+          {props.dateOptionList.map((item: any, index: number) => {
             return (
               <option key={index} value={item.value}>
                 {item.name}
@@ -34,8 +44,8 @@ const SearchBar = (props: PropsType) => {
             );
           })}
         </Filter>
-        <Filter name="" onChange={() => {}}>
-          {props.optionList2.map((item: any, index: number) => {
+        <Filter value="checkFilter" onChange={handleCheckFilterChange}>
+          {props.checkOptionList.map((item: any, index: number) => {
             return (
               <option key={index} value={item.value}>
                 {item.name}
