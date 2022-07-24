@@ -29,22 +29,26 @@ export const filteredApplicantData = selector({
     const applicantData = get(applicantAllData);
     const filterState = get(filteredApplicantState);
 
-    // TODO: 사용자 이름의 일부만 일치해도 보여줄 수 있게끔 수정
-    const filterByName = ({ name }: Applicant) => name === filterState.name;
+    const filterByName = ({ name }: Applicant) =>
+      name.includes(filterState.name);
 
     const filterByCheck = ({ isChecked }: Applicant) =>
       isChecked === filterState.isChecked;
 
-    const filterByRecruitment = ({
-      DateOfApplication: applicantDate,
-    }: Applicant) => {
+    const filterByRecruitment = ({ DateOfApplication }: Applicant) => {
       const { recruitment } = filterState;
-      // TODO: 특정날짜 DATE 생성
-      //       - recuitment가 1이면 특정날짜보다 이후에 지원한 지원자들만 filter
-      //       - recuitment가 2면 특정날짜보다 이전에 지원한 지원자들만 filter
+
+      const applicantDate = new Date(DateOfApplication).getTime();
+      // TODO: 특정날짜를 어느 날짜로 할지 정하기
+      const referenceDate = new Date().getTime();
+      const timeDifference = applicantDate - referenceDate;
+
+      if (recruitment === 1) {
+        return timeDifference > 0;
+      }
+      return timeDifference <= 0;
     };
 
-    // TODO: 현재 dummy의 date로는 작동 X -> 수정 필요
     const sortByDate = (
       { DateOfApplication: prevDate }: Applicant,
       { DateOfApplication: currDate }: Applicant,
