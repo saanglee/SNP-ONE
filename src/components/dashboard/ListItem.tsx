@@ -1,11 +1,16 @@
 import styled from "styled-components";
 import "./dashboard.css";
-import { Applicant } from "../../types/datshboard";
+import { Applicant } from "../../types/dashboard";
+import { patchIsApplicantChecked } from "../../api/models/dashboard";
+import { useRecoilState } from "recoil";
+import { applicantAllData } from "../../store/dashboard";
+import { replaceItemAtIndex } from "../../util/replaceItemIndex";
 
 /* eslint-disable react/prop-types */
 
 const ListItem = ({ data, index }: { data: Applicant; index: number }) => {
   const {
+    id,
     DateOfApplication,
     name,
     gender,
@@ -14,12 +19,29 @@ const ListItem = ({ data, index }: { data: Applicant; index: number }) => {
     email,
     transportation,
     address,
+    isChecked,
   } = data;
+
+  const [applicants, setApplicants] = useRecoilState(applicantAllData);
+
+  const toggleChecked = async (applicant: Applicant) => {
+    let updatedApplicants = replaceItemAtIndex(applicants, index, {
+      ...applicant,
+      isChecked: !applicant.isChecked,
+    }) as Applicant[];
+    setApplicants(updatedApplicants);
+
+    const { status } = await patchIsApplicantChecked(applicant);
+    if (status === 200) return;
+    updatedApplicants = replaceItemAtIndex(applicants, index, {
+      ...applicant,
+      isChecked: !applicant.isChecked,
+    });
+    setApplicants(updatedApplicants);
+  };
+
   return (
     <ListItemContainer className="ListItem">
-      {/* {item.map((item: string | number | boolean, index: number) => {
-        return <TD key={index}>{item} </TD>;
-      })} */}
       <TD>{index}</TD>
       <TD>{DateOfApplication}</TD>
       <TD>{name}</TD>
@@ -31,7 +53,11 @@ const ListItem = ({ data, index }: { data: Applicant; index: number }) => {
       <TD>{address}</TD>
 
       <ListCheckboxWrapper className="checkboxWrapper">
-        <ListCheckbox type="checkbox" />
+        <ListCheckbox
+          type="checkbox"
+          checked={isChecked}
+          onChange={() => toggleChecked(data)}
+        />
       </ListCheckboxWrapper>
     </ListItemContainer>
   );
