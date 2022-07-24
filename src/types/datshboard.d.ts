@@ -1,6 +1,5 @@
-export interface Applicant {
+interface Applicant {
   _id?: string;
-
   DateOfApplication: string | number;
   name: string;
   gender: string;
@@ -15,6 +14,8 @@ export interface Applicant {
 // TODO: 타입 좁히기
 // type gender = "femail" | "male";
 
+type ApplicantList = Applicant[];
+
 interface FilterDashboardApplicantData {
   name: string;
   sort: "asc" | "desc";
@@ -23,4 +24,4 @@ interface FilterDashboardApplicantData {
   isChecked: boolean;
 }
 
-export { Applicant, FilterDashboardApplicantData };
+export { Applicant, ApplicantList, FilterDashboardApplicantData };

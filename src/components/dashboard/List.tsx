@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ListItem from "./ListItem";
 import styled from "styled-components";
 import dummy from "./dummy.json";
-import { Applicant } from "../../types/datshboard";
+
 import "./dashboard.css";
 
 const TABLE_HEADER: string[] = [
@@ -18,12 +18,7 @@ const TABLE_HEADER: string[] = [
   "당첨여부",
 ];
 
-const List = () => {
-  const dummyData = dummy;
-  useEffect(() => {
-    console.log(dummyData);
-  }, []);
-
+const List = ({ items, loading }: { items: any; loading: boolean }) => {
   return (
     <LitsContainer>
       <ListTable>
@@ -34,8 +29,9 @@ const List = () => {
             })}
           </tr>
         </ListTableHeader>
+
         <tbody>
-          {dummyData.map((item, index) => {
+          {items.map((item: any, index: number) => {
             return <ListItem key={item._id} data={item} index={index} />;
           })}
         </tbody>
