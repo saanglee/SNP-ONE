@@ -1,14 +1,12 @@
 import { atom, selector } from "recoil";
 import { Applicant, FilterDashboardApplicantData } from "../types/dashboard";
-import { axiosInstance } from "../api/instance/instance";
+import { getApplicantData } from "../api/models/dashboard";
 
-// TODO: get 메소드를 api 파일로 분리
-// TODO: filteredApplicantData 작업 마친 후 export 제거
 export const applicantAllData = atom({
   key: "applicantAllData",
   default: selector({
     key: "applicantUpdateData",
-    get: async () => (await axiosInstance.get<Applicant[]>("/user")).data,
+    get: getApplicantData,
   }),
 });
 
