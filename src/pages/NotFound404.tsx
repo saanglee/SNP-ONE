@@ -1,6 +1,6 @@
 import react from "react";
 import styled from "styled-components";
-import Animation from "../components/layout/animation/Animation";
+import Animation from "../elements/Animations/Animation";
 const NotFound404 = () => {
   return (
     <>

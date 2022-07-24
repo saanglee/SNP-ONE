@@ -130,14 +130,4 @@ const AppBar = styled(MuiAppBar, {
     duration: theme.transitions.duration.leavingScreen,
   }),
   backgroundColor: theme.palette.primary.main,
-
-  ...(sign === "true" && {
-    width: `calc(100% - ${sidebar}px)`,
-    marginLeft: `${sidebar}px`,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    display: "none",
-  }),
 }));

@@ -6,15 +6,17 @@ import {
   useMediaQuery,
   CircularProgress,
 } from "@mui/material";
-import Header from "./Header";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { loadedStatus } from "../../store/global";
-import Animation from "./animation/Animation";
+import Animation from "../../elements/Animations/Animation";
 import styles from "styled-components";
 import MobileHeader from "./MobileHeader";
 import CircularMenu from "./CircularMenu";
 import { isModalState } from "../../store/form";
-
+import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
+import Title from "../../elements/Texts/Title";
+import Text from "../../elements/Texts/Text";
+import MenuIcon from "@mui/icons-material/Menu";
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -48,19 +50,47 @@ const MobileLayout = ({ children }: LayoutProps) => {
         background: "#f6f6f6",
       }}
     >
-      <Header
-        handleDrawerOpen={handleDrawerOpen}
-        handleDrawerClose={handleDrawerClose}
-        menuWidth={sidebarWidth}
-        open={open}
-        md={md}
-        sign={`${sign}`}
-      />
-
-      <Main open={open} md={md}>
+      <Main>
         <Animation animation="naturalAnimation" />
-
-        <StyledWrapper maxWidth="xl">
+        <ArrowBox>
+          <Animation animation="ArrowAnimation" />
+        </ArrowBox>
+        <HtmlTooltip
+          placement="left"
+          title={
+            <div
+              style={{
+                backgroundColor: "#fff",
+                padding: "0.3rem",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Title color="#666666" size={1.7}>
+                TIP : 창 크기를 줄여보세요
+              </Title>
+              <Text color="#383333" size={1.5} mx={8} my={4}>
+                {"현재 페이지는 모바일 화면에서 가장 잘 보입니다."}
+              </Text>
+            </div>
+          }
+        >
+          <button
+            style={{
+              border: 0,
+              outline: 0,
+              backgroundColor: "transparent",
+              display: "fixed",
+              height: "100vh",
+              width: "100px",
+              position: "fixed",
+              right: 0,
+            }}
+          ></button>
+        </HtmlTooltip>
+        <StyledWrapper>
           <CircularMenu />
           {md && (
             <MobileInnerWrapper>
@@ -106,32 +136,18 @@ const MobileLayout = ({ children }: LayoutProps) => {
 
 export default MobileLayout;
 
-const StyledWrapper: any = styled(Container, {
-  shouldForwardProp: (prop) => prop !== "md",
-})<{
-  md?: boolean;
-}>(({ theme, md }) => ({
+const StyledWrapper: any = styled(Container)({
   overflow: "hidden",
   position: "relative",
   width: "100%",
   height: "100%",
   zIndex: 1,
-}));
+});
 
-const Main = styled("main", {
-  shouldForwardProp: (prop) => prop !== "open" && prop !== "md",
-})<{
-  open?: boolean;
-  md?: boolean;
-}>(({ theme, open, md }) => ({
+const Main = styled("main")({
   flexGrow: 1,
   width: "100%",
-  transition: theme.transitions.create("margin", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  marginLeft: md ? 0 : `-${sidebarWidth}px`,
-}));
+});
 
 const StyledSpinner = styled(Box)({
   overflow: "hidden",
@@ -211,4 +227,26 @@ const MobileContent = styled(Box, {
   paddingInline: 15,
   paddingTop: 10,
   paddingBottom: 50,
+}));
+
+const ArrowBox = styles.div`
+width: 8rem;
+position: fixed;
+right:0;
+transform: rotate(180deg);
+`;
+
+const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: "#6AE9CF",
+    color: "#666666",
+    maxWidth: 240,
+    marginRight: 10,
+    marginBottom: 50,
+    fontSize: theme.typography.pxToRem(12),
+    border: 0,
+    boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+  },
 }));
