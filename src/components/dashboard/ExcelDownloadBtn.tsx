@@ -1,8 +1,9 @@
 import { Applicant } from "../../types/datshboard";
-import dummy from "./dummy.json";
+import applicants from "./dummy.json";
 
+// TODO: dummy data를 List로부터 받은 데이터로 수정
 const ExcelDownloadBtn = () => {
-  return <button>엑셀 다운로드</button>;
+  return <button onClick={() => exportToCsv(applicants)}>엑셀 다운로드</button>;
 };
 
 export default ExcelDownloadBtn;
@@ -34,22 +35,9 @@ const exportToCsv = (applicants: Applicant[]) => {
     "DateOfApplication,Name,Gender,DateOfBirth,Phone,Email,transportation,Address,isChecked",
   ];
 
-  // TODO: applicants.reduce로 수정
-  const applicantsCsv = dummy.reduce((acc: string[], applicant: Applicant) => {
-    const {
-      DateOfApplication,
-      name,
-      gender,
-      DateOfBirth,
-      phone,
-      email,
-      transportation,
-      address,
-      isChecked,
-    } = applicant;
-
-    acc.push(
-      [
+  const applicantsCsv = applicants.reduce(
+    (acc: string[], applicant: Applicant) => {
+      const {
         DateOfApplication,
         name,
         gender,
@@ -59,10 +47,25 @@ const exportToCsv = (applicants: Applicant[]) => {
         transportation,
         address,
         isChecked,
-      ].join(","),
-    );
-    return acc;
-  }, []);
+      } = applicant;
+
+      acc.push(
+        [
+          DateOfApplication,
+          name,
+          gender,
+          DateOfBirth,
+          phone,
+          email,
+          transportation,
+          address,
+          isChecked,
+        ].join(","),
+      );
+      return acc;
+    },
+    [],
+  );
 
   downloadFile({
     data: [...headers, ...applicantsCsv].join("\n"),
