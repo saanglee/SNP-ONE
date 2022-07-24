@@ -13,7 +13,7 @@ import FormRadio from "../form/FormRadio";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import ResidenceSelect from "./ResidenceSelect";
 import Terms from "./Terms";
-import FormCheckbox from "../form/FormCheckbox";
+import FormCheckboxBtn from "../form/FormCheckboxBtn";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 type FormValues = {
@@ -21,6 +21,8 @@ type FormValues = {
   birth: string;
   email: string;
   name: string;
+  transportation: string;
+  gender: string;
 };
 const SignForm = () => {
   const { register, handleSubmit, control } = useForm<FormValues>();
@@ -66,7 +68,14 @@ const SignForm = () => {
         label="mode switch"
       /> */}
         <FormInput title="이름" name="name" control={control} />
-        <FormRadio type="radio" title="성별" values={["female", "male"]} />
+        <Box sx={{ mt: 1 }}>
+          <FormRadio
+            name="gender"
+            title="성별"
+            control={control}
+            values={["female", "male"]}
+          />
+        </Box>
         <FormInput
           title="생년월일"
           placeholder="YYYY.MM.DD"
@@ -98,10 +107,10 @@ const SignForm = () => {
           }}
         />
         <FormInput title="이메일" name="email" control={control} />
-        <FormCheckbox
-          type="checkbox"
-          title="주로 이용하는 교통 수단"
-          subText="주로 이용하는 교통 수단을 모두 선택해주세요."
+        <FormCheckboxBtn
+          name="transportation"
+          control={control}
+          register={register}
           values={[
             "버스",
             "지하철",
