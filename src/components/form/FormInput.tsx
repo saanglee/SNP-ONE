@@ -4,13 +4,21 @@ import { Input, InputLabel, TextField, FormControl } from "@mui/material";
 interface InputProps {
   title: string;
   placeholder?: string;
-  maxRows?: number;
-  onKeyUp?: any;
-  onChange?: any;
+  onKeyUp?: React.KeyboardEvent;
+  onChange?: React.ChangeEvent;
+  inputRef?: any;
+  inputProps?: any;
 }
 
-const FormInput = ({ title, placeholder, maxRows }: InputProps) => {
+const FormInput = ({
+  title,
+  placeholder,
+  inputRef,
+  inputProps,
+}: InputProps) => {
   const [value, setValue] = React.useState("");
+  const inputsRef = React.useRef<HTMLInputElement | any>(null);
+
   const regexp = {
     korean: /[a-z0-9]|[ [\]{}()<>?|`~!@#$%^&*-_+=,.;:"'\\]/g,
     email: /^([0-9a-zA-Z_.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/,
@@ -20,6 +28,7 @@ const FormInput = ({ title, placeholder, maxRows }: InputProps) => {
   };
 
   const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    console.log(inputRef.current.value);
     if (title === "이름") {
       if (regexp.korean.test(event.target.value)) {
         event.target.value = event.target.value.replace(regexp.korean, "");
@@ -30,6 +39,11 @@ const FormInput = ({ title, placeholder, maxRows }: InputProps) => {
         .replace(/(\..*)\./g, "$1");
     }
   };
+  React.useEffect(() => {
+    if (inputRef.current.value === "") {
+      // console.log("활성화");
+    }
+  }, [value]);
 
   return (
     <FormControl sx={{ mb: 3 }}>
@@ -43,7 +57,8 @@ const FormInput = ({ title, placeholder, maxRows }: InputProps) => {
         onKeyUp={handleKeyUp}
         value={value}
         placeholder={placeholder}
-        maxRows={maxRows}
+        inputRef={inputRef}
+        inputProps={inputProps}
       />
     </FormControl>
   );

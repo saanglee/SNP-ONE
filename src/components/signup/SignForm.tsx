@@ -24,9 +24,15 @@ import FormCheckbox from "../form/FormCheckbox";
 
 const SignForm = () => {
   const [value, setValue] = React.useState("female");
-  const [selectOpen, setSelectOpen] = useState(false);
-  const [termsOpen, setTermsOpen] = useState(false);
+  const [isSelectOpen, setISSelectOpen] = useState(false);
+  const [isTermsOpen, setIsTermsOpen] = useState(false);
+  const [termsType, setTermsType] = useState("개인정보");
+  const [ckeckApply, setCheckApply] = useState(false);
 
+  const nameRef = React.useRef<HTMLInputElement | any>(null);
+  const birthRef = React.useRef<HTMLInputElement | any>(null);
+  const phoneRef = React.useRef<HTMLInputElement | any>(null);
+  const emailRef = React.useRef<HTMLInputElement | any>(null);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
   };
@@ -46,17 +52,18 @@ const SignForm = () => {
   };
 
   const handleResidenceOpen = () => {
-    setSelectOpen(true);
+    setIsTermsOpen(true);
   };
   const handleResidenceClose = () => {
-    setSelectOpen(false);
+    setIsTermsOpen(false);
   };
 
-  const handleTermsOpen = () => {
-    setTermsOpen(true);
+  const handleTermsOpen = (event: string): void => {
+    setIsTermsOpen(true);
+    setTermsType(event);
   };
   const handleTermsClose = () => {
-    setTermsOpen(false);
+    setIsTermsOpen(false);
   };
   return (
     <FormGroup>
@@ -64,18 +71,31 @@ const SignForm = () => {
         control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
         label="mode switch"
       /> */}
-      <FormInput title="이름" />
+      <FormInput title="이름" inputRef={nameRef} />
       <FormRadio type="radio" title="성별" values={["female", "male"]} />
-      <FormInput title="생년월일" placeholder="YYYY.MM.DD" />
+      <FormInput
+        title="생년월일"
+        placeholder="YYYY.MM.DD"
+        inputRef={birthRef}
+        inputProps={{
+          maxLength: 8,
+        }}
+      />
       <Box sx={{ mb: 3 }}>
         <Typography sx={{ mb: 2, fontWeight: 500 }}>거주지역</Typography>
         <Button variant="outlined" onClick={handleResidenceOpen}>
           거주지역 선택
         </Button>
       </Box>
-      <ResidenceSelect open={selectOpen} handleClose={handleResidenceClose} />
-      <FormInput title="연락처" />
-      <FormInput title="이메일" />
+      <ResidenceSelect open={isSelectOpen} handleClose={handleResidenceClose} />
+      <FormInput
+        title="연락처"
+        inputRef={phoneRef}
+        inputProps={{
+          maxLength: 11,
+        }}
+      />
+      <FormInput title="이메일" inputRef={emailRef} />
       <FormCheckbox
         type="checkbox"
         title="주로 이용하는 교통 수단"
@@ -112,7 +132,7 @@ const SignForm = () => {
             }
             control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
           />
-          <Button onClick={handleTermsOpen}>
+          <Button onClick={() => handleTermsOpen("개인정보")}>
             <KeyboardArrowRightIcon />
           </Button>
         </StyledTerms>
@@ -125,13 +145,21 @@ const SignForm = () => {
             }
             control={<Checkbox checked={checked[1]} onChange={handleChange3} />}
           />
-          <Button onClick={handleTermsOpen}>
+          <Button onClick={() => handleTermsOpen("제3자")}>
             <KeyboardArrowRightIcon />
           </Button>
-          <Terms open={termsOpen} handleClose={handleTermsClose} />
+          <Terms
+            open={isTermsOpen}
+            type={termsType}
+            handleClose={handleTermsClose}
+          />
         </StyledTerms>
       </Box>
-      <Button variant="contained" sx={{ height: 48, fontSize: 16 }}>
+      <Button
+        disabled={ckeckApply === false}
+        variant="contained"
+        sx={{ height: 48, fontSize: 16 }}
+      >
         지원하기
       </Button>
     </FormGroup>
