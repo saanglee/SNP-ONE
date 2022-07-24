@@ -1,7 +1,5 @@
 import * as React from "react";
-import { Options } from "react-lottie";
 import { Container, LottieWrapper } from "./Animation.styled";
-import * as For404Animation from "../../static/animations/error-404-background.json";
 import { getAnimations } from "../../hooks/getAnimations";
 
 type AnimationType = {
