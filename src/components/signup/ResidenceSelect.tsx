@@ -22,11 +22,16 @@ import { useRecoilState } from "recoil";
 import { ResidenceValue } from "../../store/form";
 
 interface ResidenceSelectProps {
+  control: any;
   open: boolean;
   handleClose: () => void;
 }
 
-const ResidenceSelect = ({ open, handleClose }: ResidenceSelectProps) => {
+const ResidenceSelectModal = ({
+  open,
+  handleClose,
+  control,
+}: ResidenceSelectProps) => {
   const { getCitys } = useCitysModel();
   const [citys, setCitys] = useState<string[] | undefined | any>();
   const [regions, setRegions] = useState<string | HTMLSelectElement>();
@@ -56,7 +61,6 @@ const ResidenceSelect = ({ open, handleClose }: ResidenceSelectProps) => {
     setResidence(regions + " " + distric);
     handleClose();
   };
-
   return (
     <StyledModal open={open}>
       <StyledModalContent>
@@ -79,19 +83,19 @@ const ResidenceSelect = ({ open, handleClose }: ResidenceSelectProps) => {
             <FormSelect
               label="시/도"
               name="region"
-              id="region"
               options={citys && Object.keys(citys)}
-              onChange={handleChangeRegion}
-              value={regions || ""}
+              onBlur={handleChangeRegion}
+              control={control}
+              sx={{ width: 135, mr: 2 }}
             />
 
             <FormSelect
               label="시/구/군"
               name="distric"
-              id="distric"
-              onChange={handleChangeDistric}
+              onBlur={handleChangeDistric}
               options={districs}
-              value={distric || ""}
+              control={control}
+              sx={{ width: 135 }}
             />
           </Box>
           <Button
@@ -107,7 +111,7 @@ const ResidenceSelect = ({ open, handleClose }: ResidenceSelectProps) => {
   );
 };
 
-export default ResidenceSelect;
+export default ResidenceSelectModal;
 
 const StyledModal = styled(Box, {
   shouldForwardProp: (prop) => prop !== "open",

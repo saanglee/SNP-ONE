@@ -12,12 +12,12 @@ import {
 import FormInput from "../form/FormInput";
 import FormRadio from "../form/FormRadio";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import ResidenceSelect from "./ResidenceSelect";
+import ResidenceSelectModal from "./ResidenceSelect";
 import Terms from "./Terms";
 import FormCheckboxBtn from "../form/FormCheckboxBtn";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { ResidenceValue } from "../../store/form";
-import { useRecoilState } from "recoil";
+import { ResidenceValue, FormData } from "../../store/form";
+import { useRecoilState, useRecoilValue } from "recoil";
 type FormValues = {
   phone: string;
   birth: string;
@@ -25,14 +25,20 @@ type FormValues = {
   name: string;
   transportation: string;
   gender: string;
+  region: string;
+  distric: string;
 };
 const SignForm = () => {
   const { register, handleSubmit, control } = useForm<FormValues>();
-  const onSubmit: SubmitHandler<FormValues> = (data: any) => console.log(data);
+  const onSubmit: SubmitHandler<FormValues> = (data: any) => {
+    console.log(data);
 
-  const [residence, setResidence] = useRecoilState(ResidenceValue);
+    // TODO: 데이터 추가하기
+  };
 
-  const [value, setValue] = React.useState("female");
+  const residence = useRecoilValue(ResidenceValue);
+  const [formData, setFormData] = useRecoilState(FormData);
+
   const [isOpenSelect, setIsOpenSelect] = useState(false);
   const [isTermsOpen, setIsTermsOpen] = useState(false);
   const [termsType, setTermsType] = useState("개인정보");
@@ -83,7 +89,7 @@ const SignForm = () => {
         <FormInput
           title="생년월일"
           placeholder="YYYY.MM.DD"
-          name="DateOfBirth"
+          name="birth"
           control={control}
           inputProps={{
             maxLength: 8,
@@ -98,9 +104,11 @@ const SignForm = () => {
           </Button>
           <Typography sx={{ mt: 1, fontSize: 14 }}>{residence}</Typography>
         </Box>
-        <ResidenceSelect
+        {/*  */}
+        <ResidenceSelectModal
           open={isOpenSelect}
           handleClose={handleResidenceClose}
+          control={control}
         />
         <FormInput
           title="연락처"
