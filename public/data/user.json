@@ -1,0 +1,35 @@
+[
+  {
+    "name": "김수빈",
+    "birth": "2022.10.05",
+    "email": "1008sb@email.com",
+    "gender": "female",
+    "phone": "01011111234",
+    "region": "제주특별자치도",
+    "distric": "서귀포시",
+    "transportation": ["지하철", "전동킥보드"],
+    "date": "2022-07-11 13:12:22"
+  },
+  {
+    "name": "김수빈",
+    "birth": "2022.10.05",
+    "email": "1008sb@email.com",
+    "gender": "female",
+    "phone": "01011111234",
+    "region": "제주특별자치도",
+    "distric": "서귀포시",
+    "transportation": ["지하철", "전동킥보드"],
+    "date": "2022-07-11 13:12:22"
+  },
+  {
+    "name": "김수빈",
+    "birth": "2022.10.05",
+    "email": "1008sb@email.com",
+    "gender": "female",
+    "phone": "01011111234",
+    "region": "제주특별자치도",
+    "distric": "서귀포시",
+    "transportation": ["지하철", "전동킥보드"],
+    "date": "2022-07-11 13:12:22"
+  }
+]
