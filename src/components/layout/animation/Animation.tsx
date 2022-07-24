@@ -8,37 +8,44 @@ import * as springAnimation from "./animations/spring-background.json";
 import * as underwaterAnimation from "./animations/underwater-background.json";
 import * as businessAnimation from "./animations/business-background.json";
 import * as naturalAnimation from "./animations/natural-background.json";
+import * as For404Animation from "./animations/error-404-background.json";
 
-const animationCompleteOptions = {
-  loop: true,
-  autoplay: true,
-  animationData: naturalAnimation,
-  rendererSettings: {
-    preserveAspectRatio: "xMidYMid slice",
-  },
+type AnimationType = {
+  animation?: string;
 };
 
-const useCallback = (callback: any, values: any) => {
-  const self = React.useRef({
-    values,
-    handler: (...args: any) => {
-      return callback(new Error(...args, self.current.values));
+type ContainerType = {
+  size?: string;
+};
+
+const Animation = (props: AnimationType) => {
+  const animationCompleteOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: naturalAnimation,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
     },
-  });
-  self.current.values = values;
-  return self.current.handler;
-};
+  };
 
-const Animation = () => {
-  const [animationSwap, setAnimationSwap] = React.useState<boolean | null>(
-    false,
-  );
+  const animation404Options = {
+    loop: true,
+    autoplay: true,
+    animationData: For404Animation,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
 
   return (
-    <Container>
+    <Container size={props?.animation}>
       <LottieWrapper
         isClickToPauseDisabled
-        options={animationCompleteOptions}
+        options={
+          props?.animation === "For404Animation"
+            ? animation404Options
+            : animationCompleteOptions
+        }
       />
     </Container>
   );

@@ -58,7 +58,7 @@ const MobileLayout = ({ children }: LayoutProps) => {
       />
 
       <Main open={open} md={md}>
-        <Animation />
+        <Animation animation="naturalAnimation" />
 
         <StyledWrapper maxWidth="xl">
           <CircularMenu />
