@@ -5,43 +5,40 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
+import { Controller } from "react-hook-form";
 
 interface SelectProps {
   label: string;
   name: string;
-  id: string;
-  options?: string[];
-  onChange: any;
-  value?: string | HTMLSelectElement | undefined;
+  options: string[] | undefined;
+  control: any;
+  sx?: object;
+  onBlur?: any;
 }
 
 const FormSelect = ({
   label,
   name,
-  id,
   options,
-  onChange,
-  value,
+  control,
+  sx,
+  onBlur,
 }: SelectProps) => {
   return (
-    <FormControl sx={{ m: 1, minWidth: 120 }}>
-      <InputLabel htmlFor={id}>{label}</InputLabel>
-      <Select
-        label={label}
-        input={<OutlinedInput name={name} id={id} />}
-        inputProps={{
-          id: `${id}-select`,
-        }}
-        onChange={onChange}
-        value={value}
-      >
-        {options?.map((option, index) => (
-          <MenuItem key={option + index} value={option}>
-            {option}
-          </MenuItem>
-        ))}
-      </Select>
-    </FormControl>
+    <Controller
+      name={name}
+      control={control}
+      defaultValue=""
+      render={({ field }) => (
+        <Select {...field} onBlur={onBlur} sx={sx}>
+          {options?.map((option, index) => (
+            <MenuItem key={option + index} value={option}>
+              {option}
+            </MenuItem>
+          ))}
+        </Select>
+      )}
+    />
   );
 };
 

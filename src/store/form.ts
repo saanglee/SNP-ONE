@@ -9,3 +9,8 @@ export const ResidenceValue = atom({
   key: "ResidenceValue",
   default: "",
 });
+
+export const FormData = atom({
+  key: "FormData",
+  default: {},
+});

@@ -17,21 +17,26 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useCitysModel } from "../../api/models/useCityModels";
-import FormSelect from "../../components/form/FormSelect";
+import FormSelect from "../form/FormSelect";
 import { useRecoilState } from "recoil";
 import { ResidenceValue } from "../../store/form";
 
 interface ResidenceSelectProps {
+  control: any;
   open: boolean;
   handleClose: () => void;
 }
 
-const ResidenceSelect = ({ open, handleClose }: ResidenceSelectProps) => {
+const ResidenceSelectModal = ({
+  open,
+  handleClose,
+  control,
+}: ResidenceSelectProps) => {
   const { getCitys } = useCitysModel();
   const [citys, setCitys] = useState<string[] | undefined | any>();
   const [regions, setRegions] = useState<string | HTMLSelectElement>();
-  const [districs, setDistrics] = useState<string[]>();
-  const [distric, setDistric] = useState<string | HTMLSelectElement>();
+  const [districts, setDistricts] = useState<string[]>();
+  const [district, setDistrict] = useState<string | HTMLSelectElement>();
 
   const [, setResidence] = useRecoilState(ResidenceValue);
   useEffect(() => {
@@ -45,18 +50,19 @@ const ResidenceSelect = ({ open, handleClose }: ResidenceSelectProps) => {
 
   const handleChangeRegion = (event: SelectChangeEvent<HTMLSelectElement>) => {
     setRegions(event.target.value);
-    setDistrics(citys[`${event.target.value}`]);
+    setDistricts(citys[`${event.target.value}`]);
   };
 
-  const handleChangeDistric = (event: SelectChangeEvent<HTMLSelectElement>) => {
-    setDistric(event.target.value);
+  const handleChangeDistrict = (
+    event: SelectChangeEvent<HTMLSelectElement>,
+  ) => {
+    setDistrict(event.target.value);
   };
 
   const handleSelectValue = () => {
-    setResidence(regions + " " + distric);
+    setResidence(regions + " " + district);
     handleClose();
   };
-
   return (
     <StyledModal open={open}>
       <StyledModalContent>
@@ -79,19 +85,19 @@ const ResidenceSelect = ({ open, handleClose }: ResidenceSelectProps) => {
             <FormSelect
               label="시/도"
               name="region"
-              id="region"
               options={citys && Object.keys(citys)}
-              onChange={handleChangeRegion}
-              value={regions || ""}
+              onBlur={handleChangeRegion}
+              control={control}
+              sx={{ width: 135, mr: 2 }}
             />
 
             <FormSelect
               label="시/구/군"
-              name="distric"
-              id="distric"
-              onChange={handleChangeDistric}
-              options={districs}
-              value={distric || ""}
+              name="district"
+              onBlur={handleChangeDistrict}
+              options={districts}
+              control={control}
+              sx={{ width: 135 }}
             />
           </Box>
           <Button
@@ -107,7 +113,7 @@ const ResidenceSelect = ({ open, handleClose }: ResidenceSelectProps) => {
   );
 };
 
-export default ResidenceSelect;
+export default ResidenceSelectModal;
 
 const StyledModal = styled(Box, {
   shouldForwardProp: (prop) => prop !== "open",

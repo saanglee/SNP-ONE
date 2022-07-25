@@ -8,6 +8,7 @@ interface InputProps {
   inputProps?: any;
   name?: any;
   control?: any;
+  sx?: any;
 }
 
 const FormInput = ({
@@ -16,6 +17,7 @@ const FormInput = ({
   name,
   control,
   title,
+  sx,
 }: InputProps) => {
   const [value, setValue] = React.useState("");
   const inputsRef = React.useRef<HTMLInputElement | any>(null);
@@ -37,6 +39,7 @@ const FormInput = ({
           variant="standard"
           placeholder={placeholder}
           inputProps={inputProps}
+          sx={sx}
         />
       )}
     />
