@@ -19,9 +19,10 @@ import Terms from "./Terms";
 import FormCheckboxBtn from "../form/FormCheckboxBtn";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ResidenceValue } from "../../store/form";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { FormValues } from "../../types/form";
 import { RegexName, RegexBirth, RegexPhone, RegexEmail } from "./regex";
+import axios from "axios";
 
 const SignForm = () => {
   const today = format(new Date(), "yyyy-MM-dd HH:mm:s");
@@ -33,12 +34,17 @@ const SignForm = () => {
     control,
     formState: { errors, isDirty, isValid },
   } = useForm<FormValues>({ mode: "onChange" });
-  const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-    console.log(data);
-
-    // TODO: 서버에 데이터 전송
+  const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
+    const postUser = await fetch("http://localhost:8000/user", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => console.log(error));
   };
-  console.log(errors);
   const residence = useRecoilValue(ResidenceValue);
 
   const [isOpenSelect, setIsOpenSelect] = useState(false);
