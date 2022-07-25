@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import cx from "classnames";
 
 export interface Props {
   itemsPerPage: number;
@@ -18,64 +19,70 @@ const PageNation: React.FC<Props> = ({
   for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
     pageNumbers.push(i);
   }
-  const totalPages = pageNumbers.length;
+  const TOTAL_PAGES = pageNumbers.length;
+  const LAST_PAGE = pageNumbers.length;
+  const FIRST_PAGE = 1;
+  const MOVE_FORWARD = "<";
+  const MOVE_BACKWORD = ">";
   // console.log(itemsPerPage, totalItems, currentPage);
+
+  const handleMoveBackword = () => {
+    if (TOTAL_PAGES === 0) return;
+    if (currentPage === 1) return;
+    paginate(currentPage - 1);
+  };
+
+  const handleMoveforword = () => {
+    if (TOTAL_PAGES === 0) return;
+    if (currentPage === TOTAL_PAGES) return;
+    paginate(currentPage + 1);
+  };
 
   return (
     <div>
       <PageNationContainer>
-        <NumberOfItems> 1-4 of {totalItems}</NumberOfItems>
+        <NumberOfItems>
+          전체 {totalItems} 페이지 중 {currentPage} 페이지
+        </NumberOfItems>
         <PageUl className="pagination">
-          {/* Move backword */}
-          <PageButton onClick={() => paginate(currentPage - 1)} type="button">
-            &lt;
+          <PageButton
+            onClick={handleMoveBackword}
+            type="button"
+            className="next_button"
+          >
+            {MOVE_FORWARD}
           </PageButton>
-          {/* First page */}
+
           <PageButton
             onClick={() => paginate(1)}
             type="button"
-
-            // className={classNames(styles.pageItem, {[styles.active]: page === 1,})}
+            className={cx("", { activePage: currentPage === FIRST_PAGE })}
           >
-            {1}
+            {FIRST_PAGE}
           </PageButton>
+
           {currentPage > 3 && <span className="separator">...</span>}
-          {/* {pageNumbers.map((number) => (
-            <PageLi key={number} className="page-item">
-              <PageSpan onClick={() => paginate(number)} className="page-link">
-                {number}
-              </PageSpan>
-            </PageLi>
-          ))} */}
-          {currentPage === totalPages &&
-            totalPages > 3 && ( // 전체 페이지가 2개 이하, 현재 페이지가 마지막 페이지일 경우
-              <PageButton
-                onClick={() => paginate(currentPage - 2)}
-                type="button"
-              >
-                {currentPage - 2}
-              </PageButton>
-            )}
-          {currentPage > 2 &&
-            currentPage !== 0 && ( // 현재 페이지가 세번째페이지 이상일 경우
-              <PageButton
-                onClick={() => paginate(currentPage - 1)}
-                type="button"
-              >
-                {currentPage - 1}
-              </PageButton>
-            )}
-          {currentPage !== 1 &&
-            currentPage !== totalPages && ( // 현재 페이지가 첫번째페이지가 아니고 전체 페이지도 아닐 경우??
-              <PageButton
-                onClick={() => paginate(currentPage)}
-                type="button"
-                // className={[styles.pageItem, styles.active].join(' ')}
-              >
-                {currentPage}
-              </PageButton>
-            )}
-          {currentPage < totalPages - 1 && ( // 현재페이지가 마지막 페이지의 -1 번째 페이지보다 작을 경우?
+
+          {currentPage === LAST_PAGE && TOTAL_PAGES > 3 && (
+            <PageButton onClick={() => paginate(currentPage - 2)} type="button">
+              {currentPage - 2}
+            </PageButton>
+          )}
+          {currentPage > 2 && currentPage !== 0 && (
+            <PageButton onClick={() => paginate(currentPage - 1)} type="button">
+              {currentPage - 1}
+            </PageButton>
+          )}
+          {currentPage !== 1 && currentPage !== TOTAL_PAGES && (
+            <PageButton
+              onClick={() => paginate(currentPage)}
+              type="button"
+              className="activePage"
+            >
+              {currentPage}
+            </PageButton>
+          )}
+          {currentPage < TOTAL_PAGES - 1 && (
             <PageButton
               onClick={() => paginate(currentPage + 1)}
               type="button"
@@ -84,37 +91,37 @@ const PageNation: React.FC<Props> = ({
               {currentPage + 1}
             </PageButton>
           )}
-          {currentPage === 1 &&
-            totalPages > 3 && ( // 현재페이지가 첫번째이고 총 페이지 갯수는 2 이하일 경우
-              <PageButton
-                onClick={() => paginate(currentPage + 2)}
-                type="button"
-                // className={styles.pageItem}
-              >
-                {currentPage + 2}
-              </PageButton>
-            )}
-          {currentPage < totalPages - 2 && <div className="separator">...</div>}
-          {/* Last page */}
-          {totalPages !== 0 && (
+          {currentPage === 1 && TOTAL_PAGES > 3 && (
             <PageButton
-              onClick={() => paginate(totalPages)}
+              onClick={() => paginate(currentPage + 2)}
               type="button"
-              // className={classNames(styles.pageItem, {[styles.active]: page === totalPages,})}
+              // className={styles.pageItem}
             >
-              {totalPages}
+              {currentPage + 2}
+            </PageButton>
+          )}
+          {currentPage < TOTAL_PAGES - 2 && (
+            <div className="separator">...</div>
+          )}
+          {/* Last page */}
+          {TOTAL_PAGES !== 0 && (
+            <PageButton
+              onClick={() => paginate(LAST_PAGE)}
+              type="button"
+              className={cx("", { activePage: currentPage === LAST_PAGE })}
+            >
+              {LAST_PAGE}
             </PageButton>
           )}
           {/* Move forword */}
-          {currentPage !== totalPages && (
-            <PageButton
-              onClick={() => paginate(currentPage + 1)}
-              type="button"
-              // className={[styles.pageItem, styles.sides].join(" ")}
-            >
-              &gt;
-            </PageButton>
-          )}
+
+          <PageButton
+            onClick={handleMoveforword}
+            type="button"
+            className="next_button"
+          >
+            {MOVE_BACKWORD}
+          </PageButton>
         </PageUl>
       </PageNationContainer>
     </div>
@@ -144,7 +151,6 @@ const PageUl = styled.ul`
   text-align: center;
   width: 300px;
   height: inherit;
-  border: 1px solid black;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -160,30 +166,10 @@ const PageButton = styled.button`
   &:hover {
     background-color: white;
   }
-`;
-/* ----------------------- */
-const PageLi = styled.li`
-  display: inline-block;
-  font-size: 17px;
-  padding: 5px;
-  border-radius: 5px;
-  width: 25px;
-  &:hover {
-    cursor: pointer;
-    color: white;
-    background-color: #263a6c;
+  &.activePage {
+    border: 2px solid #6e8cd3;
   }
-  &:focus::after {
-    color: white;
-    background-color: #263a6c;
-  }
-`;
-
-const PageSpan = styled.span`
-  &:hover::after,
-  &:focus::after {
-    border-radius: 100%;
-    color: white;
-    background-color: #263a6c;
+  &.next_button:hover {
+    background-color: #cecece;
   }
 `;
