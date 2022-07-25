@@ -1,8 +1,7 @@
 import { Applicant } from "../../types/datshboard";
-import applicants from "./dummy.json";
 
 // TODO: dummy data를 List로부터 받은 데이터로 수정
-const ExcelDownloadBtn = () => {
+const ExcelDownloadBtn = (applicants: Applicant[]) => {
   return <button onClick={() => exportToCsv(applicants)}>엑셀 다운로드</button>;
 };
 
