@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   FormGroup,
   FormControlLabel,
@@ -22,11 +23,11 @@ import { ResidenceValue } from "../../store/form";
 import { useRecoilValue } from "recoil";
 import { FormValues } from "../../types/form";
 import { RegexName, RegexBirth, RegexPhone, RegexEmail } from "./regex";
-import axios from "axios";
 
 const SignForm = () => {
   const today = format(new Date(), "yyyy-MM-dd HH:mm:s");
   const userId = Math.random().toString(36).substring(2, 10);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -42,6 +43,9 @@ const SignForm = () => {
     })
       .then((response) => {
         console.log(response);
+        if (response.status === 201) {
+          alert("지원이 완료되었습니다");
+        }
       })
       .catch((error) => console.log(error));
   };
