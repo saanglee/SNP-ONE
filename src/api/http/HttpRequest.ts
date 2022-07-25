@@ -9,21 +9,19 @@ export class HttpRequest {
     this.service = service;
   }
 
-  get(url: ApiUrlType, queryString = "") {
-    return this.service.get(`${url}?${queryString}`).catch((error) => {
-      console.log("error: ", error);
-    });
+  get<T>(url: ApiUrlType, queryString = "") {
+    return this.service
+      .get<T>(`${url}?${queryString}`)
+      .then((response) => response.data);
   }
 
   post<T>(url: ApiUrlType, data: T) {
-    return this.service.post(`${url}`, data).catch(console.log);
+    return this.service.post(`${url}`, data).then((response) => response.data);
   }
 
-  patch<T>(id: number, data: T) {
-    return this.service.patch(`/${id}`, data);
+  patch<T>(url: ApiUrlType, id: string, data: T) {
+    return this.service
+      .patch(`${url}/${id}`, data)
+      .then((response) => response.data);
   }
-
-  // delete(url: ApiUrlType, id: number) {
-  //   return this.service.delete(`${url}`, id);
-  // }
 }
