@@ -1,17 +1,11 @@
 import * as React from "react";
 import {
-  FormGroup,
-  FormLabel,
-  FormControlLabel,
-  Switch,
   Box,
   Checkbox,
-  styled,
   IconButton,
   Typography,
   Toolbar,
   AppBar,
-  Link,
   useMediaQuery,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -19,6 +13,8 @@ import Logo from "../../static/images/e.png";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { activeStatus } from "../../store/global";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
+import styled from "styled-components";
+import { Link, Navigate } from "react-router-dom";
 
 const MobileHeader = () => {
   const [active, setActive] = useRecoilState(activeStatus);
@@ -62,9 +58,9 @@ const MobileHeader = () => {
                 {open ? (
                   <Box>
                     관리자 페이지로 가시겠어요?
-                    <Link href="/dash" color="inherit">
+                    <StyledLink to="/dash">
                       <strong> __CLICK!</strong>
-                    </Link>
+                    </StyledLink>
                   </Box>
                 ) : null}
               </Box>
@@ -95,3 +91,7 @@ const MobileHeader = () => {
 };
 
 export default MobileHeader;
+
+const StyledLink = styled(Link)`
+  color: #fff;
+`;

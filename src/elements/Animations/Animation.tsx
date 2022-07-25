@@ -7,8 +7,6 @@ type AnimationType = {
 };
 
 const Animation = (props: AnimationType) => {
-  console.log();
-
   const animationCompleteOptions = {
     loop: true,
     autoplay: true,

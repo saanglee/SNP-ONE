@@ -1,11 +1,11 @@
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import styles from "styled-components";
-import { Link, styled } from "@mui/material";
+import { styled } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { activeStatus } from "../../store/global";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
@@ -17,7 +17,6 @@ const CircularMenu = () => {
   return (
     <>
       <CircularContainer
-        id="circularMenu"
         className={
           active
             ? "circular-menu circular-menu-left active"
@@ -32,25 +31,32 @@ const CircularMenu = () => {
         </FloatingButton>
 
         <ItemWrapper>
-          <BootstrapTooltip title="Home" placement="top">
+          <BootstrapTooltip
+            title={
+              location.pathname === "/" || location.pathname === "/sign"
+                ? "여기가 홈입니다"
+                : "Home"
+            }
+            placement="top"
+          >
             <button className={active ? "active menu-item" : "menu-item"}>
-              <Link href="/sign" color="inherit">
+              <StyledLink to="/sign">
                 <HomeIcon className="icon" />
-              </Link>
+              </StyledLink>
             </button>
           </BootstrapTooltip>
           <BootstrapTooltip title="AdminPage" placement="top">
             <button className={active ? "active menu-item" : "menu-item"}>
-              <Link href="/dash" color="inherit">
+              <StyledLink to="/dash">
                 <HomeRepairServiceIcon className="icon" />
-              </Link>
+              </StyledLink>
             </button>
           </BootstrapTooltip>
           <BootstrapTooltip title="About us" placement="top">
             <button className={active ? "active menu-item" : "menu-item"}>
-              <Link href="/about" color="inherit">
+              <StyledLink to="/about">
                 <PhoneAndroidIcon className="icon" />
-              </Link>
+              </StyledLink>
             </button>
           </BootstrapTooltip>
         </ItemWrapper>
@@ -60,6 +66,10 @@ const CircularMenu = () => {
 };
 
 export default CircularMenu;
+
+const StyledLink = styles(Link)`
+color: #fff;
+`;
 
 const CircularContainer = styles.div`
   position: fixed;
