@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import Layout from "../components/layout/Layout";
 import ListHeader from "../components/dashboard/ListHeader";
@@ -9,7 +9,7 @@ import PageNation from "../components/dashboard/PageNation";
 
 import { ApplicantList, Applicant } from "../types/datshboard";
 import dummy from "../components/dashboard/dummy.json";
-import { applicantAllData } from "../store/dashboard";
+import { applicantAllData, filteredApplicantData } from "../store/dashboard";
 
 const dateOptionList = [
   { value: "latest", name: "최신순" },
@@ -24,7 +24,8 @@ const checkOptionList = [
 
 const Dashboard = () => {
   const ITEMS_PER_PAGE = 6;
-  const AllAplicants = useRecoilValue<Applicant[]>(applicantAllData);
+  const allAplicants = useRecoilValue<Applicant[]>(applicantAllData);
+  const filteredApplicants = useRecoilValue<Applicant[]>(filteredApplicantData);
 
   const [items, setItems] = useState<ApplicantList>([]);
   const [loading, setLoading] = useState(false);
@@ -34,7 +35,10 @@ const Dashboard = () => {
   const indexOfFirst = indexOfLast - ITEMS_PER_PAGE;
 
   const dummyData = dummy;
-  console.log(AllAplicants);
+  console.log(allAplicants); // 전체데이터
+  console.log(filteredApplicants); // 필터데이터
+  // 전체데이터는 필터데이터와의 차이점을 보여주기 위해 콘솔에 찍었습니다.
+  // 필터데이터를 이용해주시면 됩니다!
 
   useEffect(() => {
     // const allApplicantsArray: ApplicantList = [];
@@ -56,25 +60,23 @@ const Dashboard = () => {
   };
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <Layout>
-        <div style={{ maxWidth: "1500px" }}>
-          <ListHeader />
-          <SearchBar
-            handleChagne={() => {}}
-            dateOptionList={dateOptionList}
-            checkOptionList={checkOptionList}
-          />
-          <List items={getItemsOnCurrentPage(items)} loading={loading} />
-          <PageNation
-            itemsPerPage={ITEMS_PER_PAGE}
-            totalItems={items.length}
-            paginate={setCurrentPage}
-          />
-          {/* <Footer /> */}
-        </div>
-      </Layout>
-    </Suspense>
+    <Layout>
+      <div style={{ maxWidth: "1500px" }}>
+        <ListHeader />
+        <SearchBar
+          handleChagne={() => {}}
+          dateOptionList={dateOptionList}
+          checkOptionList={checkOptionList}
+        />
+        <List items={getItemsOnCurrentPage(items)} loading={loading} />
+        <PageNation
+          itemsPerPage={ITEMS_PER_PAGE}
+          totalItems={items.length}
+          paginate={setCurrentPage}
+        />
+        {/* <Footer /> */}
+      </div>
+    </Layout>
   );
 };
 
