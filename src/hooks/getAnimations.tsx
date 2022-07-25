@@ -25,5 +25,9 @@ export const getAnimations = (animation: AnimationType) => {
       return SpinAnimation;
     case "ArrowAnimation":
       return ArrowAnimation;
+    case "businessAnimation":
+      return businessAnimation;
+    case "underwaterAnimation":
+      return underwaterAnimation;
   }
 };

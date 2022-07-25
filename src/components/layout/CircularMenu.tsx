@@ -34,7 +34,7 @@ const CircularMenu = () => {
         <ItemWrapper>
           <BootstrapTooltip title="Home" placement="top">
             <button className={active ? "active menu-item" : "menu-item"}>
-              <Link href="/dash" color="inherit">
+              <Link href="/sign" color="inherit">
                 <HomeIcon className="icon" />
               </Link>
             </button>
@@ -48,7 +48,7 @@ const CircularMenu = () => {
           </BootstrapTooltip>
           <BootstrapTooltip title="About us" placement="top">
             <button className={active ? "active menu-item" : "menu-item"}>
-              <Link href="/sign" color="inherit">
+              <Link href="/about" color="inherit">
                 <PhoneAndroidIcon className="icon" />
               </Link>
             </button>
