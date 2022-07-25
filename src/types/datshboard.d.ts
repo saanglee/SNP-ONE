@@ -1,4 +1,5 @@
 interface Applicant {
+  id?: string;
   _id?: string;
   DateOfApplication: string | number;
   name: string;

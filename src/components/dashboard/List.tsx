@@ -32,7 +32,7 @@ const List = ({ items, loading }: { items: any; loading: boolean }) => {
 
         <tbody>
           {items.map((item: any, index: number) => {
-            return <ListItem key={item._id} data={item} index={index} />;
+            return <ListItem key={item.id} data={item} index={index} />;
           })}
         </tbody>
       </ListTable>
@@ -47,8 +47,6 @@ export default List;
 const LitsContainer = styled.div`
   border-radius: 8px;
   margin-top: 20px;
-  height: 500px;
-
   display: flex;
   flex-direction: column;
 `;

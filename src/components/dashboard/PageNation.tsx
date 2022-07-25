@@ -20,7 +20,8 @@ const PageNation: React.FC<Props> = ({
 
   return (
     <div>
-      <nav>
+      <PageNationContainer>
+        <NumberOfItems> 1-4 of {totalItems}</NumberOfItems>
         <PageUl className="pagination">
           {pageNumbers.map((number) => (
             <PageLi key={number} className="page-item">
@@ -30,29 +31,37 @@ const PageNation: React.FC<Props> = ({
             </PageLi>
           ))}
         </PageUl>
-      </nav>
+      </PageNationContainer>
     </div>
   );
 };
 
 export default PageNation;
 
+const PageNationContainer = styled.div`
+  background-color: #eff3ff;
+  color: #0f2c6e;
+  height: 50px;
+  border-radius: 10px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px 0 10px;
+`;
+
+const NumberOfItems = styled.div``;
+
 const PageUl = styled.ul`
-  float: left;
+  background-color: #eff3ff;
+  color: #0f2c6e;
   list-style: none;
   text-align: center;
-  border-radius: 3px;
-  color: white;
-  padding: 1px;
-  border-top: 3px solid #186ead;
-  border-bottom: 3px solid #186ead;
-  background-color: rgba(0, 0, 0, 0.4);
 `;
 
 const PageLi = styled.li`
   display: inline-block;
   font-size: 17px;
-  font-weight: 600;
   padding: 5px;
   border-radius: 5px;
   width: 25px;
