@@ -1,5 +1,5 @@
 import { atom, selector } from "recoil";
-import { Applicant, FilterDashboardApplicantData } from "../types/datshboard";
+import { Applicant, FilteredApplicants } from "../types/datshboard";
 import { getApplicantData } from "../api/models/dashboard";
 
 export const applicantAllData = atom({
@@ -15,10 +15,9 @@ const filteredApplicantState = atom({
   default: {
     name: "",
     sort: "asc",
-    address: "전국",
     recruitment: 1,
-    isChecked: true,
-  } as FilterDashboardApplicantData,
+    isChecked: "전체",
+  } as FilteredApplicants,
 });
 
 export const filteredApplicantData = selector({
@@ -30,15 +29,12 @@ export const filteredApplicantData = selector({
     const filterByName = ({ name }: Applicant) =>
       name.includes(filterState.name);
 
-    const filterByCheck = ({ isChecked }: Applicant) =>
-      isChecked === filterState.isChecked;
-
     const filterByRecruitment = ({ DateOfApplication }: Applicant) => {
       const { recruitment } = filterState;
 
       const applicantDate = new Date(DateOfApplication).getTime();
       // TODO: 특정날짜를 어느 날짜로 할지 정하기
-      const referenceDate = new Date().getTime();
+      const referenceDate = new Date("2022.05.02").getTime();
       const timeDifference = applicantDate - referenceDate;
 
       if (recruitment === 1) {
@@ -64,15 +60,17 @@ export const filteredApplicantData = selector({
     const filteredApplicantList = applicantData
       .filter(filterByName)
       .filter(filterByRecruitment)
-      .filter(filterByCheck)
       .sort(sortByDate);
 
-    if (filterState.address === "전국") {
+    if (filterState.isChecked === "전체") {
       return filteredApplicantList;
     }
 
-    return filteredApplicantList.filter(
-      ({ address }: Applicant) => address === filterState.address,
-    );
+    return filteredApplicantList.filter(({ isChecked }: Applicant) => {
+      if (filterState.isChecked === "당첨") {
+        return isChecked;
+      }
+      return !isChecked;
+    });
   },
 });
