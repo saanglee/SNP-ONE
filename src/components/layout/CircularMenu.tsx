@@ -31,7 +31,14 @@ const CircularMenu = () => {
         </FloatingButton>
 
         <ItemWrapper>
-          <BootstrapTooltip title="Home" placement="top">
+          <BootstrapTooltip
+            title={
+              location.pathname === "/" || location.pathname === "/sign"
+                ? "여기가 홈입니다"
+                : "Home"
+            }
+            placement="top"
+          >
             <button className={active ? "active menu-item" : "menu-item"}>
               <StyledLink to="/sign">
                 <HomeIcon className="icon" />
