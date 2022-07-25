@@ -4,10 +4,7 @@ import { getApplicantData } from "../api/models/dashboard";
 
 export const applicantAllData = atom({
   key: "applicantAllData",
-  default: selector({
-    key: "applicantUpdateData",
-    get: getApplicantData,
-  }),
+  default: [] as Applicant[],
 });
 
 const filteredApplicantState = atom({
@@ -25,6 +22,7 @@ export const filteredApplicantData = selector({
   get: ({ get }) => {
     const applicantData = get(applicantAllData);
     const filterState = get(filteredApplicantState);
+    console.log(applicantData);
 
     const filterByName = ({ name }: Applicant) =>
       name.includes(filterState.name);
