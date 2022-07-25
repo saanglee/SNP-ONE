@@ -1,5 +1,5 @@
 import { apiRequest } from "../instance/instance";
-import { Applicant } from "../../types/dashboard";
+import { Applicant } from "../../types/datshboard";
 
 export const getApplicantData = async () =>
   await apiRequest.get<Applicant[]>("/user");
