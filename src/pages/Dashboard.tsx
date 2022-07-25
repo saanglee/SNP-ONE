@@ -33,6 +33,7 @@ const Dashboard = () => {
     fetchAndSetApplicants();
   }, []);
 
+  const allAplicants = useRecoilValue<Applicant[]>(applicantAllData);
   const filteredApplicants = useRecoilValue<Applicant[]>(filteredApplicantData);
 
   const ITEMS_PER_PAGE = 6;
@@ -45,11 +46,14 @@ const Dashboard = () => {
 
   console.log(filteredApplicants); // 필터데이터를 이용해주시면 됩니다!
 
+  console.log(allAplicants); // 전체데이터
+  console.log("filteredApplicants", filteredApplicants); // 필터데이터
+  // 전체데이터는 필터데이터와의 차이점을 보여주기 위해 콘솔에 찍었습니다.
+  // 필터데이터를 이용해주시면 됩니다!
+
   useEffect(() => {
-    // const allApplicantsArray: ApplicantList = [];
-    // allApplicantsArray.push(AllAplicants);
-    // setItems(allApplicantsArray);
-    // setItems(dummy);
+    // setItems(allAplicants);
+    // setItems(filteredApplicants);
     setLoading(false);
   }, []);
 
@@ -73,10 +77,12 @@ const Dashboard = () => {
           dateOptionList={dateOptionList}
           checkOptionList={checkOptionList}
         />
-        <List items={filteredApplicants} loading={loading} />
+        {/* <List items={filteredApplicants} loading={loading} /> */}
+        <List items={getItemsOnCurrentPage(items)} loading={loading} />
         <PageNation
           itemsPerPage={ITEMS_PER_PAGE}
           totalItems={items.length}
+          currentPage={currentPage}
           paginate={setCurrentPage}
         />
         {/* <Footer /> */}
