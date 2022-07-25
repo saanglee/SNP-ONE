@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   FormGroup,
   FormControlLabel,
@@ -19,13 +20,14 @@ import Terms from "./Terms";
 import FormCheckboxBtn from "../form/FormCheckboxBtn";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { ResidenceValue } from "../../store/form";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { FormValues } from "../../types/form";
 import { RegexName, RegexBirth, RegexPhone, RegexEmail } from "./regex";
 
 const SignForm = () => {
   const today = format(new Date(), "yyyy-MM-dd HH:mm:s");
   const userId = Math.random().toString(36).substring(2, 10);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -33,12 +35,20 @@ const SignForm = () => {
     control,
     formState: { errors, isDirty, isValid },
   } = useForm<FormValues>({ mode: "onChange" });
-  const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-    console.log(data);
-
-    // TODO: 서버에 데이터 전송
+  const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
+    const postUser = await fetch("http://localhost:8000/user", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        console.log(response);
+        if (response.status === 201) {
+          alert("지원이 완료되었습니다");
+        }
+      })
+      .catch((error) => console.log(error));
   };
-  console.log(errors);
   const residence = useRecoilValue(ResidenceValue);
 
   const [isOpenSelect, setIsOpenSelect] = useState(false);
