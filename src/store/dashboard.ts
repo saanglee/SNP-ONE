@@ -1,5 +1,5 @@
 import { atom, selector } from "recoil";
-import { Applicant, FilterDashboardApplicantData } from "../types/dashboard";
+import { Applicant, FilterDashboardApplicantData } from "../types/datshboard";
 import { getApplicantData } from "../api/models/dashboard";
 
 export const applicantAllData = atom({

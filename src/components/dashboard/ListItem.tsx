@@ -1,6 +1,7 @@
+import React from "react";
 import styled from "styled-components";
 import "./dashboard.css";
-import { Applicant } from "../../types/dashboard";
+import { Applicant } from "../../types/datshboard";
 import { patchIsApplicantChecked } from "../../api/models/dashboard";
 import { useRecoilState } from "recoil";
 import { applicantAllData } from "../../store/dashboard";
@@ -10,7 +11,7 @@ import { replaceItemAtIndex } from "../../util/replaceItemIndex";
 
 const ListItem = ({ data, index }: { data: Applicant; index: number }) => {
   const {
-    id,
+    id, //  FIXME: index를 넣으면 페이지 넘어가도 계속 번호에 0 ~ 4 만 뜸
     DateOfApplication,
     name,
     gender,
@@ -39,10 +40,20 @@ const ListItem = ({ data, index }: { data: Applicant; index: number }) => {
     });
     setApplicants(updatedApplicants);
   };
+  // FIXME: input checkbox handle change (필요 시 삭제 가능입니다.)
+  const [isCheckedState, setIsCheckedState] =
+    React.useState<boolean>(isChecked);
+  const handleCheckChagne = (event: React.ChangeEvent<HTMLInputElement>) =>
+    setIsCheckedState((current) => !current);
+
+  console.log(isCheckedState);
 
   return (
     <ListItemContainer className="ListItem">
-      <TD>{index}</TD>
+      {/* {item.map((item: string | number | boolean, index: number) => {
+        return <TD key={index}>{item} </TD>;
+      })} */}
+      <TD>{id}</TD>
       <TD>{DateOfApplication}</TD>
       <TD>{name}</TD>
       <TD>{gender}</TD>

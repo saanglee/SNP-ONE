@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
+import { useRecoilValue } from "recoil";
 import Layout from "../components/layout/Layout";
 import ListHeader from "../components/dashboard/ListHeader";
 import SearchBar from "../components/dashboard/SearchBar";
@@ -8,6 +9,7 @@ import PageNation from "../components/dashboard/PageNation";
 
 import { ApplicantList, Applicant } from "../types/datshboard";
 import dummy from "../components/dashboard/dummy.json";
+import { applicantAllData } from "../store/dashboard";
 
 const dateOptionList = [
   { value: "latest", name: "최신순" },
@@ -21,21 +23,24 @@ const checkOptionList = [
 ];
 
 const Dashboard = () => {
-  const [items, setItems] = useState<ApplicantList>([]); // TODO: any 변경, 타입지정!
+  const ITEMS_PER_PAGE = 6;
+  const AllAplicants = useRecoilValue<Applicant[]>(applicantAllData);
+
+  const [items, setItems] = useState<ApplicantList>([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const ITEMS_PER_PAGE = 5;
-  // const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const indexOfLast = currentPage * ITEMS_PER_PAGE;
   const indexOfFirst = indexOfLast - ITEMS_PER_PAGE;
 
   const dummyData = dummy;
+  console.log(AllAplicants);
 
   useEffect(() => {
-    console.log("dummyData: ", dummyData);
-    setItems(dummyData);
-    console.log("items: ", items);
+    // const allApplicantsArray: ApplicantList = [];
+    // allApplicantsArray.push(AllAplicants);
+    // setItems(allApplicantsArray);
+    // setItems(dummy);
     setLoading(false);
   }, []);
 
@@ -51,23 +56,25 @@ const Dashboard = () => {
   };
 
   return (
-    <Layout>
-      <div style={{ maxWidth: "1500px" }}>
-        <ListHeader />
-        <SearchBar
-          handleChagne={() => {}}
-          dateOptionList={dateOptionList}
-          checkOptionList={checkOptionList}
-        />
-        <List items={getItemsOnCurrentPage(items)} loading={loading} />
-        <PageNation
-          itemsPerPage={ITEMS_PER_PAGE}
-          totalItems={items.length}
-          paginate={setCurrentPage}
-        />
-        {/* <Footer /> */}
-      </div>
-    </Layout>
+    <Suspense fallback={<div>Loading...</div>}>
+      <Layout>
+        <div style={{ maxWidth: "1500px" }}>
+          <ListHeader />
+          <SearchBar
+            handleChagne={() => {}}
+            dateOptionList={dateOptionList}
+            checkOptionList={checkOptionList}
+          />
+          <List items={getItemsOnCurrentPage(items)} loading={loading} />
+          <PageNation
+            itemsPerPage={ITEMS_PER_PAGE}
+            totalItems={items.length}
+            paginate={setCurrentPage}
+          />
+          {/* <Footer /> */}
+        </div>
+      </Layout>
+    </Suspense>
   );
 };
 
