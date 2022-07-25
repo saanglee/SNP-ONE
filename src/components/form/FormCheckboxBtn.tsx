@@ -16,9 +16,16 @@ interface CheckProps {
   values: string[];
   control: any;
   register: any;
+  required?: any;
 }
 
-const FormCheckbox = ({ control, values, name, register }: CheckProps) => {
+const FormCheckbox = ({
+  control,
+  values,
+  name,
+  register,
+  required,
+}: CheckProps) => {
   return (
     <Box>
       {values.map((value: string, index: number) => (
@@ -27,9 +34,13 @@ const FormCheckbox = ({ control, values, name, register }: CheckProps) => {
           name={name}
           control={control}
           defaultValue={false}
-          render={({ field }) => (
+          rules={{
+            required: required,
+          }}
+          render={({ field, fieldState: { error } }) => (
             <>
               <StyledCheckInput
+                {...field}
                 type="checkbox"
                 name={name}
                 id={value}
@@ -69,29 +80,3 @@ const StyledLabel = styled("label")(({ theme }) => ({
   borderRadius: "20px",
   cursor: "pointer",
 }));
-
-// eslint-disable-next-line no-lone-blocks
-{
-  /* <FormControl sx={{ mb: 3 }}>
-  <FormLabel id="demo-controlled-radio-buttons-group">{title}</FormLabel>
-  <Typography sx={{ fontSize: 14, color: "eee" }}>{subText}</Typography>
-  <RadioGroup
-    aria-labelledby="demo-controlled-radio-buttons-group"
-    name="controlled-radio-buttons-group"
-    row
-    sx={{ marginTop: 2 }}
-  >
-    {values.map((value, idx) => (
-      <Box key={value + idx}>
-        <StyledCheckInput
-          type="checkbox"
-          value={value}
-          id={value + idx}
-          name={value}
-        ></StyledCheckInput>
-        <StyledLabel htmlFor={value + idx}>{value}</StyledLabel>
-      </Box>
-    ))}
-  </RadioGroup>
-  </FormControl> */
-}

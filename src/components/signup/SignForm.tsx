@@ -18,23 +18,28 @@ import ResidenceSelectModal from "./ResidenceSelectModal";
 import Terms from "./Terms";
 import FormCheckboxBtn from "../form/FormCheckboxBtn";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { ResidenceValue, FormData } from "../../store/form";
+import { ResidenceValue } from "../../store/form";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { FormValues } from "../../types/form";
+import { RegexName, RegexBirth, RegexPhone, RegexEmail } from "./regex";
 
 const SignForm = () => {
   const today = format(new Date(), "yyyy-MM-dd HH:mm:s");
-  const userId = Math.random().toString(36).substr(2, 9);
+  const userId = Math.random().toString(36).substring(2, 10);
 
-  const { register, handleSubmit, control } = useForm<FormValues>();
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors, isDirty, isValid },
+  } = useForm<FormValues>({ mode: "onChange" });
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
     console.log(data);
 
     // TODO: 서버에 데이터 전송
   };
-
+  console.log(errors);
   const residence = useRecoilValue(ResidenceValue);
-  const [formData, setFormData] = useRecoilState(FormData);
 
   const [isOpenSelect, setIsOpenSelect] = useState(false);
   const [isTermsOpen, setIsTermsOpen] = useState(false);
@@ -78,7 +83,14 @@ const SignForm = () => {
         <InputHidden {...register("date")} value={today} />
         <InputHidden {...register("id")} value={userId} />
         <CheckboxHidden {...register("isChecked")} />
-        <FormInput title="이름" name="name" control={control} />
+        <FormInput
+          label="이름"
+          name="name"
+          control={control}
+          required={true}
+          pattern={RegexName.regex}
+          errorMessage={RegexName.message}
+        />
         <FormControl sx={{ mt: 2, mb: 1 }}>
           <Typography variant="h6">성별</Typography>
           <FormRadio
@@ -88,13 +100,16 @@ const SignForm = () => {
           />
         </FormControl>
         <FormInput
-          title="생년월일"
+          label="생년월일"
           placeholder="YYYY.MM.DD"
           name="birth"
           control={control}
           inputProps={{
-            maxLength: 8,
+            maxLength: 12,
           }}
+          required={true}
+          pattern={RegexBirth.regex}
+          errorMessage={RegexBirth.message}
         />
         <Box sx={{ mt: 2, mb: 2 }}>
           <Typography variant="h6" sx={{ mb: 1 }}>
@@ -103,7 +118,16 @@ const SignForm = () => {
           <Button variant="outlined" onClick={handleResidenceOpen}>
             거주지역 선택
           </Button>
-          <Typography sx={{ mt: 1, fontSize: 14 }}>{residence}</Typography>
+          <Typography
+            sx={{
+              mt: 1,
+              fontSize: 14,
+            }}
+          >
+            {residence}
+          </Typography>
+          {errors.region && <TypoError>시/도를 선택하세요.</TypoError>}
+          {errors.district && <TypoError>시/구/군을 선택하세요.</TypoError>}
         </Box>
         <ResidenceSelectModal
           open={isOpenSelect}
@@ -111,18 +135,24 @@ const SignForm = () => {
           control={control}
         />
         <FormInput
-          title="연락처"
+          label="연락처"
           name="phone"
           control={control}
           inputProps={{
             maxLength: 11,
           }}
+          required={true}
+          pattern={RegexPhone.regex}
+          errorMessage={RegexPhone.message}
         />
         <FormInput
-          title="이메일"
+          label="이메일"
           name="email"
           control={control}
           sx={{ mt: 2, mb: 3 }}
+          required={true}
+          pattern={RegexEmail.regex}
+          errorMessage={RegexEmail.message}
         />
         <Box sx={{ mb: 2 }}>
           <Typography variant="h6">주로 이용하는 교통 수단</Typography>
@@ -143,7 +173,11 @@ const SignForm = () => {
               "전동킥보드",
               "자가용",
             ]}
+            required={true}
           />
+          {errors.transportation && (
+            <TypoError>최소 1개 이상의 교통수단을 선택해주세요.</TypoError>
+          )}
         </Box>
         <FormControlLabel
           label="이용약관 모두 동의"
@@ -152,6 +186,8 @@ const SignForm = () => {
               checked={checked[0] && checked[1]}
               indeterminate={checked[0] !== checked[1]}
               onChange={handleChange1}
+              name="allchk"
+              required
             />
           }
         />
@@ -164,7 +200,11 @@ const SignForm = () => {
                 </Typography>
               }
               control={
-                <Checkbox checked={checked[0]} onChange={handleChange2} />
+                <Checkbox
+                  checked={checked[0]}
+                  onChange={handleChange2}
+                  required
+                />
               }
             />
             <Button onClick={() => handleTermsOpen("개인정보")}>
@@ -179,7 +219,11 @@ const SignForm = () => {
                 </Typography>
               }
               control={
-                <Checkbox checked={checked[1]} onChange={handleChange3} />
+                <Checkbox
+                  checked={checked[1]}
+                  onChange={handleChange3}
+                  required
+                />
               }
             />
             <Button onClick={() => handleTermsOpen("제3자")}>
@@ -194,7 +238,7 @@ const SignForm = () => {
         </Box>
         <Button
           type="submit"
-          // disabled={ckeckApply === false}
+          disabled={!isDirty || !isValid}
           variant="contained"
           sx={{ height: 48, fontSize: 16 }}
         >
@@ -222,4 +266,10 @@ const CheckboxHidden = styled(Checkbox)({
   position: "absolute",
   top: "-9999px",
   visibility: "hidden",
+});
+
+const TypoError = styled(Typography)({
+  mt: 1,
+  fontSize: 14,
+  color: "#d32f2f",
 });
