@@ -1,18 +1,19 @@
 [
   {
-    "_id": "62d96032905b177880c8b198",
+    "id": "62d96032905b177880c8b198",
     "name": "김수빈",
-    "birth": "2022.10.05",
+    "birth": "2000.01.03",
     "email": "1008sb@email.com",
     "gender": "female",
     "phone": "01011111234",
     "region": "제주특별자치도",
     "district": "서귀포시",
     "transportation": ["지하철", "전동킥보드"],
-    "date": "2022-07-11 13:12:22"
+    "date": "2022-07-11 13:12:22",
+    "isChecked": false
   },
   {
-    "_id": "62d96032215cec639c2c8b9d",
+    "id": "62d96032215cec639c2c8b9d",
     "name": "김수빈",
     "birth": "2022.10.05",
     "email": "1008sb@email.com",
@@ -21,7 +22,8 @@
     "region": "제주특별자치도",
     "district": "서귀포시",
     "transportation": ["지하철", "전동킥보드"],
-    "date": "2022-07-11 13:12:22"
+    "date": "2022-07-11 13:12:22",
+    "isChecked": true
   },
   {
     "id": "62d960324aff84dd8d4e33ea",
@@ -33,6 +35,7 @@
     "region": "제주특별자치도",
     "district": "서귀포시",
     "transportation": ["지하철", "전동킥보드"],
-    "date": "2022-07-11 13:12:22"
+    "date": "2022-07-11 13:12:22",
+    "isChecked": false
   }
 ]

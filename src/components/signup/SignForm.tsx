@@ -76,7 +76,8 @@ const SignForm = () => {
         label="mode switch"
       /> */}
         <InputHidden {...register("date")} value={today} />
-        <InputHidden {...register("_id")} value={userId} />
+        <InputHidden {...register("id")} value={userId} />
+        <CheckboxHidden {...register("isChecked")} />
         <FormInput title="이름" name="name" control={control} />
         <FormControl sx={{ mt: 2, mb: 1 }}>
           <Typography variant="h6">성별</Typography>
@@ -212,6 +213,12 @@ const StyledTerms = styled(Box)({
 });
 
 const InputHidden = styled(Input)({
+  position: "absolute",
+  top: "-9999px",
+  visibility: "hidden",
+});
+
+const CheckboxHidden = styled(Checkbox)({
   position: "absolute",
   top: "-9999px",
   visibility: "hidden",

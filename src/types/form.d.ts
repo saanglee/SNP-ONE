@@ -1,5 +1,5 @@
 export interface FormValues {
-  _id: string;
+  id: string;
   phone: string;
   birth: string;
   email: string;
@@ -9,4 +9,5 @@ export interface FormValues {
   region: string;
   district: string;
   date: string;
+  isChecked: boolean;
 }
