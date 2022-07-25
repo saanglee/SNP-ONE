@@ -1,59 +1,35 @@
 import React from "react";
-import {
-  Box,
-  Toolbar,
-  Typography,
-  Divider,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  Link,
-  styled,
-  IconButton,
-  Badge,
-  Avatar,
-} from "@mui/material";
+import { Box, Toolbar, styled, IconButton, Badge, Avatar } from "@mui/material";
+import Styled from "styled-components";
 
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-
-import Drawer from "@mui/material/Drawer";
 import StackedLineChartIcon from "@mui/icons-material/StackedLineChart";
-import PostAddIcon from "@mui/icons-material/PostAdd";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import MenuIcon from "@mui/icons-material/Menu";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import SettingsIcon from "@mui/icons-material/Settings";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import Logo from "../../static/images/d.png";
+import ButtonAnimation from "../../elements/Animations/ButtonAnimation";
+import { Link, Navigate } from "react-router-dom";
 
 const Header = () => {
   return (
-    <Box component="nav" aria-label="mailbox folders">
+    <Box>
       <AppBar>
         <StyledToolbar>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <div>
-              <Link href="/sign" color="inherit">
+              <StyledLink to="/sign">
                 <img style={{ width: "180px" }} src={Logo} alt="" />
-              </Link>
+              </StyledLink>
             </div>
           </Box>
           <Icons>
-            <Link href="/sign" color="inherit">
-              sign up
-            </Link>
-
-            {/* <Badge>
-              <NotificationsNoneIcon fontSize="large" />
-            </Badge> */}
+            <StyledLink to="/sign">sign up</StyledLink>
+            <div>
+              <ButtonAnimation animation={["loopAnimation", "doneAnimation"]} />
+            </div>
             <Badge>
               <SettingsIcon fontSize="large" />
             </Badge>
-            {/* <UserBox>
-              <Avatar sx={{ mr: 2 }} />
-              <Typography>user</Typography>
-            </UserBox> */}
           </Icons>
         </StyledToolbar>
       </AppBar>
@@ -63,11 +39,9 @@ const Header = () => {
 
 export default Header;
 
-const StyledLink = styled(Link)({
-  textDecoration: "none",
-  fontSize: 18,
-  display: "block",
-});
+const StyledLink = Styled(Link)`
+color: #fff;
+`;
 
 const StyledToolbar = styled(Toolbar)({
   display: "flex",

@@ -6,10 +6,16 @@ import Subtitle from "../elements/Texts/Subtitle";
 import Text from "../elements/Texts/Text";
 import Styled from "styled-components";
 import Animation from "../elements/Animations/Animation";
+import ButtonAnimation from "../elements/Animations/ButtonAnimation";
 const Home = () => {
   return (
     <Layout>
-      <Animation animation="SpinAnimation" />
+      <Box>
+        <ButtonAnimation animation={["loopAnimation", "doneAnimation"]} />
+      </Box>
+      <Box>
+        <Animation animation="For404Animation" />
+      </Box>
       <Title size={3} my={80} mx={30}>
         폰트 적용
       </Title>
@@ -30,4 +36,8 @@ export default Home;
 
 const AA = Styled.p`
 font-family: "font_bold"
+`;
+
+const Box = Styled.div`
+width: 300px;
 `;

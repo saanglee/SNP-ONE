@@ -12,7 +12,7 @@ import * as SpinAnimation from "../static/animations/spin3-background.json";
 import * as ArrowAnimation from "../static/animations/arrow.json";
 
 type AnimationType = {
-  animation?: string | undefined;
+  animation?: string;
 };
 
 export const getAnimations = (animation: AnimationType) => {
@@ -29,5 +29,9 @@ export const getAnimations = (animation: AnimationType) => {
       return businessAnimation;
     case "underwaterAnimation":
       return underwaterAnimation;
+    case "loopAnimation":
+      return loopAnimation;
+    case "doneAnimation":
+      return doneAnimation;
   }
 };
