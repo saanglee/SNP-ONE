@@ -13,7 +13,7 @@ import { Link, Navigate } from "react-router-dom";
 const Header = () => {
   return (
     <Box>
-      <AppBar>
+      <MuiAppBar>
         <StyledToolbar>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <div>
@@ -32,7 +32,7 @@ const Header = () => {
             </Badge>
           </Icons>
         </StyledToolbar>
-      </AppBar>
+      </MuiAppBar>
     </Box>
   );
 };
@@ -53,10 +53,3 @@ const Icons = styled(Box)({
   alignItems: "center",
   gap: "20px",
 });
-
-const UserBox = styled(Box)({
-  display: "flex",
-  alignItems: "center",
-});
-
-const AppBar = styled(MuiAppBar)();
