@@ -26,7 +26,11 @@ const ListItem = ({ data, index }: { data: Applicant; index: number }) => {
   const [applicants, setApplicants] = useRecoilState(applicantAllData);
 
   const toggleChecked = async (applicant: Applicant) => {
-    let updatedApplicants = replaceItemAtIndex(applicants, index, {
+    const changeApplicantIdx = applicants.findIndex(
+      ({ id: applicantId }: Applicant) => id === applicantId,
+    );
+
+    let updatedApplicants = replaceItemAtIndex(applicants, changeApplicantIdx, {
       ...applicant,
       isChecked: !applicant.isChecked,
     }) as Applicant[];
@@ -34,25 +38,21 @@ const ListItem = ({ data, index }: { data: Applicant; index: number }) => {
 
     const { status } = await patchIsApplicantChecked(applicant);
     if (status === 200) return;
-    updatedApplicants = replaceItemAtIndex(applicants, index, {
+    updatedApplicants = replaceItemAtIndex(applicants, changeApplicantIdx, {
       ...applicant,
       isChecked: !applicant.isChecked,
     });
     setApplicants(updatedApplicants);
   };
+
   // FIXME: input checkbox handle change (필요 시 삭제 가능입니다.)
   const [isCheckedState, setIsCheckedState] =
     React.useState<boolean>(isChecked);
   const handleCheckChagne = (event: React.ChangeEvent<HTMLInputElement>) =>
     setIsCheckedState((current) => !current);
 
-  console.log(isCheckedState);
-
   return (
     <ListItemContainer className="ListItem">
-      {/* {item.map((item: string | number | boolean, index: number) => {
-        return <TD key={index}>{item} </TD>;
-      })} */}
       <TD>{id}</TD>
       <TD>{DateOfApplication}</TD>
       <TD>{name}</TD>
