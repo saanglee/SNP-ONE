@@ -36,7 +36,7 @@ const Dashboard = () => {
   const allAplicants = useRecoilValue<Applicant[]>(applicantAllData);
   const filteredApplicants = useRecoilValue<Applicant[]>(filteredApplicantData);
 
-  const ITEMS_PER_PAGE = 6;
+  const ITEMS_PER_PAGE = 4;
   const [items, setItems] = useState<ApplicantList>([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -44,15 +44,13 @@ const Dashboard = () => {
   const indexOfLast = currentPage * ITEMS_PER_PAGE;
   const indexOfFirst = indexOfLast - ITEMS_PER_PAGE;
 
-  console.log(filteredApplicants); // 필터데이터를 이용해주시면 됩니다!
-
-  console.log(allAplicants); // 전체데이터
-  console.log("filteredApplicants", filteredApplicants); // 필터데이터
+  // console.log(allAplicants); // 전체데이터
+  // console.log("filteredApplicants", filteredApplicants); // 필터데이터
   // 전체데이터는 필터데이터와의 차이점을 보여주기 위해 콘솔에 찍었습니다.
   // 필터데이터를 이용해주시면 됩니다!
 
   useEffect(() => {
-    // setItems(allAplicants);
+    setItems(allAplicants);
     // setItems(filteredApplicants);
     setLoading(false);
   }, []);
