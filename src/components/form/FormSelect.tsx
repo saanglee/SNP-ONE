@@ -14,6 +14,7 @@ interface SelectProps {
   control: any;
   sx?: object;
   onBlur?: any;
+  required?: boolean;
 }
 
 const FormSelect = ({
@@ -29,8 +30,11 @@ const FormSelect = ({
       name={name}
       control={control}
       defaultValue=""
-      render={({ field }) => (
-        <Select {...field} onBlur={onBlur} sx={sx}>
+      rules={{
+        required: true,
+      }}
+      render={({ field, fieldState: { error } }) => (
+        <Select {...field} onBlur={onBlur} sx={sx} error={error !== undefined}>
           {options?.map((option, index) => (
             <MenuItem key={option + index} value={option}>
               {option}

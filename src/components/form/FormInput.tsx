@@ -3,12 +3,15 @@ import { TextField } from "@mui/material";
 import { Controller } from "react-hook-form";
 
 interface InputProps {
-  title: string;
+  label: string;
   placeholder?: string;
   inputProps?: any;
   name?: any;
   control?: any;
   sx?: any;
+  required?: any;
+  pattern?: any;
+  errorMessage?: string;
 }
 
 const FormInput = ({
@@ -16,30 +19,35 @@ const FormInput = ({
   inputProps,
   name,
   control,
-  title,
+  label,
   sx,
+  required,
+  pattern,
+  errorMessage,
 }: InputProps) => {
-  const [value, setValue] = React.useState("");
-  const inputsRef = React.useRef<HTMLInputElement | any>(null);
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(value);
-    setValue((event.target as HTMLInputElement).value);
-  };
-
   return (
     <Controller
       name={name}
       defaultValue=""
       control={control}
-      render={({ field }) => (
+      rules={{
+        required,
+        pattern,
+      }}
+      render={({ field, fieldState: { error } }) => (
         <TextField
           {...field}
-          label={title}
+          label={label}
           type="text"
           variant="standard"
           placeholder={placeholder}
           inputProps={inputProps}
           sx={sx}
+          error={error !== undefined}
+          helperText={
+            error &&
+            (error.type === "required" ? "필수 입력 사항입니다." : errorMessage)
+          }
         />
       )}
     />

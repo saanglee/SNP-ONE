@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   Box,
-  Dialog,
-  DialogTitle,
-  FormControl,
-  DialogContent,
-  InputLabel,
-  OutlinedInput,
-  Select,
-  MenuItem,
-  DialogActions,
   Button,
   styled,
   IconButton,
@@ -59,7 +50,9 @@ const ResidenceSelectModal = ({
   };
 
   const handleSelectValue = () => {
-    setResidence(regions + " " + district);
+    if (regions !== undefined && district !== undefined) {
+      setResidence(regions + " " + district);
+    }
     handleClose();
   };
 
@@ -88,6 +81,7 @@ const ResidenceSelectModal = ({
               options={citys && Object.keys(citys)}
               onBlur={handleChangeRegion}
               control={control}
+              required={true}
               sx={{ width: 135, mr: 2 }}
             />
 
@@ -97,6 +91,7 @@ const ResidenceSelectModal = ({
               onBlur={handleChangeDistrict}
               options={districts}
               control={control}
+              required={true}
               sx={{ width: 135 }}
             />
           </Box>
