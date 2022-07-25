@@ -49,6 +49,7 @@ const LitsContainer = styled.div`
   margin-top: 20px;
   display: flex;
   flex-direction: column;
+  height: 600px;
 `;
 
 const ListTable = styled.table`
