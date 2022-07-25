@@ -42,8 +42,7 @@ const ResidenceSelectModal = ({
   useEffect(() => {
     async function fetchCitys() {
       const response = await getCitys().then((result) => result);
-
-      setCitys(response.data);
+      setCitys(response);
     }
     fetchCitys();
   }, []);
@@ -63,6 +62,7 @@ const ResidenceSelectModal = ({
     setResidence(regions + " " + district);
     handleClose();
   };
+
   return (
     <StyledModal open={open}>
       <StyledModalContent>
