@@ -20,7 +20,6 @@ const TABLE_HEADER: string[] = [
 ];
 
 const List = ({ items }: { items: any }) => {
-  console.log(items);
   const setApplicantsList = useSetRecoilState(listOnTargetPage);
 
   React.useEffect(() => {
@@ -40,7 +39,14 @@ const List = ({ items }: { items: any }) => {
 
         <tbody>
           {items.map((item: any, index: number) => {
-            return <ListItem key={item.id} data={item} index={index} />;
+            return (
+              <ListItem
+                key={item.id}
+                data={item}
+                index={index}
+                transportation={item.transportation.join(", ")}
+              />
+            );
           })}
         </tbody>
       </ListTable>
