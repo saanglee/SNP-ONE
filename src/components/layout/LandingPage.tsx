@@ -6,12 +6,6 @@ import { Link, useLocation } from "react-router-dom";
 
 const LandingPage = () => {
   const [open, setOpen] = useRecoilState(openStatus);
-  const location = useLocation();
-  React.useEffect(() => {
-    if (location.pathname === "/") {
-      setOpen(false);
-    }
-  }, [location]);
 
   return (
     <>
