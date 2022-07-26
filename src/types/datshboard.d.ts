@@ -16,7 +16,7 @@ type ApplicantList = Applicant[];
 interface FilteredApplicants {
   name: string;
   sort: "asc" | "desc";
-  recruitment: 1 | 2;
+  recruitment: "1" | "2";
   isChecked: string;
 }
 

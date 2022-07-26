@@ -4,7 +4,6 @@ import {
   FilteredApplicants,
   ApplicantList,
 } from "../types/datshboard";
-import { getApplicantData } from "../api/models/dashboard";
 
 export const listOnTargetPage = atom({
   key: "listForExcelDownload",
@@ -21,7 +20,7 @@ export const filteredApplicantState = atom({
   default: {
     name: "",
     sort: "asc",
-    recruitment: 1,
+    recruitment: "1",
     isChecked: "all",
   } as FilteredApplicants,
 });
@@ -31,6 +30,7 @@ export const filteredApplicantData = selector({
   get: ({ get }) => {
     const applicantData = get(applicantAllData);
     const filterState = get(filteredApplicantState);
+    console.log(filterState);
 
     const filterByName = ({ name }: Applicant) =>
       name.includes(filterState.name);
@@ -43,7 +43,7 @@ export const filteredApplicantData = selector({
       const referenceDate = new Date("2022.05.02").getTime();
       const timeDifference = applicantDate - referenceDate;
 
-      if (recruitment === 1) {
+      if (recruitment === "1") {
         return timeDifference > 0;
       }
       return timeDifference <= 0;
