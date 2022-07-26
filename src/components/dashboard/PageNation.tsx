@@ -24,8 +24,6 @@ const PageNation: React.FC<Props> = ({
   const FIRST_PAGE = 1;
   const MOVE_FORWARD = "<";
   const MOVE_BACKWORD = ">";
-  // console.log(itemsPerPage, totalItems, currentPage);
-
   const handleMoveBackword = () => {
     if (TOTAL_PAGES === 0) return;
     if (currentPage === 1) return;
@@ -42,7 +40,7 @@ const PageNation: React.FC<Props> = ({
     <div>
       <PageNationContainer>
         <NumberOfItems>
-          전체 {totalItems} 페이지 중 {currentPage} 페이지
+          전체 {TOTAL_PAGES} 페이지 중 {currentPage} 페이지
         </NumberOfItems>
         <PageUl className="pagination">
           <PageButton
@@ -53,13 +51,15 @@ const PageNation: React.FC<Props> = ({
             {MOVE_FORWARD}
           </PageButton>
 
-          <PageButton
-            onClick={() => paginate(1)}
-            type="button"
-            className={cx("", { activePage: currentPage === FIRST_PAGE })}
-          >
-            {FIRST_PAGE}
-          </PageButton>
+          {TOTAL_PAGES !== 1 && (
+            <PageButton
+              onClick={() => paginate(1)}
+              type="button"
+              className={cx("", { activePage: currentPage === FIRST_PAGE })}
+            >
+              {FIRST_PAGE}
+            </PageButton>
+          )}
 
           {currentPage > 3 && <span className="separator">...</span>}
 
@@ -83,20 +83,12 @@ const PageNation: React.FC<Props> = ({
             </PageButton>
           )}
           {currentPage < TOTAL_PAGES - 1 && (
-            <PageButton
-              onClick={() => paginate(currentPage + 1)}
-              type="button"
-              // className={styles.pageItem}
-            >
+            <PageButton onClick={() => paginate(currentPage + 1)} type="button">
               {currentPage + 1}
             </PageButton>
           )}
           {currentPage === 1 && TOTAL_PAGES > 3 && (
-            <PageButton
-              onClick={() => paginate(currentPage + 2)}
-              type="button"
-              // className={styles.pageItem}
-            >
+            <PageButton onClick={() => paginate(currentPage + 2)} type="button">
               {currentPage + 2}
             </PageButton>
           )}
