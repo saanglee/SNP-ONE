@@ -4,7 +4,6 @@ import Layout from "../components/layout/Layout";
 import ListHeader from "../components/dashboard/ListHeader";
 import SearchBar from "../components/dashboard/SearchBar";
 import List from "../components/dashboard/List";
-import Footer from "../components/dashboard/Footer";
 import PageNation from "../components/dashboard/PageNation";
 import Animation from "../elements/Animations/Animation";
 
@@ -39,7 +38,12 @@ const Dashboard = () => {
     fetchAndSetApplicants();
   }, []);
 
-  const ITEMS_PER_PAGE = 4;
+  const allAplicants = useRecoilValue<Applicant[]>(applicantAllData);
+  const filteredApplicants = useRecoilValue<Applicant[]>(filteredApplicantData);
+
+  const ITEMS_PER_PAGE = 6;
+  const [items, setItems] = useState<ApplicantList>([]);
+
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLast = currentPage * ITEMS_PER_PAGE;
