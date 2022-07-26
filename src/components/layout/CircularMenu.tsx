@@ -6,12 +6,13 @@ import HomeIcon from "@mui/icons-material/Home";
 import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import { useLocation, Link } from "react-router-dom";
-import { activeStatus } from "../../store/global";
+import { activeStatus, openStatus } from "../../store/global";
 import { useRecoilState, useRecoilValue } from "recoil";
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
 
 const CircularMenu = () => {
   const [active, setActive] = useRecoilState(activeStatus);
+  const [open, setOpen] = useRecoilState(openStatus);
   const location = useLocation();
   //   console.log(location.pathname);
   return (
@@ -32,21 +33,23 @@ const CircularMenu = () => {
 
         <ItemWrapper>
           <BootstrapTooltip
-            title={
-              location.pathname === "/" || location.pathname === "/sign"
-                ? "여기가 홈입니다"
-                : "Home"
-            }
+            title={location.pathname === "/" ? "여기가 홈입니다" : "Home"}
             placement="top"
           >
-            <button className={active ? "active menu-item" : "menu-item"}>
-              <StyledLink to="/sign">
+            <button
+              className={active ? "active menu-item" : "menu-item"}
+              onClick={() => setOpen(false)}
+            >
+              <StyledLink to="/">
                 <HomeIcon className="icon" />
               </StyledLink>
             </button>
           </BootstrapTooltip>
           <BootstrapTooltip title="AdminPage" placement="top">
-            <button className={active ? "active menu-item" : "menu-item"}>
+            <button
+              className={active ? "active menu-item" : "menu-item"}
+              onClick={() => setOpen(false)}
+            >
               <StyledLink to="/dash">
                 <HomeRepairServiceIcon className="icon" />
               </StyledLink>

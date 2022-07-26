@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Container,
   Box,
@@ -7,7 +7,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { loadedStatus } from "../../store/global";
+import { loadedStatus, openStatus } from "../../store/global";
 import Animation from "../../elements/Animations/Animation";
 import styles from "styled-components";
 import MobileHeader from "./MobileHeader";
@@ -16,31 +16,18 @@ import { isModalState } from "../../store/form";
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
 import Title from "../../elements/Texts/Title";
 import Text from "../../elements/Texts/Text";
-import MenuIcon from "@mui/icons-material/Menu";
+import LandingPage from "./LandingPage";
 interface LayoutProps {
   children: React.ReactNode;
 }
 
-const sidebarWidth = 240;
-
 const MobileLayout = ({ children }: LayoutProps) => {
-  const [open, setOpen] = useState(true);
-  const [sign, setSign] = useState(true);
+  const [open, setOpen] = useRecoilState(openStatus);
 
   const [isModal, setIsModal] = useRecoilState(isModalState);
   const loading = useRecoilValue(loadedStatus);
 
   const md = useMediaQuery("(max-width:900px)");
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-    setSign(false);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-    setSign(true);
-  };
 
   return (
     <Box
@@ -52,76 +39,89 @@ const MobileLayout = ({ children }: LayoutProps) => {
     >
       <Main>
         <Animation animation="naturalAnimation" />
-        <ArrowBox>
-          <Animation animation="ArrowAnimation" />
-        </ArrowBox>
-        <HtmlTooltip
-          placement="left"
-          title={
-            <div
-              style={{
-                backgroundColor: "#fff",
-                padding: "0.3rem",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+
+        {open && (
+          <>
+            <ArrowBox>
+              <Animation animation="ArrowAnimation" />
+            </ArrowBox>
+            <HtmlTooltip
+              placement="left"
+              title={
+                <div
+                  style={{
+                    backgroundColor: "#fff",
+                    padding: "0.3rem",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Title color="#666666" size={1.7}>
+                    TIP : 창 크기를 줄여보세요
+                  </Title>
+                  <Text color="#383333" size={1.5} mx={8} my={4}>
+                    {"현재 페이지는 모바일 화면에서 가장 잘 보입니다."}
+                  </Text>
+                </div>
+              }
             >
-              <Title color="#666666" size={1.7}>
-                TIP : 창 크기를 줄여보세요
-              </Title>
-              <Text color="#383333" size={1.5} mx={8} my={4}>
-                {"현재 페이지는 모바일 화면에서 가장 잘 보입니다."}
-              </Text>
-            </div>
-          }
-        >
-          <button
-            style={{
-              border: 0,
-              outline: 0,
-              backgroundColor: "transparent",
-              display: "fixed",
-              height: "100vh",
-              width: "100px",
-              position: "fixed",
-              right: 0,
-            }}
-          ></button>
-        </HtmlTooltip>
+              <button
+                style={{
+                  border: 0,
+                  outline: 0,
+                  backgroundColor: "transparent",
+                  display: "fixed",
+                  height: "100vh",
+                  width: "100px",
+                  position: "fixed",
+                  right: 0,
+                }}
+              ></button>
+            </HtmlTooltip>
+          </>
+        )}
+
         <StyledWrapper>
           <CircularMenu />
-          {md && (
-            <MobileInnerWrapper>
-              <MobileHeader />
-              <Box
-                sx={{
-                  backgroundColor: "#fff",
-                  marginLeft: "1rem",
-                  marginRight: "1rem",
-                }}
-              >
-                {children}
-              </Box>
-            </MobileInnerWrapper>
-          )}
-          {!md && (
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                height: "100%",
-              }}
-            >
-              <MobileWrapper>
-                <InnerWrapper>
+          {!open && <LandingPage />}
+          {open && (
+            <>
+              {md && (
+                <MobileInnerWrapper>
                   <MobileHeader />
-                  <MobileContent isModal={isModal}>{children}</MobileContent>
-                </InnerWrapper>
-              </MobileWrapper>
-            </Box>
+                  <Box
+                    sx={{
+                      backgroundColor: "#fff",
+                      marginLeft: "1rem",
+                      marginRight: "1rem",
+                    }}
+                  >
+                    {children}
+                  </Box>
+                </MobileInnerWrapper>
+              )}
+              {!md && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: "100%",
+                  }}
+                >
+                  <MobileWrapper>
+                    <InnerWrapper>
+                      <MobileHeader />
+                      <MobileContent isModal={isModal}>
+                        {children}
+                      </MobileContent>
+                    </InnerWrapper>
+                  </MobileWrapper>
+                </Box>
+              )}
+            </>
           )}
         </StyledWrapper>
       </Main>

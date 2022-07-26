@@ -9,21 +9,26 @@ import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import Logo from "../../static/images/d.png";
 import ButtonAnimation from "../../elements/Animations/ButtonAnimation";
 import { Link, Navigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { openStatus } from "../../store/global";
 
 const Header = () => {
+  const [open, setOpen] = useRecoilState(openStatus);
   return (
     <Box>
       <MuiAppBar>
         <StyledToolbar>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <div>
-              <StyledLink to="/sign">
+              <StyledLink to="/" onClick={() => setOpen(false)}>
                 <img style={{ width: "180px" }} src={Logo} alt="" />
               </StyledLink>
             </div>
           </Box>
           <Icons>
-            <StyledLink to="/sign">sign up</StyledLink>
+            <StyledLink to="/sign" onClick={() => setOpen(true)}>
+              sign up
+            </StyledLink>
             <div>
               <ButtonAnimation animation={["loopAnimation", "doneAnimation"]} />
             </div>
