@@ -1,35 +1,127 @@
 import React from "react";
 import styled from "styled-components";
+import cx from "classnames";
 
 export interface Props {
   itemsPerPage: number;
   totalItems: number;
+  currentPage: number;
   paginate: any;
 }
 
 const PageNation: React.FC<Props> = ({
   itemsPerPage,
   totalItems,
+  currentPage,
   paginate,
 }) => {
   const pageNumbers = [];
-
   for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
     pageNumbers.push(i);
   }
+  const TOTAL_PAGES = pageNumbers.length;
+  const LAST_PAGE = pageNumbers.length;
+  const FIRST_PAGE = 1;
+  const MOVE_FORWARD = "<";
+  const MOVE_BACKWORD = ">";
+  // console.log(itemsPerPage, totalItems, currentPage);
+
+  const handleMoveBackword = () => {
+    if (TOTAL_PAGES === 0) return;
+    if (currentPage === 1) return;
+    paginate(currentPage - 1);
+  };
+
+  const handleMoveforword = () => {
+    if (TOTAL_PAGES === 0) return;
+    if (currentPage === TOTAL_PAGES) return;
+    paginate(currentPage + 1);
+  };
 
   return (
     <div>
       <PageNationContainer>
-        <NumberOfItems> 1-4 of {totalItems}</NumberOfItems>
+        <NumberOfItems>
+          전체 {totalItems} 페이지 중 {currentPage} 페이지
+        </NumberOfItems>
         <PageUl className="pagination">
-          {pageNumbers.map((number) => (
-            <PageLi key={number} className="page-item">
-              <PageSpan onClick={() => paginate(number)} className="page-link">
-                {number}
-              </PageSpan>
-            </PageLi>
-          ))}
+          <PageButton
+            onClick={handleMoveBackword}
+            type="button"
+            className="next_button"
+          >
+            {MOVE_FORWARD}
+          </PageButton>
+
+          <PageButton
+            onClick={() => paginate(1)}
+            type="button"
+            className={cx("", { activePage: currentPage === FIRST_PAGE })}
+          >
+            {FIRST_PAGE}
+          </PageButton>
+
+          {currentPage > 3 && <span className="separator">...</span>}
+
+          {currentPage === LAST_PAGE && TOTAL_PAGES > 3 && (
+            <PageButton onClick={() => paginate(currentPage - 2)} type="button">
+              {currentPage - 2}
+            </PageButton>
+          )}
+          {currentPage > 2 && currentPage !== 0 && (
+            <PageButton onClick={() => paginate(currentPage - 1)} type="button">
+              {currentPage - 1}
+            </PageButton>
+          )}
+          {currentPage !== 1 && currentPage !== TOTAL_PAGES && (
+            <PageButton
+              onClick={() => paginate(currentPage)}
+              type="button"
+              className="activePage"
+            >
+              {currentPage}
+            </PageButton>
+          )}
+          {currentPage < TOTAL_PAGES - 1 && (
+            <PageButton
+              onClick={() => paginate(currentPage + 1)}
+              type="button"
+              // className={styles.pageItem}
+            >
+              {currentPage + 1}
+            </PageButton>
+          )}
+          {currentPage === 1 && TOTAL_PAGES > 3 && (
+            <PageButton
+              onClick={() => paginate(currentPage + 2)}
+              type="button"
+              // className={styles.pageItem}
+            >
+              {currentPage + 2}
+            </PageButton>
+          )}
+          {currentPage < TOTAL_PAGES - 2 && (
+            <div className="separator">...</div>
+          )}
+          {/* Last page */}
+          {TOTAL_PAGES !== 0 && (
+            <PageButton
+              onClick={() => paginate(LAST_PAGE)}
+              type="button"
+              className={cx("", { activePage: currentPage === LAST_PAGE })}
+            >
+              {LAST_PAGE}
+            </PageButton>
+          )}
+          {/* Move forword */}
+
+          <PageButton
+            onClick={handleMoveforword}
+            type="button"
+            className="next_button"
+          >
+            {MOVE_BACKWORD}
+          </PageButton>
         </PageUl>
       </PageNationContainer>
     </div>
@@ -57,30 +149,27 @@ const PageUl = styled.ul`
   color: #0f2c6e;
   list-style: none;
   text-align: center;
+  width: 300px;
+  height: inherit;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 `;
 
-const PageLi = styled.li`
-  display: inline-block;
-  font-size: 17px;
-  padding: 5px;
-  border-radius: 5px;
-  width: 25px;
+const PageButton = styled.button`
+  color: #0f2c6e;
+  height: 35px;
+  width: 35px;
+  border-radius: 3px;
+  border: 1px solid #d9d9d9;
+  background-color: white;
   &:hover {
-    cursor: pointer;
-    color: white;
-    background-color: #263a6c;
+    background-color: white;
   }
-  &:focus::after {
-    color: white;
-    background-color: #263a6c;
+  &.activePage {
+    border: 2px solid #6e8cd3;
   }
-`;
-
-const PageSpan = styled.span`
-  &:hover::after,
-  &:focus::after {
-    border-radius: 100%;
-    color: white;
-    background-color: #263a6c;
+  &.next_button:hover {
+    background-color: #cecece;
   }
 `;

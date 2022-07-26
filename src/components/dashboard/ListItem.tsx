@@ -48,8 +48,29 @@ const ListItem = ({ data, index }: { data: Applicant; index: number }) => {
   // FIXME: input checkbox handle change (필요 시 삭제 가능입니다.)
   const [isCheckedState, setIsCheckedState] =
     React.useState<boolean>(isChecked);
-  const handleCheckChagne = (event: React.ChangeEvent<HTMLInputElement>) =>
+
+  // const toggleChecked = async (applicant: Applicant) => {
+  //   let updatedApplicants = replaceItemAtIndex(applicants, index, {
+  //     ...applicant,
+  //     // isChecked: !applicant.isChecked,
+  //     isChecked: isCheckedState,
+  //   }) as Applicant[];
+
+  //   setApplicants(updatedApplicants);
+
+  //   const { status } = await patchIsApplicantChecked(applicant);
+  //   if (status === 200) return;
+  //   updatedApplicants = replaceItemAtIndex(applicants, index, {
+  //     ...applicant,
+  //     isChecked: !applicant.isChecked,
+  //   });
+  //   setApplicants(updatedApplicants);
+  // };
+
+  const handleCheckChagne = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIsCheckedState((current) => !current);
+    // toggleChecked(data);
+  };
 
   return (
     <ListItemContainer className="ListItem">
@@ -67,7 +88,8 @@ const ListItem = ({ data, index }: { data: Applicant; index: number }) => {
         <ListCheckbox
           type="checkbox"
           checked={isChecked}
-          onChange={() => toggleChecked(data)}
+          // onChange={() => toggleChecked(data)}
+          onChange={handleCheckChagne}
         />
       </ListCheckboxWrapper>
     </ListItemContainer>
