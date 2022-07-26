@@ -12,10 +12,10 @@ import { replaceItemAtIndex } from "../../util/replaceItemIndex";
 const ListItem = ({ data, index }: { data: Applicant; index: number }) => {
   const {
     id,
-    DateOfApplication,
+    date,
     name,
     gender,
-    DateOfBirth,
+    birth,
     phone,
     email,
     transportation,
@@ -46,12 +46,12 @@ const ListItem = ({ data, index }: { data: Applicant; index: number }) => {
   };
 
   return (
-    <ListItemContainer className="ListItem">
-      <TD>{id}</TD>
-      <TD>{DateOfApplication}</TD>
+    <ListItemContainer className="ListItem" checked={isChecked}>
+      <TD>{index + 1}</TD>
+      <TD>{date}</TD>
       <TD>{name}</TD>
       <TD>{gender}</TD>
-      <TD>{DateOfBirth}</TD>
+      <TD>{birth}</TD>
       <TD>{phone}</TD>
       <TD>{email}</TD>
       <TD>{transportation}</TD>
@@ -70,7 +70,10 @@ const ListItem = ({ data, index }: { data: Applicant; index: number }) => {
 
 export default ListItem;
 
-const ListItemContainer = styled.tr``;
+const ListItemContainer = styled.tr<{ checked: boolean }>`
+  background-color: ${(props) => `${props.checked && "#ececec"}`};
+  border-bottom: 1px solid #d9d9d9;
+`;
 
 const ListCheckboxWrapper = styled.td`
   display: flex;
@@ -87,5 +90,5 @@ const ListCheckbox = styled.input`
 
 const TD = styled.td`
   text-align: center;
-  padding-top: 10px;
+  padding-top: 5px;
 `;
