@@ -5,6 +5,7 @@ import ListHeader from "../components/dashboard/ListHeader";
 import SearchBar from "../components/dashboard/SearchBar";
 import List from "../components/dashboard/List";
 import PageNation from "../components/dashboard/PageNation";
+import Animation from "../elements/Animations/Animation";
 
 import { ApplicantList, Applicant } from "../types/datshboard";
 import { applicantAllData, filteredApplicantData } from "../store/dashboard";
@@ -23,7 +24,10 @@ const checkOptionList = [
 
 const Dashboard = () => {
   const [applicants, setApplicants] = useRecoilState(applicantAllData);
+  // TODO: filterApplicants로 갈아끼울 시
+  // const setApplicants = useSetRecoilState(applicantAllData)로 변경할 예정 (applicants가 안쓰이므로)
   const [fetchLoading, setFetchLoading] = useState(false);
+  const filterApplicants = useRecoilValue(filteredApplicantData);
 
   React.useEffect(() => {
     async function fetchAndSetApplicants() {
@@ -65,14 +69,15 @@ const Dashboard = () => {
           dateOptionList={dateOptionList}
           checkOptionList={checkOptionList}
         />
-        {fetchLoading ?? <div>로딩중...</div>}
-
+        {fetchLoading || <Animation animation="SpinAnimation" />}
         {fetchLoading && (
           <>
+            {/* TODO: List items로 getItemsOnTargetPage(filterApplicants) 쓰면 됨 */}
+            {/* <List items={getItemsOnTargetPage(filterApplicants)} /> */}
             <List items={getItemsOnTargetPage(applicants)} />
             <PageNation
               itemsPerPage={ITEMS_PER_PAGE}
-              totalItems={items.length}
+              totalItems={applicants.length}
               currentPage={currentPage}
               paginate={setCurrentPage}
             />
