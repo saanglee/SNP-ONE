@@ -1,50 +1,47 @@
 import styled from "styled-components";
 import React, { ChangeEvent } from "react";
+import { useRecoilState } from "recoil";
+import { filteredApplicantState } from "../../store/dashboard";
 
-type PropsType = {
-  handleChagne: object;
-  dateOptionList: any;
-  checkOptionList: any;
-};
+// TODO: select 타입 지정하기
+const dateOptionList = [
+  { name: "최신순", value: "asc" },
+  { name: "오래된 순", value: "desc" },
+] as any;
 
-const SearchBar = (props: PropsType) => {
-  const [inputState, setInputState] = React.useState<string>(""); // 임시 useState
-  const [dateSort, setDateSort] = React.useState<string>("latest");
-  const [checkFilter, setCheckFilter] = React.useState<string>("all");
+const checkOptionList = [
+  { name: "전체", value: "all" },
+  { name: "당첨", value: "checked" },
+  { name: "미당첨", value: "unchecked" },
+] as any;
 
-  const [isActiveOrder1, setIsActiveOrder1] = React.useState<boolean>(true);
-  const [isActiveOrder2, setIsActiveOrder2] = React.useState<boolean>(false);
-
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setInputState(event.target.value);
-  };
-  const handleClickSearch = () => {};
-
-  const handleDateSortChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setDateSort(event.target.value);
-  };
-  const handleCheckFilterChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setCheckFilter(event.target.value);
-  };
-
-  const handleClickOrderButton = () => {
-    setIsActiveOrder1((current) => !current);
-    setIsActiveOrder2((current) => !current);
+const SearchBar = () => {
+  const [filter, setFilter] = useRecoilState(filteredApplicantState);
+  const changeSelectHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = event.target;
+    setFilter({
+      ...filter,
+      [name]: value,
+    });
   };
 
   return (
     <SearchBarContainer>
       <div>
-        <SearchInput
-          type="text"
-          placeholder="지원자명"
-          value={inputState}
-          onChange={handleInputChange}
-        />
-        <SearchButton onClick={handleClickSearch}>검색</SearchButton>
-
-        <Filter value="dateSort" onChange={handleDateSortChange}>
-          {props.dateOptionList.map((item: any, index: number) => {
+        {/* 이름 검색창
+        - ref로 변경
+        - onSubmit시 setFilter(현재 입력값)
+        */}
+        <form>
+          <SearchInput type="text" placeholder="지원자명" />
+          <SearchButton>검색</SearchButton>
+        </form>
+        <Filter
+          name="sort"
+          defaultValue={filter.sort}
+          onChange={changeSelectHandler}
+        >
+          {dateOptionList.map((item: any, index: number) => {
             return (
               <option key={index} value={item.value}>
                 {item.name}
@@ -52,8 +49,12 @@ const SearchBar = (props: PropsType) => {
             );
           })}
         </Filter>
-        <Filter value="checkFilter" onChange={handleCheckFilterChange}>
-          {props.checkOptionList.map((item: any, index: number) => {
+        <Filter
+          name="isChecked"
+          defaultValue={filter.isChecked}
+          onChange={changeSelectHandler}
+        >
+          {checkOptionList.map((item: any, index: number) => {
             return (
               <option key={index} value={item.value}>
                 {item.name}
@@ -62,13 +63,12 @@ const SearchBar = (props: PropsType) => {
           })}
         </Filter>
       </div>
+      {/* 1차, 2차 */}
       <ButtonWrapper>
-        <OrderButton1 onClick={handleClickOrderButton} toggle={isActiveOrder1}>
-          1차
-        </OrderButton1>
-        <OrderButton2 onClick={handleClickOrderButton} toggle={isActiveOrder2}>
-          2차
-        </OrderButton2>
+        {/* <OrderBtn>1차</OrderBtn> */}
+        {/* <OrderBtn>차</OrderBtn> */}
+        <button>1차</button>
+        <button>2차</button>
       </ButtonWrapper>
     </SearchBarContainer>
   );
@@ -111,7 +111,7 @@ const ButtonWrapper = styled.div`
   margin-right: 30px;
 `;
 
-const OrderButton1 = styled.button<{ toggle: boolean }>`
+const OrderButton = styled.button<{ toggle: boolean }>`
   background-color: #6e8cd3;
   color: white;
   font-size: 18px;
@@ -122,16 +122,6 @@ const OrderButton1 = styled.button<{ toggle: boolean }>`
   background-color: ${(props) => `${props.toggle ? "#0f2c6e" : "#48619B"}`};
 `;
 
-const OrderButton2 = styled.button<{ toggle: boolean }>`
-  background-color: #6e8cd3;
-  color: white;
-  font-size: 18px;
-  border-radius: 0 7px 7px 0;
-  border: 0.5px solid #d9d9d9;
-  width: 120px;
-  height: 40px;
-  background-color: ${(props) => `${props.toggle ? "#0f2c6e" : "#48619B"}`};
-`;
 const Filter = styled.select`
   border-radius: 8px;
   border: 1px solid #d9d9d9d9;
