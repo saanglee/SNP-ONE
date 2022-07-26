@@ -31,16 +31,16 @@ const downloadFile = ({ data, fileName, fileType }: DownloadFile) => {
 
 const exportToCsv = (applicants: Applicant[]) => {
   const headers = [
-    "DateOfApplication,Name,Gender,DateOfBirth,Phone,Email,transportation,Address,isChecked",
+    "date,Name,Gender,birth,Phone,Email,transportation,Address,isChecked",
   ];
 
   const applicantsCsv = applicants.reduce(
     (acc: string[], applicant: Applicant) => {
       const {
-        DateOfApplication,
+        date,
         name,
         gender,
-        DateOfBirth,
+        birth,
         phone,
         email,
         transportation,
@@ -50,10 +50,10 @@ const exportToCsv = (applicants: Applicant[]) => {
 
       acc.push(
         [
-          DateOfApplication,
+          date,
           name,
           gender,
-          DateOfBirth,
+          birth,
           phone,
           email,
           transportation,

@@ -27,10 +27,10 @@ export const filteredApplicantData = selector({
     const filterByName = ({ name }: Applicant) =>
       name.includes(filterState.name);
 
-    const filterByRecruitment = ({ DateOfApplication }: Applicant) => {
+    const filterByRecruitment = ({ date }: Applicant) => {
       const { recruitment } = filterState;
 
-      const applicantDate = new Date(DateOfApplication).getTime();
+      const applicantDate = new Date(date).getTime();
       // TODO: 특정날짜를 어느 날짜로 할지 정하기
       const referenceDate = new Date("2022.05.02").getTime();
       const timeDifference = applicantDate - referenceDate;
@@ -42,8 +42,8 @@ export const filteredApplicantData = selector({
     };
 
     const sortByDate = (
-      { DateOfApplication: prevDate }: Applicant,
-      { DateOfApplication: currDate }: Applicant,
+      { date: prevDate }: Applicant,
+      { date: currDate }: Applicant,
     ) => {
       const { sort } = filterState;
       const prevDateTime = new Date(prevDate).getTime();

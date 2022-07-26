@@ -1,9 +1,9 @@
 interface Applicant {
   id: string;
-  DateOfApplication: string | number;
+  date: string | number;
   name: string;
   gender: "femail" | "male";
-  DateOfBirth: string | number;
+  birth: string | number;
   phone: string | number;
   email: string;
   transportation: string;
