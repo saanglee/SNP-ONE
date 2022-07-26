@@ -1,10 +1,19 @@
 import { atom, selector } from "recoil";
-import { Applicant, FilteredApplicants } from "../types/datshboard";
+import {
+  Applicant,
+  FilteredApplicants,
+  ApplicantList,
+} from "../types/datshboard";
 import { getApplicantData } from "../api/models/dashboard";
+
+export const listOnTargetPage = atom({
+  key: "listForExcelDownload",
+  default: [] as Applicant[],
+});
 
 export const applicantAllData = atom({
   key: "applicantAllData",
-  default: [] as Applicant[],
+  default: [] as ApplicantList,
 });
 
 const filteredApplicantState = atom({

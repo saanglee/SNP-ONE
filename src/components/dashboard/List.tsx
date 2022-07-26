@@ -1,9 +1,10 @@
 import React from "react";
 import ListItem from "./ListItem";
 import styled from "styled-components";
-import dummy from "./dummy.json";
+import { listOnTargetPage } from "../../store/dashboard";
 
 import "./dashboard.css";
+import { useSetRecoilState } from "recoil";
 
 const TABLE_HEADER: string[] = [
   "번호",
@@ -19,6 +20,13 @@ const TABLE_HEADER: string[] = [
 ];
 
 const List = ({ items }: { items: any }) => {
+  console.log(items);
+  const setApplicantsList = useSetRecoilState(listOnTargetPage);
+
+  React.useEffect(() => {
+    setApplicantsList(items);
+  }, []);
+
   return (
     <LitsContainer>
       <ListTable>

@@ -1,8 +1,14 @@
-import { Applicant } from "../../types/datshboard";
+import { Applicant, ApplicantList } from "../../types/datshboard";
 
-// TODO: dummy data를 List로부터 받은 데이터로 수정
-const ExcelDownloadBtn = (applicants: Applicant[]) => {
-  return <button onClick={() => exportToCsv(applicants)}>엑셀 다운로드</button>;
+const ExcelDownloadBtn = ({
+  applicantsList,
+}: {
+  applicantsList: Applicant[];
+}) => {
+  console.log(applicantsList);
+  return (
+    <button onClick={() => exportToCsv(applicantsList)}>CSV 운로드</button>
+  );
 };
 
 export default ExcelDownloadBtn;
@@ -29,13 +35,16 @@ const downloadFile = ({ data, fileName, fileType }: DownloadFile) => {
   a.remove();
 };
 
-const exportToCsv = (applicants: Applicant[]) => {
+const exportToCsv = (applicantsList: Applicant[]) => {
   const headers = [
     "date,Name,Gender,birth,Phone,Email,transportation,Address,isChecked",
   ];
 
-  const applicantsCsv = applicants.reduce(
-    (acc: string[], applicant: Applicant) => {
+  const applicantsListCsv = applicantsList
+    .map((item) => {
+      return item;
+    })
+    .reduce((acc: string[], applicant: Applicant) => {
       const {
         date,
         name,
@@ -62,13 +71,11 @@ const exportToCsv = (applicants: Applicant[]) => {
         ].join(","),
       );
       return acc;
-    },
-    [],
-  );
+    }, []);
 
   downloadFile({
-    data: [...headers, ...applicantsCsv].join("\n"),
-    fileName: "applicants.csv",
+    data: [...headers, ...applicantsListCsv].join("\n"),
+    fileName: "applicantsList.csv",
     fileType: "text/csv;charset=utf-8",
   });
 };
