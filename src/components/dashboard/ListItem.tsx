@@ -45,13 +45,6 @@ const ListItem = ({ data, index }: { data: Applicant; index: number }) => {
     setApplicants(updatedApplicants);
   };
 
-  const [isCheckedState, setIsCheckedState] =
-    React.useState<boolean>(isChecked);
-
-  const handleCheckChagne = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsCheckedState((current) => !current);
-  };
-
   return (
     <ListItemContainer className="ListItem">
       <TD>{id}</TD>
