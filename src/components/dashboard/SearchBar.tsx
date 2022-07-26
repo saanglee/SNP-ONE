@@ -3,17 +3,20 @@ import React from "react";
 import { useRecoilState } from "recoil";
 import { filteredApplicantState } from "../../store/dashboard";
 
-// TODO: select 타입 지정하기
+type filterSelect = {
+  [key: string]: string;
+};
+
 const dateOptionList = [
   { name: "최신순", value: "asc" },
   { name: "오래된 순", value: "desc" },
-] as any;
+];
 
 const checkOptionList = [
   { name: "전체", value: "all" },
   { name: "당첨", value: "checked" },
   { name: "미당첨", value: "unchecked" },
-] as any;
+];
 
 const SearchBar = () => {
   const [filter, setFilter] = useRecoilState(filteredApplicantState);
@@ -56,7 +59,7 @@ const SearchBar = () => {
           defaultValue={filter.sort}
           onChange={changeSelectHandler}
         >
-          {dateOptionList.map((item: any, index: number) => {
+          {dateOptionList.map((item: filterSelect, index: number) => {
             return (
               <option key={index} value={item.value}>
                 {item.name}
@@ -69,7 +72,7 @@ const SearchBar = () => {
           defaultValue={filter.isChecked}
           onChange={changeSelectHandler}
         >
-          {checkOptionList.map((item: any, index: number) => {
+          {checkOptionList.map((item: filterSelect, index: number) => {
             return (
               <option key={index} value={item.value}>
                 {item.name}
