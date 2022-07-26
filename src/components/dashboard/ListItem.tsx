@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import "./dashboard.css";
-import { Applicant } from "../../types/datshboard";
+import { Applicant, ApplicantList } from "../../types/datshboard";
 import { patchIsApplicantChecked } from "../../api/models/dashboard";
 import { useRecoilState } from "recoil";
 import { applicantAllData } from "../../store/dashboard";
@@ -29,7 +29,7 @@ const ListItem = ({ data, index, transportation }: PropsType) => {
     let updatedApplicants = replaceItemAtIndex(applicants, changeApplicantIdx, {
       ...applicant,
       isChecked: !applicant.isChecked,
-    }) as Applicant[];
+    }) as ApplicantList;
     setApplicants(updatedApplicants);
 
     const { status } = await patchIsApplicantChecked(applicant);

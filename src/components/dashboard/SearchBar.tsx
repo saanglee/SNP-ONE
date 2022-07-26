@@ -1,47 +1,65 @@
 import styled from "styled-components";
-import React, { ChangeEvent } from "react";
+import React from "react";
 import { useRecoilState } from "recoil";
 import { filteredApplicantState } from "../../store/dashboard";
 
-// TODO: select 타입 지정하기
+type filterSelect = {
+  [key: string]: string;
+};
+
 const dateOptionList = [
   { name: "최신순", value: "asc" },
   { name: "오래된 순", value: "desc" },
-] as any;
+];
 
 const checkOptionList = [
   { name: "전체", value: "all" },
   { name: "당첨", value: "checked" },
   { name: "미당첨", value: "unchecked" },
-] as any;
+];
 
 const SearchBar = () => {
   const [filter, setFilter] = useRecoilState(filteredApplicantState);
-  const changeSelectHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = event.target;
+  const nameInput = React.useRef<HTMLInputElement>(null);
+
+  const changeFilterCallback = (name: string, value?: string) => {
     setFilter({
       ...filter,
       [name]: value,
     });
   };
 
+  const changeNameHandler = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const { name } = event.currentTarget;
+    changeFilterCallback(name, nameInput.current?.value);
+  };
+
+  const changeSelectHandler = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = event.currentTarget;
+    changeFilterCallback(name, value);
+  };
+
+  const changeRecruitmentHandler = (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    const { name, value } = event.currentTarget;
+    changeFilterCallback(name, value);
+  };
+
   return (
     <SearchBarContainer>
       <div>
-        {/* 이름 검색창
-        - ref로 변경
-        - onSubmit시 setFilter(현재 입력값)
-        */}
-        <form>
-          <SearchInput type="text" placeholder="지원자명" />
+        <SearchForm name="name" onSubmit={changeNameHandler}>
+          <SearchInput type="text" placeholder="지원자명" ref={nameInput} />
           <SearchButton>검색</SearchButton>
-        </form>
+        </SearchForm>
         <Filter
           name="sort"
           defaultValue={filter.sort}
           onChange={changeSelectHandler}
         >
-          {dateOptionList.map((item: any, index: number) => {
+          {dateOptionList.map((item: filterSelect, index: number) => {
             return (
               <option key={index} value={item.value}>
                 {item.name}
@@ -54,7 +72,7 @@ const SearchBar = () => {
           defaultValue={filter.isChecked}
           onChange={changeSelectHandler}
         >
-          {checkOptionList.map((item: any, index: number) => {
+          {checkOptionList.map((item: filterSelect, index: number) => {
             return (
               <option key={index} value={item.value}>
                 {item.name}
@@ -63,12 +81,23 @@ const SearchBar = () => {
           })}
         </Filter>
       </div>
-      {/* 1차, 2차 */}
       <ButtonWrapper>
-        {/* <OrderBtn>1차</OrderBtn> */}
-        {/* <OrderBtn>차</OrderBtn> */}
-        <button>1차</button>
-        <button>2차</button>
+        <OrderButton
+          value="1"
+          name="recruitment"
+          toggle={filter.recruitment === "1"}
+          onClick={changeRecruitmentHandler}
+        >
+          1차
+        </OrderButton>
+        <OrderButton
+          value="2"
+          name="recruitment"
+          toggle={filter.recruitment === "2"}
+          onClick={changeRecruitmentHandler}
+        >
+          2차
+        </OrderButton>
       </ButtonWrapper>
     </SearchBarContainer>
   );
@@ -86,6 +115,14 @@ const SearchBarContainer = styled.div`
   align-items: center;
   margin-top: 20px;
   justify-content: space-between;
+  & > div {
+    display: flex;
+    align-items: center;
+  }
+`;
+
+const SearchForm = styled.form`
+  display: flex;
 `;
 
 const SearchInput = styled.input`
@@ -109,13 +146,14 @@ const SearchButton = styled.button`
 
 const ButtonWrapper = styled.div`
   margin-right: 30px;
+  gap: 0.5rem;
 `;
 
 const OrderButton = styled.button<{ toggle: boolean }>`
   background-color: #6e8cd3;
   color: white;
   font-size: 18px;
-  border-radius: 7px 0 0 7px;
+  border-radius: 7px;
   border: 0.5px solid #d9d9d9;
   width: 120px;
   height: 40px;

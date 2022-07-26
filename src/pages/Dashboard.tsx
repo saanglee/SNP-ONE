@@ -1,5 +1,5 @@
-import React, { useState, useEffect, ReactNode } from "react";
-import { useRecoilValue, useRecoilState } from "recoil";
+import React from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import Layout from "../components/layout/Layout";
 import ListHeader from "../components/dashboard/ListHeader";
 import SearchBar from "../components/dashboard/SearchBar";
@@ -7,33 +7,35 @@ import List from "../components/dashboard/List";
 import PageNation from "../components/dashboard/PageNation";
 import Animation from "../elements/Animations/Animation";
 
-import { ApplicantList, Applicant } from "../types/datshboard";
-import { applicantAllData, filteredApplicantData } from "../store/dashboard";
+import { Applicant } from "../types/datshboard";
+import {
+  applicantAllData,
+  filteredApplicantData,
+  filteredApplicantState,
+  FILTER_DEFAULT,
+} from "../store/dashboard";
 import { getApplicantData } from "../api/models/dashboard";
 
 const Dashboard = () => {
-  const [applicants, setApplicants] = useRecoilState(applicantAllData);
-  // TODO: filterApplicants로 갈아끼울 시
-  // const setApplicants = useSetRecoilState(applicantAllData)로 변경할 예정 (applicants가 안쓰이므로)
-  const [fetchLoading, setFetchLoading] = useState(false);
-  const filterApplicants = useRecoilValue(filteredApplicantData);
+  const setApplicants = useSetRecoilState(applicantAllData);
+  const setApplicantFilter = useSetRecoilState(filteredApplicantState);
+  const filteredApplicants = useRecoilValue(filteredApplicantData);
+  const [fetchLoading, setFetchLoading] = React.useState(false);
 
   React.useEffect(() => {
     async function fetchAndSetApplicants() {
       const response = await getApplicantData();
+
       setApplicants(response);
+      setApplicantFilter(FILTER_DEFAULT);
       setFetchLoading(true);
     }
+
     fetchAndSetApplicants();
   }, []);
 
-  const allAplicants = useRecoilValue<Applicant[]>(applicantAllData);
-  const filteredApplicants = useRecoilValue<Applicant[]>(filteredApplicantData);
-
   const ITEMS_PER_PAGE = 6;
-  const [items, setItems] = useState<ApplicantList>([]);
-
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = React.useState(1);
 
   const indexOfLast = currentPage * ITEMS_PER_PAGE;
   const indexOfFirst = indexOfLast - ITEMS_PER_PAGE;
@@ -53,16 +55,14 @@ const Dashboard = () => {
     <Layout>
       <div style={{ maxWidth: "1700px", minWidth: "1000px" }}>
         <ListHeader />
-        <SearchBar />
         {fetchLoading || <Animation animation="SpinAnimation" />}
         {fetchLoading && (
           <>
-            {/* TODO: List items로 getItemsOnTargetPage(filterApplicants) 쓰면 됨 */}
-            <List items={getItemsOnTargetPage(filterApplicants)} />
-            {/* <List items={getItemsOnTargetPage(applicants)} /> */}
+            <SearchBar />
+            <List items={getItemsOnTargetPage(filteredApplicants)} />
             <PageNation
               itemsPerPage={ITEMS_PER_PAGE}
-              totalItems={applicants.length}
+              totalItems={filteredApplicants.length}
               currentPage={currentPage}
               paginate={setCurrentPage}
             />

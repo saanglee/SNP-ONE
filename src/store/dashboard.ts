@@ -4,11 +4,10 @@ import {
   FilteredApplicants,
   ApplicantList,
 } from "../types/datshboard";
-import { getApplicantData } from "../api/models/dashboard";
 
 export const listOnTargetPage = atom({
   key: "listForExcelDownload",
-  default: [] as Applicant[],
+  default: [] as ApplicantList,
 });
 
 export const applicantAllData = atom({
@@ -16,16 +15,19 @@ export const applicantAllData = atom({
   default: [] as ApplicantList,
 });
 
+export const FILTER_DEFAULT = {
+  name: "",
+  sort: "asc",
+  recruitment: "1",
+  isChecked: "all",
+} as FilteredApplicants;
+
 export const filteredApplicantState = atom({
   key: "filteredApplicantState",
-  default: {
-    name: "",
-    sort: "asc",
-    recruitment: 1,
-    isChecked: "all",
-  } as FilteredApplicants,
+  default: FILTER_DEFAULT,
 });
 
+const REFERENCE_DATE = "2022.05.05";
 export const filteredApplicantData = selector({
   key: "filteredApplicantData",
   get: ({ get }) => {
@@ -39,11 +41,10 @@ export const filteredApplicantData = selector({
       const { recruitment } = filterState;
 
       const applicantDate = new Date(date).getTime();
-      // TODO: 특정날짜를 어느 날짜로 할지 정하기
-      const referenceDate = new Date("2022.05.02").getTime();
+      const referenceDate = new Date(REFERENCE_DATE).getTime();
       const timeDifference = applicantDate - referenceDate;
 
-      if (recruitment === 1) {
+      if (recruitment === "1") {
         return timeDifference > 0;
       }
       return timeDifference <= 0;
