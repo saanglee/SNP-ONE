@@ -7,7 +7,7 @@ const ExcelDownloadBtn = ({
 }) => {
   console.log(applicantsList);
   return (
-    <button onClick={() => exportToCsv(applicantsList)}>CSV 운로드</button>
+    <button onClick={() => exportToCsv(applicantsList)}>CSV 다운로드</button>
   );
 };
 

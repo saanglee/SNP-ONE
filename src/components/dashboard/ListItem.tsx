@@ -9,19 +9,15 @@ import { replaceItemAtIndex } from "../../util/replaceItemIndex";
 
 /* eslint-disable react/prop-types */
 
-const ListItem = ({ data, index }: { data: Applicant; index: number }) => {
-  const {
-    id,
-    date,
-    name,
-    gender,
-    birth,
-    phone,
-    email,
-    transportation,
-    address,
-    isChecked,
-  } = data;
+interface PropsType {
+  data: Applicant;
+  index: number;
+  transportation: string;
+}
+
+const ListItem = ({ data, index, transportation }: PropsType) => {
+  const { id, date, name, gender, birth, phone, email, address, isChecked } =
+    data;
 
   const [applicants, setApplicants] = useRecoilState(applicantAllData);
 

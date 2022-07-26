@@ -51,7 +51,7 @@ const Dashboard = () => {
 
   return (
     <Layout>
-      <div style={{ maxWidth: "1500px" }}>
+      <div style={{ maxWidth: "1700px", minWidth: "1000px" }}>
         <ListHeader />
         <SearchBar />
         {fetchLoading || <Animation animation="SpinAnimation" />}
