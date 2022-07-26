@@ -3,7 +3,7 @@ import { apiRequest } from "../instance/instance";
 
 export const useUsersModel = () => {
   const postUsers = async (data: any) => {
-    const response: void | any = await apiRequest.post("/user", data);
+    const response: void | any = await apiRequest.post("/users", data);
     return response;
   };
 

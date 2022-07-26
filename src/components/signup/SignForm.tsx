@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import {
   FormGroup,
   FormControlLabel,
@@ -36,15 +36,16 @@ const SignForm = () => {
     formState: { errors, isDirty, isValid },
   } = useForm<FormValues>({ mode: "onChange" });
   const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
-    const postUser = await fetch("http://localhost:8000/user", {
+    const postUser = await fetch("http://localhost:8000/users", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     })
       .then((response) => {
-        console.log(response);
         if (response.status === 201) {
           alert("지원이 완료되었습니다");
+          // navigate("/");
+          // return <Navigate to="/" />;
         }
       })
       .catch((error) => console.log(error));
