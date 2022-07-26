@@ -16,13 +16,13 @@ export const applicantAllData = atom({
   default: [] as ApplicantList,
 });
 
-const filteredApplicantState = atom({
+export const filteredApplicantState = atom({
   key: "filteredApplicantState",
   default: {
     name: "",
     sort: "asc",
     recruitment: 1,
-    isChecked: "전체",
+    isChecked: "all",
   } as FilteredApplicants,
 });
 
@@ -31,7 +31,6 @@ export const filteredApplicantData = selector({
   get: ({ get }) => {
     const applicantData = get(applicantAllData);
     const filterState = get(filteredApplicantState);
-    console.log(applicantData);
 
     const filterByName = ({ name }: Applicant) =>
       name.includes(filterState.name);
@@ -69,12 +68,12 @@ export const filteredApplicantData = selector({
       .filter(filterByRecruitment)
       .sort(sortByDate);
 
-    if (filterState.isChecked === "전체") {
+    if (filterState.isChecked === "all") {
       return filteredApplicantList;
     }
 
     return filteredApplicantList.filter(({ isChecked }: Applicant) => {
-      if (filterState.isChecked === "당첨") {
+      if (filterState.isChecked === "checked") {
         return isChecked;
       }
       return !isChecked;

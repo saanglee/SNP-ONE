@@ -11,17 +11,6 @@ import { ApplicantList, Applicant } from "../types/datshboard";
 import { applicantAllData, filteredApplicantData } from "../store/dashboard";
 import { getApplicantData } from "../api/models/dashboard";
 
-const dateOptionList = [
-  { value: "latest", name: "최신순" },
-  { value: "oldest", name: "오래된 순" },
-];
-
-const checkOptionList = [
-  { value: "all", name: "전체" },
-  { value: "checked", name: "당첨" },
-  { value: "unchecked", name: "미당첨" },
-];
-
 const Dashboard = () => {
   const [applicants, setApplicants] = useRecoilState(applicantAllData);
   // TODO: filterApplicants로 갈아끼울 시
@@ -64,17 +53,13 @@ const Dashboard = () => {
     <Layout>
       <div style={{ maxWidth: "1500px" }}>
         <ListHeader />
-        <SearchBar
-          handleChagne={() => {}}
-          dateOptionList={dateOptionList}
-          checkOptionList={checkOptionList}
-        />
+        <SearchBar />
         {fetchLoading || <Animation animation="SpinAnimation" />}
         {fetchLoading && (
           <>
             {/* TODO: List items로 getItemsOnTargetPage(filterApplicants) 쓰면 됨 */}
-            {/* <List items={getItemsOnTargetPage(filterApplicants)} /> */}
-            <List items={getItemsOnTargetPage(applicants)} />
+            <List items={getItemsOnTargetPage(filterApplicants)} />
+            {/* <List items={getItemsOnTargetPage(applicants)} /> */}
             <PageNation
               itemsPerPage={ITEMS_PER_PAGE}
               totalItems={applicants.length}
