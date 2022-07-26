@@ -3,11 +3,10 @@ import { Applicant, ApplicantList } from "../../types/datshboard";
 const ExcelDownloadBtn = ({
   applicantsList,
 }: {
-  applicantsList: Applicant[];
+  applicantsList: ApplicantList;
 }) => {
-  console.log(applicantsList);
   return (
-    <button onClick={() => exportToCsv(applicantsList)}>CSV 운로드</button>
+    <button onClick={() => exportToCsv(applicantsList)}>CSV 다운로드</button>
   );
 };
 
@@ -20,7 +19,7 @@ interface DownloadFile {
 }
 
 const downloadFile = ({ data, fileName, fileType }: DownloadFile) => {
-  const blob = new Blob([data], { type: fileType });
+  const blob = new Blob(["\ufeff" + data], { type: fileType });
 
   const a = document.createElement("a");
   a.download = fileName;
@@ -35,7 +34,7 @@ const downloadFile = ({ data, fileName, fileType }: DownloadFile) => {
   a.remove();
 };
 
-const exportToCsv = (applicantsList: Applicant[]) => {
+const exportToCsv = (applicantsList: ApplicantList) => {
   const headers = [
     "date,Name,Gender,birth,Phone,Email,transportation,Address,isChecked",
   ];
