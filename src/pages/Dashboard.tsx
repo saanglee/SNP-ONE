@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import { useRecoilValue, useRecoilState } from "recoil";
 import Layout from "../components/layout/Layout";
 import ListHeader from "../components/dashboard/ListHeader";
@@ -36,7 +36,6 @@ const Dashboard = () => {
       setApplicants(response);
       setFetchLoading(true);
     }
-
     fetchAndSetApplicants();
   }, []);
 

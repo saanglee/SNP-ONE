@@ -40,8 +40,6 @@ const List = ({ items }: any) => {
 
 export default List;
 
-// const SearchBarContainer = styled.div`
-
 const LitsContainer = styled.div`
   border-radius: 8px;
   margin-top: 20px;

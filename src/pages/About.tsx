@@ -15,6 +15,7 @@ const About = () => {
             ProfileCardInfo.map((profile) => (
               <>
                 <Card
+                  key={profile.name}
                   name={profile.name}
                   called={profile.called}
                   desc={profile.desc}

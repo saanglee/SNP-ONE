@@ -11,7 +11,7 @@ import { replaceItemAtIndex } from "../../util/replaceItemIndex";
 
 const ListItem = ({ data, index }: { data: Applicant; index: number }) => {
   const {
-    id, //  FIXME: index를 넣으면 페이지 넘어가도 계속 번호에 0 ~ 4 만 뜸
+    id,
     DateOfApplication,
     name,
     gender,
