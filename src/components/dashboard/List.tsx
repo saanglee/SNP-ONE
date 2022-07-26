@@ -18,7 +18,7 @@ const TABLE_HEADER: string[] = [
   "당첨여부",
 ];
 
-const List = ({ items, loading }: { items: any; loading: boolean }) => {
+const List = ({ items }: { items: any }) => {
   return (
     <LitsContainer>
       <ListTable>
@@ -41,8 +41,6 @@ const List = ({ items, loading }: { items: any; loading: boolean }) => {
 };
 
 export default List;
-
-// const SearchBarContainer = styled.div`
 
 const LitsContainer = styled.div`
   border-radius: 8px;

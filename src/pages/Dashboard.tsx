@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import React, { useState, useEffect, ReactNode } from "react";
+import { useRecoilValue, useRecoilState } from "recoil";
 import Layout from "../components/layout/Layout";
 import ListHeader from "../components/dashboard/ListHeader";
 import SearchBar from "../components/dashboard/SearchBar";
@@ -23,13 +23,15 @@ const checkOptionList = [
 ];
 
 const Dashboard = () => {
-  const setApplicants = useSetRecoilState(applicantAllData);
+  const [applicants, setApplicants] = useRecoilState(applicantAllData);
+  const [fetchLoading, setFetchLoading] = useState(false);
+
   React.useEffect(() => {
     async function fetchAndSetApplicants() {
       const response = await getApplicantData();
       setApplicants(response);
+      setFetchLoading(true);
     }
-
     fetchAndSetApplicants();
   }, []);
 
@@ -38,24 +40,13 @@ const Dashboard = () => {
 
   const ITEMS_PER_PAGE = 4;
   const [items, setItems] = useState<ApplicantList>([]);
-  const [loading, setLoading] = useState(false);
+
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLast = currentPage * ITEMS_PER_PAGE;
   const indexOfFirst = indexOfLast - ITEMS_PER_PAGE;
 
-  // console.log(allAplicants); // 전체데이터
-  // console.log("filteredApplicants", filteredApplicants); // 필터데이터
-  // 전체데이터는 필터데이터와의 차이점을 보여주기 위해 콘솔에 찍었습니다.
-  // 필터데이터를 이용해주시면 됩니다!
-
-  useEffect(() => {
-    setItems(allAplicants);
-    // setItems(filteredApplicants);
-    setLoading(false);
-  }, []);
-
-  const getItemsOnCurrentPage = (items: any) => {
+  const getItemsOnTargetPage = (items: any) => {
     let itemsOnCurrentPage = 0;
 
     itemsOnCurrentPage = items
@@ -75,15 +66,19 @@ const Dashboard = () => {
           dateOptionList={dateOptionList}
           checkOptionList={checkOptionList}
         />
-        {/* <List items={filteredApplicants} loading={loading} /> */}
-        <List items={getItemsOnCurrentPage(items)} loading={loading} />
-        <PageNation
-          itemsPerPage={ITEMS_PER_PAGE}
-          totalItems={items.length}
-          currentPage={currentPage}
-          paginate={setCurrentPage}
-        />
-        {/* <Footer /> */}
+        {fetchLoading ?? <div>로딩중...</div>}
+
+        {fetchLoading && (
+          <>
+            <List items={getItemsOnTargetPage(applicants)} />
+            <PageNation
+              itemsPerPage={ITEMS_PER_PAGE}
+              totalItems={items.length}
+              currentPage={currentPage}
+              paginate={setCurrentPage}
+            />
+          </>
+        )}
       </div>
     </Layout>
   );
