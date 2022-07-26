@@ -6,8 +6,9 @@ export interface FormValues {
   name: string;
   transportation: string;
   gender: string;
-  region: string;
-  district: string;
+  address: string;
+  region: string | undefined;
+  district: string | undefined;
   date: string;
   isChecked: boolean;
 }

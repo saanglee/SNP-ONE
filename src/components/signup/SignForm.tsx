@@ -36,6 +36,12 @@ const SignForm = () => {
     formState: { errors, isDirty, isValid },
   } = useForm<FormValues>({ mode: "onChange" });
   const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
+    const address = data?.region + " " + data?.district;
+    data.address = address;
+
+    delete data.region;
+    delete data.district;
+
     const postUser = await fetch("http://localhost:8000/users", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -137,8 +143,8 @@ const SignForm = () => {
           >
             {residence}
           </Typography>
-          {errors.region && <TypoError>시/도를 선택하세요.</TypoError>}
-          {errors.district && <TypoError>시/구/군을 선택하세요.</TypoError>}
+          {errors.address && <TypoError>시/도를 선택하세요.</TypoError>}
+          {errors.address && <TypoError>시/구/군을 선택하세요.</TypoError>}
         </Box>
         <ResidenceSelectModal
           open={isOpenSelect}
