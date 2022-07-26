@@ -113,7 +113,7 @@ const MobileLayout = ({ children }: LayoutProps) => {
                   }}
                 >
                   <MobileWrapper>
-                    <InnerWrapper isModal={isModal}>
+                    <InnerWrapper>
                       <MobileHeader />
                       <MobileContent isModal={isModal}>
                         {children}
@@ -201,21 +201,15 @@ const MobileWrapper = styles.div`
   }
 `;
 
-const InnerWrapper = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "isModal",
-})<{
-  isModal?: boolean;
-}>(({ isModal }) => ({
-  overflow: isModal ? "hidden" : "auto",
+const InnerWrapper = styled(Box)({
   position: "relative",
   display: "flex",
   flexDirection: "column",
   height: "90%",
   border: "1px solid #8c8c8c",
-}));
+});
 
 const MobileInnerWrapper = styles.div`
-  overflow-y: auto;
   position: relative;
   height: 100%;
   background-color: #fff;
