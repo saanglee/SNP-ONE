@@ -1,6 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Suspense } from "react";
-
 import Dashboard from "../pages/Dashboard";
 import SignUp from "../pages/SignUp";
 import Home from "../pages/Home";
@@ -14,19 +12,17 @@ const Router = () => {
   return (
     <BrowserRouter>
       <RecoilRoot>
-        <Suspense fallback={<div>로딩중</div>}>
-          <ThemeProvider theme={theme}>
-            <Routes>
-              <Route path="/home" element={<Home />} />
-              <Route path="/dash" element={<Dashboard />} />
-              <Route path="/about" element={<About />} />
-              {["/", "/sign"].map((path, index) => {
-                return <Route path={path} element={<SignUp />} key={index} />;
-              })}
-              <Route path="*" element={<NotFound404 />} />
-            </Routes>
-          </ThemeProvider>
-        </Suspense>
+        <ThemeProvider theme={theme}>
+          <Routes>
+            <Route path="/home" element={<Home />} />
+            <Route path="/dash" element={<Dashboard />} />
+            <Route path="/about" element={<About />} />
+            {["/", "/sign"].map((path, index) => {
+              return <Route path={path} element={<SignUp />} key={index} />;
+            })}
+            <Route path="*" element={<NotFound404 />} />
+          </Routes>
+        </ThemeProvider>
       </RecoilRoot>
     </BrowserRouter>
   );
