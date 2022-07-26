@@ -110,7 +110,7 @@ const SignForm = () => {
         {/* <FormControlLabel
         control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
         label="mode switch"
-      /> */}
+        /> */}
         <InputHidden {...register("date")} value={today} />
         {/* <InputHidden {...register("id")} value={userId} /> */}
         <CheckboxHidden {...register("isChecked")} />
@@ -170,7 +170,7 @@ const SignForm = () => {
           name="phone"
           control={control}
           inputProps={{
-            maxLength: 11,
+            maxLength: 13,
           }}
           required={true}
           pattern={RegexPhone.regex}
