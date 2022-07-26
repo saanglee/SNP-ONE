@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Options } from "react-lottie";
-import { getAnimations } from "../../hooks/getAnimations";
+import { getAnimations } from "../../util/getAnimations";
 import { Container, LottieWrapper } from "./ButtonAnimation.styled";
 
 type AnimationType = {

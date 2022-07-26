@@ -11,16 +11,14 @@ interface CardProps {
 const Card = (props: CardProps) => {
   const { name, called, desc, profilePicture } = props;
   return (
-    <>
-      <ProfileCard>
-        <img src={profilePicture} alt="Image" />
-        <div className="details">
-          <h2>{name}</h2>
-          <p>{called}</p>
-        </div>
-        <p className="info">{desc}</p>
-      </ProfileCard>
-    </>
+    <ProfileCard>
+      <img src={profilePicture} alt="Image" />
+      <div className="details">
+        <h2>{name}</h2>
+        <p>{called}</p>
+      </div>
+      <p className="info">{desc}</p>
+    </ProfileCard>
   );
 };
 
@@ -28,9 +26,9 @@ export default Card;
 
 const ProfileCard = styled.div`
   color: #fff;
-  max-width: 12rem;
+  max-width: 25rem;
   max-height: 34rem;
-  width: 20rem;
+  width: 25rem;
   height: 90%;
   display: flex;
   flex-direction: column;
@@ -57,12 +55,10 @@ const ProfileCard = styled.div`
 
   .details p {
     text-transform: uppercase;
-    font-weight: 300;
     font-family: "Gfont_regular";
   }
   .info {
     text-transform: uppercase;
-    font-weight: 300;
     height: 5em;
     overflow-x: scroll;
     margin-bottom: 0.5em;

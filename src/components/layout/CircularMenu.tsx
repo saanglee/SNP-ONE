@@ -36,36 +36,42 @@ const CircularMenu = () => {
         </FloatingButton>
 
         <ItemWrapper>
-          <BootstrapTooltip
-            title={location.pathname === "/" ? "여기가 홈입니다" : "Home"}
-            placement="top"
+          <StyledLink
+            to="/"
+            className={active ? "active menu-item" : "menu-item"}
           >
-            <button
-              className={active ? "active menu-item" : "menu-item"}
-              onClick={() => setOpen(false)}
+            <BootstrapTooltip
+              title={location.pathname === "/" ? "여기가 홈입니다" : "Home"}
+              placement="top"
             >
-              <StyledLink to="/">
+              <button onClick={() => setOpen(false)}>
                 <HomeIcon className="icon" />
-              </StyledLink>
-            </button>
-          </BootstrapTooltip>
-          <BootstrapTooltip title="AdminPage" placement="top">
-            <button
-              className={active ? "active menu-item" : "menu-item"}
-              onClick={() => setOpen(false)}
-            >
-              <StyledLink to="/dash">
+              </button>
+            </BootstrapTooltip>
+          </StyledLink>
+          <StyledLink
+            to="/dash"
+            className={active ? "active menu-item" : "menu-item"}
+          >
+            <BootstrapTooltip title="AdminPage" placement="bottom">
+              <button
+                // className={active ? "active menu-item" : "menu-item"}
+                onClick={() => setOpen(false)}
+              >
                 <HomeRepairServiceIcon className="icon" />
-              </StyledLink>
-            </button>
-          </BootstrapTooltip>
-          <BootstrapTooltip title="About us" placement="top">
-            <button className={active ? "active menu-item" : "menu-item"}>
-              <StyledLink to="/about">
+              </button>
+            </BootstrapTooltip>
+          </StyledLink>
+          <StyledLink
+            to="/about"
+            className={active ? "active menu-item" : "menu-item"}
+          >
+            <BootstrapTooltip title="About us" placement="bottom">
+              <button>
                 <PhoneAndroidIcon className="icon" />
-              </StyledLink>
-            </button>
-          </BootstrapTooltip>
+              </button>
+            </BootstrapTooltip>
+          </StyledLink>
         </ItemWrapper>
       </CircularContainer>
     </>
@@ -75,7 +81,12 @@ const CircularMenu = () => {
 export default CircularMenu;
 
 const StyledLink = styles(Link)`
-color: #fff;
+& > button {
+  border: none;
+  background-color: transparent;
+  color: #fff;
+  margin-top: 0.5rem;
+}
 `;
 
 const CircularContainer = styles.div`
@@ -123,9 +134,6 @@ const ItemWrapper = styles.menu`
   .menu-item {
     &:hover {
       background-color: black;
-    }
-    .icon {
-      margin-top: 0.4rem;
     }
     background-color: eee;
     border: none;
