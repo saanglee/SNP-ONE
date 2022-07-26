@@ -17,13 +17,13 @@ const Header = () => {
         <StyledToolbar>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <div>
-              <StyledLink to="/sign">
+              <StyledLink to="/">
                 <img style={{ width: "180px" }} src={Logo} alt="" />
               </StyledLink>
             </div>
           </Box>
           <Icons>
-            <StyledLink to="/sign">sign up</StyledLink>
+            <StyledLink to="/">sign up</StyledLink>
             <div>
               <ButtonAnimation animation={["loopAnimation", "doneAnimation"]} />
             </div>
