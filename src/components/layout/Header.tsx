@@ -8,33 +8,33 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import Logo from "../../static/images/d.png";
 import ButtonAnimation from "../../elements/Animations/ButtonAnimation";
-import ButtonAnimaionsByFrame from "../../elements/Animations/ButtonAnimaionsByFrame";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { openStatus } from "../../store/global";
 
 const Header = () => {
+  const navigate = useNavigate();
   const [open, setOpen] = useRecoilState(openStatus);
+  const moveToAbout = () => {
+    setTimeout(() => {
+      navigate("/about", { replace: true });
+    }, 810);
+  };
   return (
     <Box>
       <MuiAppBar>
         <StyledToolbar>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <div>
-              <StyledLink to="/">
-                <img style={{ width: "180px" }} src={Logo} alt="" />
-              </StyledLink>
-            </div>
+            <StyledLink to="/">
+              <img style={{ width: "180px" }} src={Logo} alt="" />
+            </StyledLink>
           </Box>
           <Icons>
             <StyledLink to="/sign" onClick={() => setOpen(true)}>
-              sign up
+              <span>sign up</span>
             </StyledLink>
-            <div>
+            <div onClick={moveToAbout}>
               <ButtonAnimation animation={["loopAnimation", "doneAnimation"]} />
-              {/* <ButtonAnimaionsByFrame
-                animation={["loopAnimation", "doneAnimation"]}
-              /> */}
             </div>
             <Badge>
               <SettingsIcon fontSize="large" />
@@ -50,6 +50,12 @@ export default Header;
 
 const StyledLink = Styled(Link)`
 color: #fff;
+@media (max-width: 400px) {
+  & > span {
+    display: none;
+}
+}
+
 `;
 
 const StyledToolbar = styled(Toolbar)({

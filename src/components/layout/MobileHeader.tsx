@@ -80,7 +80,9 @@ const MobileHeader = () => {
           )}
 
           <div style={{ marginLeft: "auto" }}>
-            <img style={{ width: "180px" }} src={Logo} alt="" />
+            <Link to="/">
+              <img style={{ width: "180px" }} src={Logo} alt="" />
+            </Link>
           </div>
 
           <div></div>

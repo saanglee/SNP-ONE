@@ -47,6 +47,7 @@ const TitleElement = styled.h1<{
   height: fit-content;
   font-family: "Gfont_bold";
   line-height: 0.2em;
+  flex-shrink: 0;
   letter-spacing: -0.05em;
   font-size: ${(props) => `${props.size}em` || "24px"};
   color: ${(props) => props.color};

@@ -96,6 +96,7 @@ const MobileLayout = ({ children }: LayoutProps) => {
                       backgroundColor: "#fff",
                       marginLeft: "1rem",
                       marginRight: "1rem",
+                      paddingBottom: "3rem",
                     }}
                   >
                     {children}
@@ -136,7 +137,7 @@ const MobileLayout = ({ children }: LayoutProps) => {
 
 export default MobileLayout;
 
-const StyledWrapper: any = styled(Container)({
+const StyledWrapper = styled(Container)({
   overflow: "hidden",
   position: "relative",
   width: "100%",

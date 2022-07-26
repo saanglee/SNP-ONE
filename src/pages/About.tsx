@@ -5,6 +5,7 @@ import Animation from "../elements/Animations/Animation";
 import Card from "../components/layout/Card";
 import { ProfileCardInfo } from "../static/Infomations/ProfileCardInfo";
 const About = () => {
+  const shuffle = (array: any) => [...array].sort(() => Math.random() - 0.5);
   return (
     <>
       <Animation animation="underwaterAnimation" />
@@ -12,8 +13,8 @@ const About = () => {
         <CircularMenu />
         <FlexBox>
           {ProfileCardInfo &&
-            ProfileCardInfo.map((profile) => (
-              <>
+            shuffle(
+              ProfileCardInfo.map((profile) => (
                 <Card
                   key={profile.name}
                   name={profile.name}
@@ -21,8 +22,8 @@ const About = () => {
                   desc={profile.desc}
                   profilePicture={profile.profilePicture}
                 />
-              </>
-            ))}
+              )),
+            )}
         </FlexBox>
       </Wrapper>
     </>
@@ -44,5 +45,5 @@ const FlexBox = styled.div`
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.3em;
+  gap: 0.5em;
 `;

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Container, LottieWrapper } from "./Animation.styled";
-import { getAnimations } from "../../hooks/getAnimations";
+import { getAnimations } from "../../util/getAnimations";
 
 type AnimationType = {
   animation?: any;
