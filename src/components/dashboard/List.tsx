@@ -1,8 +1,6 @@
 import React from "react";
 import ListItem from "./ListItem";
 import styled from "styled-components";
-import dummy from "./dummy.json";
-
 import "./dashboard.css";
 
 const TABLE_HEADER: string[] = [
@@ -18,7 +16,7 @@ const TABLE_HEADER: string[] = [
   "당첨여부",
 ];
 
-const List = ({ items, loading }: { items: any; loading: boolean }) => {
+const List = ({ items }: any) => {
   return (
     <LitsContainer>
       <ListTable>
