@@ -20,7 +20,7 @@ const Header = () => {
         <StyledToolbar>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <div>
-              <StyledLink to="/">
+              <StyledLink to="/" onClick={() => setOpen(false)}>
                 <img style={{ width: "180px" }} src={Logo} alt="" />
               </StyledLink>
             </div>

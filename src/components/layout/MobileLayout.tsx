@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Container,
   Box,
@@ -16,13 +16,10 @@ import { isModalState } from "../../store/form";
 import Tooltip, { TooltipProps, tooltipClasses } from "@mui/material/Tooltip";
 import Title from "../../elements/Texts/Title";
 import Text from "../../elements/Texts/Text";
-import MenuIcon from "@mui/icons-material/Menu";
 import LandingPage from "./LandingPage";
 interface LayoutProps {
   children: React.ReactNode;
 }
-
-const sidebarWidth = 240;
 
 const MobileLayout = ({ children }: LayoutProps) => {
   const [open, setOpen] = useRecoilState(openStatus);

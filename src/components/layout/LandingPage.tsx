@@ -23,13 +23,11 @@ const LandingPage = () => {
 export default LandingPage;
 
 const FlexBox = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 40%;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: auto;
+  margin-top: 25rem;
   gap: 3rem;
 `;
 
