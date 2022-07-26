@@ -30,11 +30,13 @@ import {
   InfoTerms,
   PrivacyTerms,
 } from "./utils";
+import { useUsersModel } from "../../api/models/useUserModels";
 
 const SignForm = () => {
   const today = format(new Date(), "yyyy-MM-dd HH:mm:s");
-  const userId = Math.random().toString(36).substring(2, 10);
+  // const userId = Math.random().toString(36).substring(2, 10);
   const navigate = useNavigate();
+  const a = useUsersModel();
 
   const {
     register,
@@ -49,19 +51,12 @@ const SignForm = () => {
     delete data.region;
     delete data.district;
 
-    const postUser = await fetch("http://localhost:8000/users", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    })
-      .then((response) => {
-        if (response.status === 201) {
-          alert("지원이 완료되었습니다");
-          // navigate("/");
-          // return <Navigate to="/" />;
-        }
-      })
-      .catch((error) => console.log(error));
+    a.postUsers(data).then((response) => {
+      if (response.status === 201 || response.status === 200) {
+        alert("지원이 완료되었습니다");
+        navigate("/", { replace: true });
+      }
+    });
   };
   const residence = useRecoilValue(ResidenceValue);
   const [isModal, setIsModal] = useRecoilState(isModalState);
@@ -117,7 +112,7 @@ const SignForm = () => {
         label="mode switch"
       /> */}
         <InputHidden {...register("date")} value={today} />
-        <InputHidden {...register("id")} value={userId} />
+        {/* <InputHidden {...register("id")} value={userId} /> */}
         <CheckboxHidden {...register("isChecked")} />
         <FormInput
           label="이름"

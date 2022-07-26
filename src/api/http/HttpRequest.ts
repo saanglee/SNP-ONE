@@ -1,6 +1,6 @@
 import { AxiosInstance } from "axios";
 
-type ApiUrlType = "/city" | "/users" | "/overall";
+type ApiUrlType = "/city" | "/users";
 
 export class HttpRequest {
   private service: AxiosInstance;
@@ -16,7 +16,7 @@ export class HttpRequest {
   }
 
   post<T>(url: ApiUrlType, data: T) {
-    return this.service.post(`${url}`, data).then((response) => response.data);
+    return this.service.post(`${url}`, data);
   }
 
   patch<T>(url: ApiUrlType, id: string, data: T) {
