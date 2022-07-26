@@ -19,10 +19,17 @@ import ResidenceSelectModal from "./ResidenceSelectModal";
 import Terms from "./Terms";
 import FormCheckboxBtn from "../form/FormCheckboxBtn";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { ResidenceValue } from "../../store/form";
-import { useRecoilValue } from "recoil";
+import { ResidenceValue, isModalState } from "../../store/form";
+import { useRecoilValue, useRecoilState } from "recoil";
 import { FormValues } from "../../types/form";
-import { RegexName, RegexBirth, RegexPhone, RegexEmail } from "./regex";
+import {
+  RegexName,
+  RegexBirth,
+  RegexPhone,
+  RegexEmail,
+  InfoTerms,
+  PrivacyTerms,
+} from "./utils";
 
 const SignForm = () => {
   const today = format(new Date(), "yyyy-MM-dd HH:mm:s");
@@ -57,10 +64,11 @@ const SignForm = () => {
       .catch((error) => console.log(error));
   };
   const residence = useRecoilValue(ResidenceValue);
+  const [isModal, setIsModal] = useRecoilState(isModalState);
 
   const [isOpenSelect, setIsOpenSelect] = useState(false);
-  const [isTermsOpen, setIsTermsOpen] = useState(false);
-  const [termsType, setTermsType] = useState("개인정보");
+  const [isPrivacyTermsOpen, setIsPrivacyTermsOpen] = useState(false);
+  const [isInfoTermsOpen, setisInfoTermsOpen] = useState(false);
   const [checked, setChecked] = React.useState([true, false]);
 
   const handleChange1 = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,19 +85,30 @@ const SignForm = () => {
 
   const handleResidenceOpen = () => {
     setIsOpenSelect(true);
+    setIsModal(true);
   };
   const handleResidenceClose = () => {
     setIsOpenSelect(false);
+    setIsModal(false);
   };
 
-  const handleTermsOpen = (event: string): void => {
-    setIsTermsOpen(true);
-    setTermsType(event);
+  const handlePrivacyTermsOpen = () => {
+    setIsPrivacyTermsOpen(true);
+    setIsModal(true);
   };
-  const handleTermsClose = () => {
-    setIsTermsOpen(false);
+  const handlePrivacyTermsClose = () => {
+    setIsPrivacyTermsOpen(false);
+    setIsModal(false);
   };
 
+  const handleInfoTermsOpen = () => {
+    setisInfoTermsOpen(true);
+    setIsModal(true);
+  };
+  const handleInfoTermsClose = () => {
+    setisInfoTermsOpen(false);
+    setIsModal(false);
+  };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormGroup>
@@ -224,9 +243,17 @@ const SignForm = () => {
                 />
               }
             />
-            <Button onClick={() => handleTermsOpen("개인정보")}>
+            <Button onClick={handlePrivacyTermsOpen}>
               <KeyboardArrowRightIcon />
             </Button>
+            <Terms
+              open={isPrivacyTermsOpen}
+              header="서비스 이용약관"
+              title={PrivacyTerms.title}
+              subTitle={PrivacyTerms.subTitle}
+              content={PrivacyTerms.content}
+              handleClose={handlePrivacyTermsClose}
+            />
           </StyledTerms>
           <StyledTerms>
             <FormControlLabel
@@ -243,13 +270,16 @@ const SignForm = () => {
                 />
               }
             />
-            <Button onClick={() => handleTermsOpen("제3자")}>
+            <Button onClick={handleInfoTermsOpen}>
               <KeyboardArrowRightIcon />
             </Button>
             <Terms
-              open={isTermsOpen}
-              type={termsType}
-              handleClose={handleTermsClose}
+              open={isInfoTermsOpen}
+              header="서비스 이용약관"
+              title={InfoTerms.title}
+              subTitle={InfoTerms.subTitle}
+              content={InfoTerms.content}
+              handleClose={handleInfoTermsClose}
             />
           </StyledTerms>
         </Box>
