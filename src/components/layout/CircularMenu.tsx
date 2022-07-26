@@ -14,7 +14,11 @@ const CircularMenu = () => {
   const [active, setActive] = useRecoilState(activeStatus);
   const [open, setOpen] = useRecoilState(openStatus);
   const location = useLocation();
-  //   console.log(location.pathname);
+  React.useEffect(() => {
+    if (location.pathname === "/") {
+      setOpen(false);
+    }
+  }, [location]);
   return (
     <>
       <CircularContainer

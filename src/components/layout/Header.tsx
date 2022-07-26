@@ -8,6 +8,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import PhoneAndroidIcon from "@mui/icons-material/PhoneAndroid";
 import Logo from "../../static/images/d.png";
 import ButtonAnimation from "../../elements/Animations/ButtonAnimation";
+import ButtonAnimaionsByFrame from "../../elements/Animations/ButtonAnimaionsByFrame";
 import { Link, Navigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { openStatus } from "../../store/global";
@@ -20,7 +21,7 @@ const Header = () => {
         <StyledToolbar>
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <div>
-              <StyledLink to="/" onClick={() => setOpen(false)}>
+              <StyledLink to="/">
                 <img style={{ width: "180px" }} src={Logo} alt="" />
               </StyledLink>
             </div>
@@ -31,6 +32,9 @@ const Header = () => {
             </StyledLink>
             <div>
               <ButtonAnimation animation={["loopAnimation", "doneAnimation"]} />
+              {/* <ButtonAnimaionsByFrame
+                animation={["loopAnimation", "doneAnimation"]}
+              /> */}
             </div>
             <Badge>
               <SettingsIcon fontSize="large" />

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { loadedStatus, openStatus } from "../../store/global";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const LandingPage = () => {
   const [open, setOpen] = useRecoilState(openStatus);
