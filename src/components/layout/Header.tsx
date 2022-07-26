@@ -31,7 +31,7 @@ const Header = () => {
           </Box>
           <Icons>
             <StyledLink to="/sign" onClick={() => setOpen(true)}>
-              sign up
+              <span>sign up</span>
             </StyledLink>
             <div onClick={moveToAbout}>
               <ButtonAnimation animation={["loopAnimation", "doneAnimation"]} />
@@ -50,6 +50,12 @@ export default Header;
 
 const StyledLink = Styled(Link)`
 color: #fff;
+@media (max-width: 400px) {
+  & > span {
+    display: none;
+}
+}
+
 `;
 
 const StyledToolbar = styled(Toolbar)({
