@@ -8,10 +8,9 @@ export const ProfileCardInfo = [
   },
   {
     name: "홍승연",
-    called: "mbti",
-    desc: "무엇 무엇을 맡았습니다 등니다 등니다 등니다 등니다 등니다 등니다 등니다 등니다 등니다 등",
-    profilePicture:
-      "https://images.unsplash.com/photo-1612428978260-2b9c7df20150?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
+    called: "API",
+    desc: "fetch & filtering, csv download",
+    profilePicture: "https://source.unsplash.com/random",
   },
   {
     name: "김수빈",
