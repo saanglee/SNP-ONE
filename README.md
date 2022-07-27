@@ -16,7 +16,7 @@
 | 김민주 | 팀원 </br> Frontend |                           - 회원가입(정보입력) </br> - 회원가입 정보 json server 전송                           |
 | 이상지 | 팀장 </br> Frontend |                              - 표(지원현황) </br> - 표(지원현황) 관리                               |
 | 이혜림 | 팀원 </br> Frontend | - headers, routing, interactive buttons </br> - mui & lottie & outter layout </br> - 반응형 웹 구현 |
-| 홍승연 | 팀원 </br> Frontend |                                 - 표(지원현황) </br> - 표(지원현황)                                 |
+| 홍승연 | 팀원 </br> Frontend |          - 전체데이터 fetch 및 필터링 api 구축 </br> - 당첨여부 체크박스 toggle callback 구현 </br> - search bar 구현 </br> - csv 다운로드 구현       |
 
 </br>
 </br>
@@ -79,6 +79,13 @@
   </br>
 
 ### 승연
+
+- 리코일을 이용해 전체데이터 fetch 및 필터링 api 구축
+- 당첨여부 체크박스 toggle callback 구현
+  - 클릭 시 당첨여부를 변경하는 patch api 실행
+- search bar 구현
+  - 필터 로직 연결
+- csv 다운로드 구현
 
 </br>
 
