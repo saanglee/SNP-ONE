@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   FormGroup,
   FormControlLabel,
@@ -106,10 +106,6 @@ const SignForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormGroup>
-        {/* <FormControlLabel
-        control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
-        label="mode switch"
-        /> */}
         <InputHidden {...register("date")} value={today} />
         {/* <InputHidden {...register("id")} value={userId} /> */}
         <CheckboxHidden {...register("isChecked")} />

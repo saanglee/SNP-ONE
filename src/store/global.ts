@@ -20,16 +20,6 @@ export const lastData = atom({
   default: "2022-04-20",
 });
 
-// export const overallData = atom<OverallItems[]>({
-//   key: "overallData",
-//   default: [],
-// });
-
-// export const platformData = atom<PlatformItems[]>({
-//   key: "platformData",
-//   default: [],
-// });
-
 export const typesData = atom({
   key: "typesData",
   default: { type: "Line" },
