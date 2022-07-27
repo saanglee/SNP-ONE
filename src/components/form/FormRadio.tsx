@@ -8,6 +8,7 @@ import {
   Typography,
   Button,
   Checkbox,
+  styled,
 } from "@mui/material";
 import { Controller } from "react-hook-form";
 
@@ -24,7 +25,7 @@ const FormRadio = ({ control, name, values }: RadioProps) => {
       control={control}
       defaultValue={values[0]}
       render={({ field }) => (
-        <RadioGroup {...field}>
+        <Ap {...field}>
           {values.map((value, idx) => (
             <FormControlLabel
               key={value + idx}
@@ -33,9 +34,14 @@ const FormRadio = ({ control, name, values }: RadioProps) => {
               label={value}
             />
           ))}
-        </RadioGroup>
+        </Ap>
       )}
     />
   );
 };
 export default FormRadio;
+
+const Ap = styled(RadioGroup)`
+  display: flex;
+  flex-direction: row;
+`;
