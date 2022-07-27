@@ -2,7 +2,7 @@ interface Applicant {
   id: string;
   date: string | number;
   name: string;
-  gender: "femail" | "male";
+  gender: "남" | "여";
   birth: string | number;
   phone: string | number;
   email: string;
