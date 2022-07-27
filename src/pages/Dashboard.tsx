@@ -54,12 +54,16 @@ const Dashboard = () => {
   return (
     <Layout>
       <div style={{ maxWidth: "1700px", minWidth: "1000px" }}>
-        <ListHeader />
+        <ListHeader items={getItemsOnTargetPage(filteredApplicants)} />
         {fetchLoading || <Animation animation="SpinAnimation" />}
         {fetchLoading && (
           <>
             <SearchBar />
-            <List items={getItemsOnTargetPage(filteredApplicants)} />
+            <List
+              items={getItemsOnTargetPage(filteredApplicants)}
+              itemsPerPage={ITEMS_PER_PAGE}
+              currentPage={currentPage}
+            />
             <PageNation
               itemsPerPage={ITEMS_PER_PAGE}
               totalItems={filteredApplicants.length}

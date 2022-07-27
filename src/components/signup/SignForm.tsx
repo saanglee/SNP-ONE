@@ -34,7 +34,6 @@ import { useUsersModel } from "../../api/models/useUserModels";
 
 const SignForm = () => {
   const today = format(new Date(), "yyyy-MM-dd HH:mm:s");
-  // const userId = Math.random().toString(36).substring(2, 10);
   const navigate = useNavigate();
   const a = useUsersModel();
 

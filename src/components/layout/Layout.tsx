@@ -19,7 +19,6 @@ const sidebarWidth = 240;
 const Layout = ({ children }: LayoutProps) => {
   const [open, setOpen] = useState(true);
   const sign = false;
-  // const [loading, setLoading] = useRecoilState(loadedStatus);
   const loading = useRecoilValue(loadedStatus);
   const md = useMediaQuery("(max-width:900px)");
 
@@ -36,7 +35,6 @@ const Layout = ({ children }: LayoutProps) => {
       sx={{
         display: "flex",
         minHeight: "100vh",
-        // background: "#f6f6f6",
         background: "white",
       }}
     >

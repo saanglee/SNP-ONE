@@ -1,6 +1,4 @@
-// GlobalFont.ts
 import { createGlobalStyle } from "styled-components";
-// 각 폰트 파일 import
 import FontB from "../static/fonts/MaruBuri-Bold.woff";
 import FontR from "../static/fonts/MaruBuri-Regular.woff";
 import FontL from "../static/fonts/MaruBuri-Light.woff";

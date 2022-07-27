@@ -2,9 +2,16 @@ import React from "react";
 import ListItem from "./ListItem";
 import styled from "styled-components";
 import { listOnTargetPage } from "../../store/dashboard";
+import { Applicant } from "../../types/datshboard";
 
 import "./dashboard.css";
 import { useSetRecoilState } from "recoil";
+
+interface PropsType {
+  items: any;
+  currentPage: number;
+  itemsPerPage: number;
+}
 
 const TABLE_HEADER: string[] = [
   "번호",
@@ -19,7 +26,7 @@ const TABLE_HEADER: string[] = [
   "당첨여부",
 ];
 
-const List = ({ items }: { items: any }) => {
+const List = ({ items, currentPage, itemsPerPage }: PropsType) => {
   const setApplicantsList = useSetRecoilState(listOnTargetPage);
 
   React.useEffect(() => {
@@ -43,7 +50,7 @@ const List = ({ items }: { items: any }) => {
               <ListItem
                 key={item.id}
                 data={item}
-                index={index}
+                index={(currentPage - 1) * itemsPerPage + index + 1}
                 transportation={item.transportation.join(", ")}
               />
             );

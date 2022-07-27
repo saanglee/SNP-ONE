@@ -19,6 +19,7 @@ const ListItem = ({ data, index, transportation }: PropsType) => {
   const { id, date, name, gender, birth, phone, email, address, isChecked } =
     data;
 
+  const onlyDate: string = date.slice(0, 10);
   const [applicants, setApplicants] = useRecoilState(applicantAllData);
 
   const toggleChecked = async (applicant: Applicant) => {
@@ -44,7 +45,7 @@ const ListItem = ({ data, index, transportation }: PropsType) => {
   return (
     <ListItemContainer className="ListItem" checked={isChecked}>
       <TD>{index + 1}</TD>
-      <TD>{date}</TD>
+      <TD>{onlyDate}</TD>
       <TD>{name}</TD>
       <TD>{gender}</TD>
       <TD>{birth}</TD>
