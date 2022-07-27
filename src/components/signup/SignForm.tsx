@@ -124,11 +124,7 @@ const SignForm = () => {
         />
         <FormControl sx={{ mt: 2, mb: 1 }}>
           <Typography variant="h6">성별</Typography>
-          <FormRadio
-            name="gender"
-            control={control}
-            values={["female", "male"]}
-          />
+          <FormRadio name="gender" control={control} values={["여", "남"]} />
         </FormControl>
         <FormInput
           label="생년월일"

@@ -58,7 +58,7 @@ const ProfileCard = styled.div`
     font-family: "Gfont_regular";
   }
   .info {
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     height: 5em;
     overflow-x: scroll;
     margin-bottom: 0.5em;

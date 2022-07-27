@@ -30,9 +30,9 @@ const Header = () => {
             </StyledLink>
           </Box>
           <Icons>
-            <StyledLink to="/sign" onClick={() => setOpen(true)}>
-              <span>sign up</span>
-            </StyledLink>
+            {/* <StyledLink to="/sign" onClick={() => setOpen(true)}>
+              <span>지원하기</span>
+            </StyledLink> */}
             <div onClick={moveToAbout}>
               <ButtonAnimation animation={["loopAnimation", "doneAnimation"]} />
             </div>
@@ -50,7 +50,9 @@ export default Header;
 
 const StyledLink = Styled(Link)`
 color: #fff;
-@media (max-width: 400px) {
+text-decoration-line: none;
+font-family: "Gfont_regular";
+@media (max-width: 600px) {
   & > span {
     display: none;
 }
