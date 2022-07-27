@@ -1,11 +1,7 @@
 import React from "react";
 import ListItem from "./ListItem";
 import styled from "styled-components";
-import { listOnTargetPage } from "../../store/dashboard";
-import { Applicant } from "../../types/datshboard";
-
 import "./dashboard.css";
-import { useSetRecoilState } from "recoil";
 
 interface PropsType {
   items: any;
@@ -27,12 +23,6 @@ const TABLE_HEADER: string[] = [
 ];
 
 const List = ({ items, currentPage, itemsPerPage }: PropsType) => {
-  const setApplicantsList = useSetRecoilState(listOnTargetPage);
-
-  React.useEffect(() => {
-    setApplicantsList(items);
-  }, []);
-
   return (
     <LitsContainer>
       <ListTable>
