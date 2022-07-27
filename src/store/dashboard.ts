@@ -3,12 +3,7 @@ import {
   Applicant,
   FilteredApplicants,
   ApplicantList,
-} from "../types/datshboard";
-
-export const listOnTargetPage = atom({
-  key: "listForExcelDownload",
-  default: [] as ApplicantList,
-});
+} from "../types/dashboard";
 
 export const applicantAllData = atom({
   key: "applicantAllData",

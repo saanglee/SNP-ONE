@@ -1,4 +1,4 @@
-import { Applicant, ApplicantList } from "../../types/datshboard";
+import { Applicant, ApplicantList } from "../../types/dashboard";
 
 const ExcelDownloadBtn = ({
   applicantsList,

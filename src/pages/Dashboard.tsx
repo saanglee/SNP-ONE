@@ -7,7 +7,7 @@ import List from "../components/dashboard/List";
 import PageNation from "../components/dashboard/PageNation";
 import Animation from "../elements/Animations/Animation";
 
-import { Applicant } from "../types/datshboard";
+import { Applicant } from "../types/dashboard";
 import {
   applicantAllData,
   filteredApplicantData,
