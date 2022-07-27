@@ -1,6 +1,6 @@
 interface Applicant {
   id: string;
-  date: string | number;
+  date: string;
   name: string;
   gender: "남" | "여";
   birth: string | number;

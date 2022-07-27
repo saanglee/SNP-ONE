@@ -54,10 +54,7 @@ const CircularMenu = () => {
             className={active ? "active menu-item" : "menu-item"}
           >
             <BootstrapTooltip title="AdminPage" placement="bottom">
-              <button
-                // className={active ? "active menu-item" : "menu-item"}
-                onClick={() => setOpen(false)}
-              >
+              <button onClick={() => setOpen(false)}>
                 <HomeRepairServiceIcon className="icon" />
               </button>
             </BootstrapTooltip>
