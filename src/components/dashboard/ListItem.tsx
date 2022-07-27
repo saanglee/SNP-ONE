@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import "./dashboard.css";
-import { Applicant, ApplicantList } from "../../types/datshboard";
+import { Applicant, ApplicantList } from "../../types/dashboard";
 import { patchIsApplicantChecked } from "../../api/models/dashboard";
 import { useRecoilState } from "recoil";
 import { applicantAllData } from "../../store/dashboard";
