@@ -24,7 +24,6 @@ const Title = styled("h3")({
   height: "4rem",
 });
 
-// darkMode
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
   height: 34,
