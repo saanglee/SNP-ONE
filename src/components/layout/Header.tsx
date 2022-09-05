@@ -28,12 +28,6 @@ const Header = () => {
             </StyledLink>
           </Box>
           <Icons>
-            {/* <StyledLink to="/sign" onClick={() => setOpen(true)}>
-              <span>지원하기</span>
-            </StyledLink> */}
-            <div onClick={moveToAbout}>
-              <ButtonAnimation animation={["loopAnimation", "doneAnimation"]} />
-            </div>
             <Badge>
               <SettingsIcon fontSize="large" />
             </Badge>
