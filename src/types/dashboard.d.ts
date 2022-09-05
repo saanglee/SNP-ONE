@@ -2,7 +2,7 @@ interface Applicant {
   id: string;
   date: string;
   name: string;
-  gender: "남" | "여";
+  gender: '남' | '여';
   birth: string | number;
   phone: string | number;
   email: string;
@@ -11,13 +11,13 @@ interface Applicant {
   isChecked: boolean;
 }
 
-type ApplicantList = Applicant[];
+type Applicants = Applicant[];
 
 interface FilteredApplicants {
   name: string;
-  sort: "asc" | "desc";
-  recruitment: "1" | "2";
+  sort: 'asc' | 'desc';
+  recruitment: '1' | '2';
   isChecked: string;
 }
 
-export { Applicant, ApplicantList, FilteredApplicants };
+export { Applicant, Applicants, FilteredApplicants };

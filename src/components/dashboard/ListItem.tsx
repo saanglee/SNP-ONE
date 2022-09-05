@@ -1,11 +1,11 @@
-import React from "react";
-import styled from "styled-components";
-import "./dashboard.css";
-import { Applicant, ApplicantList } from "../../types/dashboard";
-import { patchIsApplicantChecked } from "../../api/models/dashboard";
-import { useRecoilState } from "recoil";
-import { applicantAllData } from "../../store/dashboard";
-import { replaceItemAtIndex } from "../../util/replaceItemIndex";
+import React from 'react';
+import styled from 'styled-components';
+import './dashboard.css';
+import { Applicant, Applicants } from '../../types/dashboard';
+import { patchIsApplicantChecked } from '../../api/models/dashboard';
+import { useRecoilState } from 'recoil';
+import { applicantAllData } from '../../store/dashboard';
+import { replaceItemAtIndex } from '../../util/replaceItemIndex';
 
 interface PropsType {
   data: Applicant;
@@ -28,7 +28,7 @@ const ListItem = ({ data, index, transportation }: PropsType) => {
     let updatedApplicants = replaceItemAtIndex(applicants, changeApplicantIdx, {
       ...applicant,
       isChecked: !applicant.isChecked,
-    }) as ApplicantList;
+    }) as Applicants;
     setApplicants(updatedApplicants);
 
     const { status } = await patchIsApplicantChecked(applicant);
@@ -66,7 +66,7 @@ const ListItem = ({ data, index, transportation }: PropsType) => {
 export default ListItem;
 
 const ListItemContainer = styled.tr<{ checked: boolean }>`
-  background-color: ${(props) => `${props.checked && "#ececec"}`};
+  background-color: ${(props) => `${props.checked && '#ececec'}`};
   border-bottom: 1px solid #d9d9d9;
 `;
 

@@ -1,9 +1,9 @@
-import { Applicant, ApplicantList } from "../../types/dashboard";
+import { Applicant, Applicants } from '../../types/dashboard';
 
 const ExcelDownloadBtn = ({
   applicantsList,
 }: {
-  applicantsList: ApplicantList;
+  applicantsList: Applicants;
 }) => {
   return (
     <button onClick={() => exportToCsv(applicantsList)}>CSV 다운로드</button>
@@ -15,16 +15,16 @@ export default ExcelDownloadBtn;
 interface DownloadFile {
   data: string;
   fileName: string;
-  fileType: "text/csv;charset=utf-8";
+  fileType: 'text/csv;charset=utf-8';
 }
 
 const downloadFile = ({ data, fileName, fileType }: DownloadFile) => {
-  const blob = new Blob(["\ufeff" + data], { type: fileType });
+  const blob = new Blob(['\ufeff' + data], { type: fileType });
 
-  const a = document.createElement("a");
+  const a = document.createElement('a');
   a.download = fileName;
   a.href = window.URL.createObjectURL(blob);
-  const clickEvt = new MouseEvent("click", {
+  const clickEvt = new MouseEvent('click', {
     view: window,
     bubbles: true,
     cancelable: true,
@@ -34,9 +34,9 @@ const downloadFile = ({ data, fileName, fileType }: DownloadFile) => {
   a.remove();
 };
 
-const exportToCsv = (applicantsList: ApplicantList) => {
+const exportToCsv = (applicantsList: Applicants) => {
   const headers = [
-    "date,Name,Gender,birth,Phone,Email,transportation,Address,isChecked",
+    'date,Name,Gender,birth,Phone,Email,transportation,Address,isChecked',
   ];
 
   const applicantsListCsv = applicantsList
@@ -67,14 +67,14 @@ const exportToCsv = (applicantsList: ApplicantList) => {
           transportation,
           address,
           isChecked,
-        ].join(","),
+        ].join(','),
       );
       return acc;
     }, []);
 
   downloadFile({
-    data: [...headers, ...applicantsListCsv].join("\n"),
-    fileName: "applicantsList.csv",
-    fileType: "text/csv;charset=utf-8",
+    data: [...headers, ...applicantsListCsv].join('\n'),
+    fileName: 'applicantsList.csv',
+    fileType: 'text/csv;charset=utf-8',
   });
 };
