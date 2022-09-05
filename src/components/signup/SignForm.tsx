@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   FormGroup,
   FormControlLabel,
@@ -10,18 +10,18 @@ import {
   Typography,
   FormControl,
   Input,
-} from "@mui/material";
-import { format } from "date-fns";
-import FormInput from "../form/FormInput";
-import FormRadio from "../form/FormRadio";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import ResidenceSelectModal from "./ResidenceSelectModal";
-import Terms from "./Terms";
-import FormCheckboxBtn from "../form/FormCheckboxBtn";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { ResidenceValue, isModalState } from "../../store/form";
-import { useRecoilValue, useRecoilState } from "recoil";
-import { FormValues } from "../../types/form";
+} from '@mui/material';
+import { format } from 'date-fns';
+import FormInput from '../form/FormInput';
+import FormRadio from '../form/FormRadio';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import ResidenceSelectModal from './ResidenceSelectModal';
+import Terms from './Terms';
+import FormCheckboxBtn from '../form/FormCheckboxBtn';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { ResidenceValue, isModalState } from '../../store/form';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { FormValues } from '../../types/form';
 import {
   RegexName,
   RegexBirth,
@@ -29,31 +29,30 @@ import {
   RegexEmail,
   InfoTerms,
   PrivacyTerms,
-} from "./utils";
-import { useUsersModel } from "../../api/models/useUserModels";
+} from './utils';
+import { createApplicant } from '../../api/models/createApplicant';
 
 const SignForm = () => {
-  const today = format(new Date(), "yyyy-MM-dd HH:mm:s");
+  const today = format(new Date(), 'yyyy-MM-dd HH:mm:s');
   const navigate = useNavigate();
-  const a = useUsersModel();
 
   const {
     register,
     handleSubmit,
     control,
     formState: { errors, isDirty, isValid },
-  } = useForm<FormValues>({ mode: "onChange" });
+  } = useForm<FormValues>({ mode: 'onChange' });
   const onSubmit: SubmitHandler<FormValues> = async (data: FormValues) => {
-    const address = data?.region + " " + data?.district;
+    const address = data?.region + ' ' + data?.district;
     data.address = address;
 
     delete data.region;
     delete data.district;
 
-    a.postUsers(data).then((response) => {
+    createApplicant(data).then((response) => {
       if (response.status === 201 || response.status === 200) {
-        alert("지원이 완료되었습니다");
-        navigate("/", { replace: true });
+        alert('지원이 완료되었습니다');
+        navigate('/', { replace: true });
       }
     });
   };
@@ -106,9 +105,9 @@ const SignForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormGroup>
-        <InputHidden {...register("date")} value={today} />
+        <InputHidden {...register('date')} value={today} />
         {/* <InputHidden {...register("id")} value={userId} /> */}
-        <CheckboxHidden {...register("isChecked")} />
+        <CheckboxHidden {...register('isChecked')} />
         <FormInput
           label="이름"
           name="name"
@@ -120,7 +119,7 @@ const SignForm = () => {
         <FormControl sx={{ mt: 2, mb: 1 }}>
           <Typography variant="h6">성별</Typography>
 
-          <FormRadio name="gender" control={control} values={["남", "여"]} />
+          <FormRadio name="gender" control={control} values={['남', '여']} />
         </FormControl>
         <FormInput
           label="생년월일"
@@ -187,14 +186,14 @@ const SignForm = () => {
             control={control}
             register={register}
             values={[
-              "버스",
-              "지하철",
-              "택시",
-              "KTX/기차",
-              "도보",
-              "자전거",
-              "전동킥보드",
-              "자가용",
+              '버스',
+              '지하철',
+              '택시',
+              'KTX/기차',
+              '도보',
+              '자전거',
+              '전동킥보드',
+              '자가용',
             ]}
             required={true}
           />
@@ -285,25 +284,25 @@ const SignForm = () => {
 export default SignForm;
 
 const StyledTerms = styled(Box)({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
 });
 
 const InputHidden = styled(Input)({
-  position: "absolute",
-  top: "-9999px",
-  visibility: "hidden",
+  position: 'absolute',
+  top: '-9999px',
+  visibility: 'hidden',
 });
 
 const CheckboxHidden = styled(Checkbox)({
-  position: "absolute",
-  top: "-9999px",
-  visibility: "hidden",
+  position: 'absolute',
+  top: '-9999px',
+  visibility: 'hidden',
 });
 
 const TypoError = styled(Typography)({
   mt: 1,
   fontSize: 14,
-  color: "#d32f2f",
+  color: '#d32f2f',
 });
