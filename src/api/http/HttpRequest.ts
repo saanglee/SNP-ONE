@@ -1,6 +1,6 @@
-import { AxiosInstance } from "axios";
+import { AxiosInstance } from 'axios';
 
-type ApiUrlType = "/city" | "/users";
+type ApiUrlType = '/regions' | '/users';
 
 export class HttpRequest {
   private service: AxiosInstance;
@@ -9,7 +9,7 @@ export class HttpRequest {
     this.service = service;
   }
 
-  get<T>(url: ApiUrlType, queryString = "") {
+  get<T>(url: ApiUrlType, queryString = '') {
     return this.service
       .get<T>(`${url}?${queryString}`)
       .then((response) => response.data);

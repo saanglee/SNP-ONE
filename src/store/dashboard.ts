@@ -1,30 +1,26 @@
-import { atom, selector } from "recoil";
-import {
-  Applicant,
-  FilteredApplicants,
-  ApplicantList,
-} from "../types/dashboard";
+import { atom, selector } from 'recoil';
+import { Applicant, FilteredApplicants, Applicants } from '../types/dashboard';
 
 export const applicantAllData = atom({
-  key: "applicantAllData",
-  default: [] as ApplicantList,
+  key: 'applicantAllData',
+  default: [] as Applicants,
 });
 
 export const FILTER_DEFAULT = {
-  name: "",
-  sort: "asc",
-  recruitment: "1",
-  isChecked: "all",
+  name: '',
+  sort: 'asc',
+  recruitment: '1',
+  isChecked: 'all',
 } as FilteredApplicants;
 
 export const filteredApplicantState = atom({
-  key: "filteredApplicantState",
+  key: 'filteredApplicantState',
   default: FILTER_DEFAULT,
 });
 
-const REFERENCE_DATE = "2022.05.05";
+const REFERENCE_DATE = '2022.05.05';
 export const filteredApplicantData = selector({
-  key: "filteredApplicantData",
+  key: 'filteredApplicantData',
   get: ({ get }) => {
     const applicantData = get(applicantAllData);
     const filterState = get(filteredApplicantState);
@@ -39,7 +35,7 @@ export const filteredApplicantData = selector({
       const referenceDate = new Date(REFERENCE_DATE).getTime();
       const timeDifference = applicantDate - referenceDate;
 
-      if (recruitment === "1") {
+      if (recruitment === '1') {
         return timeDifference > 0;
       }
       return timeDifference <= 0;
@@ -53,23 +49,23 @@ export const filteredApplicantData = selector({
       const prevDateTime = new Date(prevDate).getTime();
       const currDateTime = new Date(currDate).getTime();
 
-      if (sort === "asc") {
+      if (sort === 'asc') {
         return currDateTime - prevDateTime;
       }
       return prevDateTime - currDateTime;
     };
 
-    const filteredApplicantList = applicantData
+    const filteredApplicants = applicantData
       .filter(filterByName)
       .filter(filterByRecruitment)
       .sort(sortByDate);
 
-    if (filterState.isChecked === "all") {
-      return filteredApplicantList;
+    if (filterState.isChecked === 'all') {
+      return filteredApplicants;
     }
 
-    return filteredApplicantList.filter(({ isChecked }: Applicant) => {
-      if (filterState.isChecked === "checked") {
+    return filteredApplicants.filter(({ isChecked }: Applicant) => {
+      if (filterState.isChecked === 'checked') {
         return isChecked;
       }
       return !isChecked;
