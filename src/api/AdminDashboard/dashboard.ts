@@ -1,4 +1,4 @@
-import { apiRequest } from '../instance/instance';
+import { apiRequest } from '../axiosInstance';
 import { Applicant, Applicants } from '../../types/dashboard';
 
 export const getApplicantData = async () =>
