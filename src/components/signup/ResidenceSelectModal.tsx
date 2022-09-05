@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Button,
   styled,
   IconButton,
   SelectChangeEvent,
-} from "@mui/material";
-import CloseIcon from "@mui/icons-material/Close";
-import { useCitysModel } from "../../api/models/useCityModels";
-import FormSelect from "../form/FormSelect";
-import { useRecoilState } from "recoil";
-import { ResidenceValue } from "../../store/form";
+} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import { getRegions } from '../../api/models/getRegions';
+import FormSelect from '../form/FormSelect';
+import { useRecoilState } from 'recoil';
+import { ResidenceValue } from '../../store/form';
 
 interface ResidenceSelectProps {
   control: any;
@@ -23,7 +23,6 @@ const ResidenceSelectModal = ({
   handleClose,
   control,
 }: ResidenceSelectProps) => {
-  const { getCitys } = useCitysModel();
   const [citys, setCitys] = useState<string[] | undefined | any>();
   const [regions, setRegions] = useState<string | HTMLSelectElement>();
   const [districts, setDistricts] = useState<string[]>();
@@ -32,7 +31,7 @@ const ResidenceSelectModal = ({
   const [, setResidence] = useRecoilState(ResidenceValue);
   useEffect(() => {
     async function fetchCitys() {
-      const response = await getCitys().then((result) => result);
+      const response = await getRegions().then((result) => result);
       setCitys(response);
     }
     fetchCitys();
@@ -51,7 +50,7 @@ const ResidenceSelectModal = ({
 
   const handleSelectValue = () => {
     if (regions !== undefined && district !== undefined) {
-      setResidence(regions + " " + district);
+      setResidence(regions + ' ' + district);
     }
     handleClose();
   };
@@ -66,15 +65,15 @@ const ResidenceSelectModal = ({
         </StyledModalHeader>
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
             paddingTop: 2,
             paddingInline: 3,
           }}
         >
-          <Box sx={{ display: "flex" }}>
+          <Box sx={{ display: 'flex' }}>
             <FormSelect
               label="시/도"
               name="region"
@@ -98,7 +97,7 @@ const ResidenceSelectModal = ({
           <Button
             variant="contained"
             onClick={handleSelectValue}
-            sx={{ mt: 3, width: "100%", height: 50 }}
+            sx={{ mt: 3, width: '100%', height: 50 }}
           >
             확인
           </Button>
@@ -111,31 +110,31 @@ const ResidenceSelectModal = ({
 export default ResidenceSelectModal;
 
 const StyledModal = styled(Box, {
-  shouldForwardProp: (prop) => prop !== "open",
+  shouldForwardProp: (prop) => prop !== 'open',
 })<{
   open?: boolean;
 }>(({ open }) => ({
-  display: open ? "block" : "none",
-  position: "absolute",
+  display: open ? 'block' : 'none',
+  position: 'absolute',
   top: 0,
   bottom: 0,
   left: 0,
   right: 0,
-  background: "rgba(0,0,0,0.2)",
+  background: 'rgba(0,0,0,0.2)',
   zIndex: 100,
 }));
 
 const StyledModalContent = styled(Box)({
-  position: "absolute",
+  position: 'absolute',
   bottom: 0,
   left: 0,
-  width: "100%",
-  height: "60%",
-  background: "#fff",
+  width: '100%',
+  height: '60%',
+  background: '#fff',
   zIndex: 100,
 });
 
 const StyledModalHeader = styled(Box)({
   paddingBlock: 1,
-  width: "100%",
+  width: '100%',
 });
