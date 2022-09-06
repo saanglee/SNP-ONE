@@ -14,7 +14,7 @@
 | ------ | :-----------------: | :------------------------------------------------------------------------------------------------------------------------------------: |
 | 김수빈 | 팀원 </br> Frontend |                                            - 회원가입(정보입력) </br> - 회원가입 validation                                            |
 | 김민주 | 팀원 </br> Frontend |                                      - 회원가입(정보입력) </br> - 회원가입 정보 json server 전송                                       |
-| 이상지 | 팀장 </br> Frontend |                                            - admin페이지 구현 </br> - Pagenation </br> 기획                                            |
+| 이상지 | 팀장 </br> Frontend |                                            - admin페이지 구현 </br> - Pagination </br> 기획                                            |
 | 이혜림 | 팀원 </br> Frontend |                  - headers, routing, interactive buttons </br> - mui & lottie & outter layout </br> - 반응형 웹 구현                   |
 | 홍승연 | 팀원 </br> Frontend | - 전체데이터 fetch 및 필터링 api 구축 </br> - 당첨여부 체크박스 toggle callback 구현 </br> - search bar 구현 </br> - csv 다운로드 구현 |
 
@@ -77,7 +77,7 @@
  ┃ ┃ ┣ 📜List.tsx
  ┃ ┃ ┣ 📜ListHeader.tsx
  ┃ ┃ ┣ 📜ListItem.tsx
- ┃ ┃ ┣ 📜PageNation.tsx
+ ┃ ┃ ┣ 📜Pagination.tsx
  ┃ ┃ ┣ 📜SearchBar.tsx
  ┃ ┃ ┗ 📜dashboard.css
  ┃ ┣ 📂form
